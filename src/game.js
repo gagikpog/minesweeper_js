@@ -8,7 +8,6 @@ const Game = {
         this._generateMap(pos);
     },
     _generateMap(pos) {
-        this.map = Array(this.height).fill().map(()=>{return Array(this.width).fill().map(() => {return {val: 0, opened: false}});});
         for (let i = 0; i < this.minesCount; i++) {
             this.addMine(pos);
         }
@@ -39,7 +38,7 @@ const Game = {
             this.status = 'game';
         }
         const val = this.map[row][cell].val;
-        item.classList.add(`cell${val}`);
+        item.open();
     }
 }
 
