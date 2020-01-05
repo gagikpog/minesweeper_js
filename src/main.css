@@ -21,10 +21,10 @@ body {
 
 table .cell{
     text-align: center;
-    line-height: 50px;
     position: relative;
     border: 1px solid black;
-    background-color: gray;
+    background-color: #50A0A0;
+    box-shadow: 0 0 11px inset rgba(0,0,0,0.8);
 }
 #game {
     border-spacing: 0;
@@ -33,13 +33,29 @@ table .cell{
     background-color: white !important;
 }
 
+#blocker {
+    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+select {
+    padding: 10px;
+}
+
 .cell::before {
-    font-size: 180%;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     font-family: "ArchivoBlack";
+    width: 100%;
+    height: 100%;
+    animation: 1s linear;
+    background-image: none;
 }
 
 .cell0::before {
@@ -82,7 +98,11 @@ table .cell{
     color: indigo;
 }
 .cell9::before {
-    content: "0";
+    content: "";
+    background-image: url(./mine.png);
+    background-size: contain;
+    background-position-y: center;
+    background-repeat: no-repeat;
     color: indigo;
 }
 .cellFlag::before {
@@ -97,4 +117,12 @@ table .cell{
 }
 .head button {
     padding: 10px;
+}
+
+.cellBoom::before {
+    content: "";
+    background-image: url(./boom.gif);
+    background-size: contain;
+    background-position-y: center;
+    background-repeat: no-repeat;
 }

@@ -44,5 +44,11 @@ function setCellSize(size = 50) {
     if (ss) {
         ss.cssRules[0].style.height = `${size}px`;
         ss.cssRules[0].style.width = `${size}px`;
+        ss.cssRules[0].style['line-height'] = `${size}px`;
+        ss.cssRules[1].style['font-size'] = `${size*0.7}px`;
     }
+}
+
+function displayBlocker(enabled = true) {
+    document.querySelector('#blocker').style.display = enabled ? 'block' : 'none';
 }

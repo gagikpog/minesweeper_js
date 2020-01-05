@@ -11,6 +11,10 @@
         .cell {
             height: 50px;
             width: 50px;
+            line-height: 50px;
+        }
+        .cell::before {
+            font-size: 50px;
         }
     </style>
 </head>
@@ -20,10 +24,15 @@
             <button onclick="Game.newGame()">New game</button>
             <button id="mines">10</button>
             <button id="time">time 100</button>
+            <select name="level" id="level" onchange="levelItemChanged(this)">
+                <option selected value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="advanced">Advanced</option>
+            </select>
         </div>
         <table id="game"></table>
     </main>
-
+    <div id="blocker"></div>
     <script src="./src/main.js"></script>
     <script src="./src/view.js"></script>
     <script src="./src/game.js"></script>

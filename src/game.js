@@ -22,11 +22,19 @@ const Game = {
     },
     end: function(isWin) {
         clearTimeout(this.timerId);
-        if (isWin) {
-            showConfirm('Победа', '', {MBOK: true});
-        } else {
-            showConfirm('Проигрыш', '', {MBOK: true});
-        }
+        setTimeout(function () {
+            if (isWin) {
+                showConfirm('Победа', '', {MBOK: true}).then(function(){
+                    displayBlocker(false);
+                    Game.newGame()
+                });
+            } else {
+                showConfirm('Проигрыш', '', {MBOK: true}).then(function(){
+                    displayBlocker(false);
+                    Game.newGame()
+                });
+            }
+        }, 2000);
     },
     _generateMap(pos) {
         for (let i = 0; i < this.totalMines; i++) {
@@ -83,10 +91,10 @@ const Game = {
         return openedCount === count;
     },
     setSize: function(width, height) {
-        this.width = width;
-        this.height = height;
+        this.width = width || this.width;
+        this.height = height || this.height;
         setCellSize(getOptimalSize());
-        tableGenerate(width, height);
+        tableGenerate(this.width, this.height);
         this.newGame();
     }
 }
@@ -117,7 +125,19 @@ function initItem(item) {
                     }
                     item.opened = true;
                     if (item.val === 9) {
+                        displayBlocker(true);
                         Game.end(false);
+                        item.classList.add('cellBoom');
+                        Game.map.forEach(function(row) {
+                            row.forEach(function(_item) {
+                                if (_item.val === 9) {
+                                    _item.open();
+                                }
+                            });
+                        });
+                        setTimeout(function() {
+                            item.classList.remove('cellBoom');
+                        }, 1000);
                     }
                 }
             } else {
@@ -138,6 +158,13 @@ function initItem(item) {
         }
         if (Game.checkEnd()) {
             Game.end(true);
+            Game.map.forEach(function(row) {
+                row.forEach(function(_item) {
+                    if (_item.val === 9) {
+                        _item.classList.add('cell9');
+                    }
+                });
+            });
         }
     }
 
@@ -180,8 +207,7 @@ function getOptimalSize() {
     const totalHeight = window.innerHeight - 150;
     const kw = totalHeight / Game.height;
     const kh = totalWidth / Game.width;
-
     const k = kw < kh ? kw : kh;
-
-    return k;
+    const minSize = 30;
+    return k > minSize ? k : minSize;
 }
