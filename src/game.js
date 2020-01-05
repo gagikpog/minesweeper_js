@@ -1,14 +1,35 @@
 const Game = {
     width: 10,
     height: 10,
-    minesCount: 10,
+    totalMines: 10,
+    remainingMines: 10,
     map: null,
     status: 'newGame',
-    newGame: function(pos) {
+    animationSpeed: 50,
+    totalTime: 100,
+    remainingTime: 100,
+    newGame: function() {
+        this.status = 'newGame';
+        resetTable();
+        this.remainingTime = this.totalTime;
+        this.remainingMines = this.totalMines;
+        document.querySelector('#mines').textContent = Game.remainingMines;
+    },
+    start: function(pos) {
+        clearTimeout(this.timerId);
+        this.timerId = setInterval(this.timer, 1000);
         this._generateMap(pos);
     },
+    end: function(isWin) {
+        clearTimeout(this.timerId);
+        if (isWin) {
+            showConfirm('Победа', '', {MBOK: true});
+        } else {
+            showConfirm('Проигрыш', '', {MBOK: true});
+        }
+    },
     _generateMap(pos) {
-        for (let i = 0; i < this.minesCount; i++) {
+        for (let i = 0; i < this.totalMines; i++) {
             this.addMine(pos);
         }
     },
@@ -32,13 +53,34 @@ const Game = {
             checkBlock(r, this.map, a => {a.val < 8 && a.val++;});
         }
     },
-    itemClick: function(item, row, cell) {
+    itemClick: function(item, row, cell, eventType) {
         if (this.status === 'newGame') {
-            this.newGame({x: cell, y: row});
+            this.start({x: cell, y: row});
             this.status = 'game';
         }
         const val = this.map[row][cell].val;
-        item.open();
+        item.open(eventType === 'rightClock');
+    },
+    timer: function() {
+        if (Game.remainingTime-- === 0) {
+            Game.end(false);
+        }
+        document.querySelector('#time').textContent = `Time ${Game.remainingTime}`;
+    },
+    checkEnd: function() {
+        let i = 0, j = 0;
+        const map = Game.map;
+        let count = null;
+        if (map.length && map[0].length) {
+            count = map.length * map[0].length - Game.totalMines;
+        }
+        let openedCount = 0;
+        for (i = 0; i < map.length; i++) {
+            for (j = 0; j < map.length; j++) {
+                openedCount += map[i][j].opened;
+            }
+        }
+        return openedCount === count;
     }
 }
 
@@ -52,4 +94,76 @@ function checkBlock(point, map, callback) {
         }
     }
     return res;
+}
+
+function initItem(item) {
+    item.val = 0;
+    item.opened = false;
+    item.flag = false;
+    item.open = function(isRightBtn) {
+        if (!item.opened) {
+            if (!isRightBtn) {
+                if (!item.flag) {
+                    item.classList.add('open', `cell${item.val}`);
+                    if (item.val === 0) {
+                        item.boom();
+                    }
+                    item.opened = true;
+                    if (item.val === 9) {
+                        Game.end(false);
+                    }
+                }
+            } else {
+                if (item.flag) {
+                    Game.remainingMines++;
+                    item.classList.remove('cellFlag');
+                } else {
+                    Game.remainingMines--;
+                    item.classList.add('cellFlag');
+                }
+                document.querySelector('#mines').textContent = Game.remainingMines >= 0 ? Game.remainingMines : 0;
+                item.flag = !item.flag;
+            }
+        } else {
+            if (typeof(isRightBtn) === 'boolean') {
+                item.neighborOpen();
+            }
+        }
+        if (Game.checkEnd()) {
+            Game.end(true);
+        }
+    }
+
+    item.neighborOpen = function() {
+        const pos = {
+            x: +item.dataset.cell,
+            y: +item.dataset.row
+        };
+        const count = checkBlock(pos, Game.map, function(_item, res) {
+            res.count = res.count || 0;
+            res.count += _item.flag;
+        }).count;
+        if (count === item.val) {
+            checkBlock(pos, Game.map, function(_item) {
+                _item.open();
+            });
+        }
+    }
+
+    item.boom = function() {
+        if (!item.opened) {
+            setTimeout(function() {
+                item.open();
+                const pos = {
+                    x: +item.dataset.cell,
+                    y: +item.dataset.row
+                }
+                checkBlock(pos, Game.map, function(_item) {
+                    _item.open();
+                });
+            }, Game.animationSpeed);
+        }
+    }
+
+    return item;
 }

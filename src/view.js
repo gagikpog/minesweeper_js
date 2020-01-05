@@ -1,11 +1,3 @@
-function initItem(item) {
-    item.val = 0;
-    item.open = function() {
-        item.classList.add(`cell${item.val}`);
-    }
-    return item;
-}
-
 function tableGenerate(width, height) {
     // clear table
     while (GameTable.hasChildNodes()) {
@@ -15,7 +7,7 @@ function tableGenerate(width, height) {
     Game.map = Array(height).fill().map(() => []);
 
     let i = 0;
-    for(i = 0; i < height; i++){
+    for(i = 0; i < height; i++) {
         let tr = GameTable.insertRow();
         let j = 0;
         for(j = 0; j < width; j++) {
@@ -33,5 +25,8 @@ function resetTable() {
     const data = document.querySelectorAll('table#game .cell');
     data.forEach(function (item) {
         item.classList = ['cell'];
+        item.opened = false;
+        item.val = 0;
+        item.flag = false;
     });
 }
