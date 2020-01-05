@@ -6,8 +6,8 @@ const Game = {
     map: null,
     status: 'newGame',
     animationSpeed: 50,
-    totalTime: 100,
-    remainingTime: 100,
+    totalTime: 999,
+    remainingTime: 999,
     newGame: function() {
         this.status = 'newGame';
         resetTable();
@@ -76,11 +76,18 @@ const Game = {
         }
         let openedCount = 0;
         for (i = 0; i < map.length; i++) {
-            for (j = 0; j < map.length; j++) {
+            for (j = 0; j < map[i].length; j++) {
                 openedCount += map[i][j].opened;
             }
         }
         return openedCount === count;
+    },
+    setSize: function(width, height) {
+        this.width = width;
+        this.height = height;
+        setCellSize(getOptimalSize());
+        tableGenerate(width, height);
+        this.newGame();
     }
 }
 
@@ -166,4 +173,15 @@ function initItem(item) {
     }
 
     return item;
+}
+
+function getOptimalSize() {
+    const totalWidth = window.innerWidth - 100;
+    const totalHeight = window.innerHeight - 150;
+    const kw = totalHeight / Game.height;
+    const kh = totalWidth / Game.width;
+
+    const k = kw < kh ? kw : kh;
+
+    return k;
 }

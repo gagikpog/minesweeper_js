@@ -30,3 +30,19 @@ function resetTable() {
         item.flag = false;
     });
 }
+
+function setCellSize(size = 50) {
+    const ssList = document.styleSheets;
+    let ss = null;
+    for (let i = 0; i< ssList.length; i++) {
+        
+        if (ssList[i].title === 'dynamic') {
+            ss = ssList[i];
+            break;
+        }
+    }
+    if (ss) {
+        ss.cssRules[0].style.height = `${size}px`;
+        ss.cssRules[0].style.width = `${size}px`;
+    }
+}
