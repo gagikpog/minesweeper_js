@@ -7,6 +7,7 @@ const Game = {
     status: 'newGame',
     animationSpeed: 50,
     remainingTime: 0,
+    featureLeftToFlag: true,
     newGame: function() {
         this.status = 'newGame';
         resetTable();
@@ -93,6 +94,20 @@ const Game = {
         setCellSize(getOptimalSize());
         tableGenerate(this.width, this.height);
         this.newGame();
+    },
+    setFlag(item, val = true) {
+        if (item.flag === val) {
+            return;
+        }
+        if (val) {
+            item.classList.add('cellFlag');
+            Game.remainingMines--;
+        } else {
+            item.classList.remove('cellFlag');
+            Game.remainingMines++;
+        }
+        item.flag = val;
+        document.querySelector('#mines').textContent = Game.remainingMines >= 0 ? Game.remainingMines : 0;
     }
 }
 
@@ -125,10 +140,15 @@ function initItem(item) {
                         displayBlocker(true);
                         Game.end(false);
                         item.classList.add('cellBoom');
+                        item.classList.add('cellX');
                         Game.map.forEach(function(row) {
                             row.forEach(function(_item) {
                                 if (_item.val === 9) {
-                                    _item.open();
+                                    _item.classList.add('open', `cell${item.val}`);
+                                } else {
+                                    if (_item.flag) {
+                                        _item.classList.add('cellX');
+                                    }
                                 }
                             });
                         });
@@ -138,15 +158,7 @@ function initItem(item) {
                     }
                 }
             } else {
-                if (item.flag) {
-                    Game.remainingMines++;
-                    item.classList.remove('cellFlag');
-                } else {
-                    Game.remainingMines--;
-                    item.classList.add('cellFlag');
-                }
-                document.querySelector('#mines').textContent = Game.remainingMines >= 0 ? Game.remainingMines : 0;
-                item.flag = !item.flag;
+                Game.setFlag(item, !item.flag);
             }
         } else {
             if (typeof(isRightBtn) === 'boolean') {
@@ -179,12 +191,23 @@ function initItem(item) {
                 _item.open();
             });
         } else {
+            let closedCount = null;
+            if (Game.featureLeftToFlag) {
+                closedCount = checkBlock(pos, Game.map, function(_item, res) {
+                    res.count = res.count || 0;
+                    res.count += !_item.opened;
+                }).count;
+            }
             checkBlock(pos, Game.map, function(_item) {
-                if(!_item.opened && !_item.flag){
-                    _item.classList.add('pushed');
-                    setTimeout(function(){
-                        _item.classList.remove('pushed');
-                    }, 300);
+                if(!_item.opened && !_item.flag) {
+                    if (Game.featureLeftToFlag && closedCount === item.val) {
+                        Game.setFlag(_item, true);
+                    } else {
+                        _item.classList.add('pushed');
+                        setTimeout(function(){
+                            _item.classList.remove('pushed');
+                        }, 300);
+                    }
                 }
             });
         }

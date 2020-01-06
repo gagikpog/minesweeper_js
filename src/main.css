@@ -27,7 +27,6 @@ table .cell{
     background-color: #50A0A0;
     outline: outset 3px #60b8b8;
     outline-offset: -3px;
-    /* box-shadow: 5px 5px 0px inset #85dfdf, -5px -5px 0px inset #2d7070; */
 }
 #game {
     border-spacing: 0;
@@ -36,6 +35,22 @@ table .cell.open {
     background-color: #c3bec0;
     outline: inset 3px #d3cfd0;
     outline-offset: -3px;
+}
+
+table .cellX::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "ArchivoBlack";
+    width: calc(100% - 3px);
+    height: calc(100% - 3px);
+    background-image: url(x-mark.png);
+    background-size: contain;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-color: #ff000055;
 }
 
 #blocker {
@@ -56,8 +71,6 @@ select {
 table .cell.pushed {
     outline: inset 3px #60b8b8;
     outline-offset: -3px;
-    /* background-color: red; */
-    /* box-shadow: 0 0 11px inset rgba(0,0,0,0.8), 0 0 6px inset rgba(0,0,0,1); */
 }
 
 
