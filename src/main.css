@@ -17,6 +17,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #1E1E1E;
 }
 
 table .cell{
@@ -24,13 +25,17 @@ table .cell{
     position: relative;
     border: 1px solid black;
     background-color: #50A0A0;
-    box-shadow: 0 0 11px inset rgba(0,0,0,0.8);
+    outline: outset 3px #60b8b8;
+    outline-offset: -3px;
+    /* box-shadow: 5px 5px 0px inset #85dfdf, -5px -5px 0px inset #2d7070; */
 }
 #game {
     border-spacing: 0;
 }
-.open {
-    background-color: white !important;
+table .cell.open {
+    background-color: #c3bec0;
+    outline: inset 3px #d3cfd0;
+    outline-offset: -3px;
 }
 
 #blocker {
@@ -44,7 +49,18 @@ table .cell{
 }
 select {
     padding: 10px;
+    background-color: #1E1E1E;
+    color: #fff;
 }
+
+table .cell.pushed {
+    outline: inset 3px #60b8b8;
+    outline-offset: -3px;
+    /* background-color: red; */
+    /* box-shadow: 0 0 11px inset rgba(0,0,0,0.8), 0 0 6px inset rgba(0,0,0,1); */
+}
+
+
 
 .cell::before {
     position: absolute;
@@ -60,42 +76,42 @@ select {
 
 .cell0::before {
     content: "";
-    color: indigo;
+    color: #000;
 }
 .cell1::before {
     content: "1";
-    color: indigo;
+    color: #0001fd;
 }
 .cell2::before {
     content: "2";
-    color: indigo;
+    color: #017e00;
 }
 .cell3::before {
     content: "3";
-    color: indigo;
+    color: #fe0001;
 }
 
 .cell4::before {
     content: "4";
-    color: indigo;
+    color: #010180;
 }
 
 .cell5::before {
     content: "5";
-    color: indigo;
+    color: #7f0300;
 }
 
 .cell6::before {
     content: "6";
-    color: indigo;
+    color: #008080;
 }
 .cell7::before {
     content: "7";
-    color: indigo;
+    color: #000000;
 }
 .cell8::before {
     content: "8";
-    color: indigo;
+    color: #808080;
 }
 .cell9::before {
     content: "";
@@ -106,7 +122,7 @@ select {
     color: indigo;
 }
 .cellFlag::before {
-    color: indigo;
+    color: black;
     content: "\1F6A9";
     font-weight: 1000;
 }
@@ -117,6 +133,8 @@ select {
 }
 .head button {
     padding: 10px;
+    background-color: #1E1E1E;
+    color: #fff;
 }
 
 .cellBoom::before {

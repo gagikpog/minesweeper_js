@@ -6,12 +6,11 @@ const Game = {
     map: null,
     status: 'newGame',
     animationSpeed: 50,
-    totalTime: 999,
-    remainingTime: 999,
+    remainingTime: 0,
     newGame: function() {
         this.status = 'newGame';
         resetTable();
-        this.remainingTime = this.totalTime;
+        this.remainingTime = 0;
         this.remainingMines = this.totalMines;
         document.querySelector('#mines').textContent = Game.remainingMines;
     },
@@ -70,9 +69,7 @@ const Game = {
         item.open(eventType === 'rightClock');
     },
     timer: function() {
-        if (Game.remainingTime-- === 0) {
-            Game.end(false);
-        }
+        Game.remainingTime++;
         document.querySelector('#time').textContent = `Time ${Game.remainingTime}`;
     },
     checkEnd: function() {
@@ -180,6 +177,15 @@ function initItem(item) {
         if (count === item.val) {
             checkBlock(pos, Game.map, function(_item) {
                 _item.open();
+            });
+        } else {
+            checkBlock(pos, Game.map, function(_item) {
+                if(!_item.opened && !_item.flag){
+                    _item.classList.add('pushed');
+                    setTimeout(function(){
+                        _item.classList.remove('pushed');
+                    }, 300);
+                }
             });
         }
     }

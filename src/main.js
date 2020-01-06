@@ -16,6 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const item = e.target;
         itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
     }
+    const level = getCookie('level');
+    if (level) {
+        document.querySelector('#level').value = level;
+        levelItemChanged({value: level});
+    }
 });
 
 function itemClick(item, row, cell, eventType) {
@@ -40,6 +45,11 @@ function levelItemChanged(event) {
         break;
         case 'custom':
         break;
-
     }
+    document.cookie = `level=${event.value}`;
+}
+
+window.getCookie = function(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
 }
