@@ -1,5 +1,5 @@
 
-function showConfirm(message, description, buttons) {
+function showConfirm(message, description, config) {
     if (!document.querySelector('#confirm')) {
         createHtml();
     }
@@ -9,17 +9,69 @@ function showConfirm(message, description, buttons) {
             res(answer)
             dialog.style.display = 'none';
         }
-        dialog.style.display = 'flex';
-        if (!buttons) {
-            buttons = {
-                MBCANCEL: true,
-                MBOK: true,
-                MBYES: false
-            }
+
+        config = config || {};
+        const isNeedUseDefaultButtons = config.MBOK || config.MBCANCEL || config.MBYES;
+
+        if (!config.buttons) {
+            config.buttons = [{
+                    id: 'MBCANCEL',
+                    title: 'Отмена',
+                    backgroundColor: '#28a745',
+                    color: '#fff',
+                    order: 3
+                }, {
+                    id: 'MBOK',
+                    title: 'ОК',
+                    backgroundColor: '#6c757d',
+                    color: '#fff',
+                    order: 2
+                }, {
+                    id: 'MBYES',
+                    title: 'Да',
+                    backgroundColor: '#007bff',
+                    color: '#fff',
+                    order: 1
+                }
+            ];
         }
-        document.querySelector('#mbOk').style.display = buttons.MBOK ? 'inline-block' : 'none';
-        document.querySelector('#mbYes').style.display = buttons.MBYES ? 'inline-block' : 'none';
-        document.querySelector('#mbCancel').style.display = buttons.MBCANCEL ? 'inline-block' : 'none';
+        config = {
+            ...{
+                theme: 'dark'
+            },
+            ...config
+        };
+
+
+        const buttonsContainer = document.querySelector('.messageBox-buttons');
+        while(buttonsContainer.hasChildNodes()) {
+            buttonsContainer.removeChild(buttonsContainer.lastChild);
+        }
+        config.buttons.forEach((button) => {
+            if (isNeedUseDefaultButtons && !(button.id in config)) {
+                return;
+            }
+            const btn = document.createElement('button');
+            btn.classList.add('btn', 'mbButton');
+            btn.textContent = button.title;
+            btn.id = button.id;
+            btn.onclick = function() {
+                showConfirm.done(button.id);
+            };
+            btn.style.backgroundColor = button.backgroundColor;
+            btn.style.color = button.color;
+            btn.style.order = button.order;
+            buttonsContainer.appendChild(btn);
+        });
+
+        dialog.classList = [];
+        dialog.classList.add('confirm', config.theme);
+        dialog.style.display = 'flex';
+
+        const minWidth = 400;
+        let width = config.buttons.length * 130;
+        width = width < minWidth ? minWidth : config.buttons.length * 130;
+        document.querySelector('.dialog').style.maxWidth = `${width}px`;
         document.querySelector('#messageTitle').textContent = message;
         document.querySelector('#messageDescription').textContent = description;
     });
@@ -32,9 +84,8 @@ function createHtml () {
     confirm.classList.add('confirm');
     confirm.style.display = 'none';
 
-    const body = document.createElement('div');
-    body.classList.add('body');
-
+    const dialog = document.createElement('div');
+    dialog.classList.add('dialog');
 
     const h1 = document.createElement('h1');
     h1.id = 'messageTitle';
@@ -44,37 +95,13 @@ function createHtml () {
     p.id = 'messageDescription';
     p.classList.add('description');
 
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.classList.add('messageBox-buttons');
 
-    const mbYes = document.createElement('button');
-    mbYes.textContent = 'Да';
-    mbYes.id = 'mbYes';
-    mbYes.classList.add('btn', 'mbButton');
-    mbYes.onclick = function() {
-        showConfirm.done(true)
-    }
-    const mbOk = document.createElement('button');
-    mbOk.textContent = 'ОК';
-    mbOk.classList.add('btn', 'mbButton');
-    mbOk.id = 'mbOk';
-    mbOk.onclick = mbYes.onclick;
-    const mbCancel = document.createElement('button');
-    mbCancel.textContent = 'Нет';
-    mbCancel.id = 'mbCancel';
-    mbCancel.classList.add('btn', 'mbButton');
-    mbCancel.onclick = function() {
-        showConfirm.done(false)
-    }
+    dialog.appendChild(h1);
+    dialog.appendChild(p);
+    dialog.appendChild(buttonsContainer);
 
-    const btns = document.createElement('div');
-    btns.classList.add('messageBox-buttons');
-    btns.appendChild(mbYes);
-    btns.appendChild(mbOk);
-    btns.appendChild(mbCancel);
-
-    body.appendChild(h1);
-    body.appendChild(p);
-    body.appendChild(btns);
-
-    confirm.appendChild(body);
+    confirm.appendChild(dialog);
     document.body.appendChild(confirm);
 }

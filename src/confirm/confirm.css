@@ -11,7 +11,7 @@
     justify-content: center;
     align-items: center;
 }
-.confirm .body {
+.confirm .dialog {
   background-color: white;
   min-width: 350px;
   min-height: 150px;
@@ -23,7 +23,7 @@
   flex: 2;
   text-align: center;
   padding: 12px;
-  max-width: 400px;
+  max-width: 100%;
 }
 .confirm .title {
   text-align: center;
@@ -38,4 +38,11 @@
 .confirm .mbButton {
   width: 120px;
   padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.confirm.dark > *{
+  color: white;
+  background-color: #1e1e1e;
 }
