@@ -21,15 +21,19 @@ const Game = {
         this._generateMap(pos);
     },
     end: function(isWin) {
+        if (Game.status === 'endGame') {
+            return;
+        }
+        Game.status = 'endGame';
         clearTimeout(this.timerId);
         setTimeout(function () {
             if (isWin) {
-                showConfirm('Победа', '', {MBOK: true}).then(function(){
+                showConfirm('Победа', '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);
                     Game.newGame()
                 });
             } else {
-                showConfirm('Проигрыш', '', {MBOK: true}).then(function(){
+                showConfirm('Проигрыш', '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);
                     Game.newGame()
                 });
