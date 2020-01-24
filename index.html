@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320,
+            height=device-height, target-densitydpi=medium-dpi">
+    <link rel="shortcut icon" href="./src/mine.png" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minesweeper</title>
-    <link rel="stylesheet" href="./src/main.css">
     <style title="dynamic">
         .cell {
             height: 50px;
@@ -32,10 +33,24 @@
         <table id="game"></table>
     </main>
     <div id="blocker"></div>
-    <script src="./src/main.js"></script>
-    <script src="./src/view.js"></script>
-    <script src="./src/game.js"></script>
-    <script src="http://findpic.online/data/confirm.min.js"></script>
+
+    <script src="http://findpic.online/data/loader.js"></script>
+    <script>
+        const Version = 0;
+        loader({
+            styles: [
+                './src/main.css'
+            ],
+            scripts: [
+                './src/main.js',
+                './src/view.js',
+                './src/game.js',
+                'http://findpic.online/data/confirm.min.js'
+            ]
+        }).then(() => {
+            documentLoaded();
+        });
+    </script>
 
 </body>
 </html>

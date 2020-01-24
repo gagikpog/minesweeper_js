@@ -1,6 +1,8 @@
 let GameTable = null;
-document.addEventListener("DOMContentLoaded", function() {
-    document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener("DOMContentLoaded", documentLoaded);
+
+function documentLoaded() {
+    document.addEventListener('contextmenu', event => event.preventDefault(), false);
     GameTable = document.querySelector('#game');
 
     Game.setSize();
@@ -21,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('#level').value = level;
         levelItemChanged({value: level});
     }
-});
+}
 
 function itemClick(item, row, cell, eventType) {
     if (item.nodeName === 'TD') {
@@ -46,10 +48,9 @@ function levelItemChanged(event) {
         case 'custom':
         break;
     }
-    document.cookie = `level=${event.value}`;
+    window.localStorage.setItem(level, event.value);
 }
 
-window.getCookie = function(name) {
-    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) return match[2];
+getCookie = function(name) {
+    window.localStorage.getItem(name);
 }

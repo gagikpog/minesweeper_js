@@ -2,6 +2,11 @@
     margin: 0;
     padding: 0;
 }
+/* disable text selection */
+*:not(input):not(textarea) {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+} 
 
 @font-face {
     font-family: "ArchivoBlack";
@@ -73,8 +78,6 @@ table .cell.pushed {
     outline-offset: -3px;
 }
 
-
-
 .cell::before {
     display: table;
     position: absolute;
@@ -86,6 +89,8 @@ table .cell.pushed {
     height: 100%;
     animation: 1s linear;
     background-image: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .cell0::before {
