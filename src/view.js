@@ -52,3 +52,8 @@ function setCellSize(size = 50) {
 function displayBlocker(enabled = true) {
     document.querySelector('#blocker').style.display = enabled ? 'block' : 'none';
 }
+
+function updatePanel() {
+    document.querySelector('#mines').textContent = Game.remainingMines;
+    document.querySelector('#time').textContent = `Time ${Game.remainingTime}`;
+}

@@ -18,11 +18,8 @@ function documentLoaded() {
         const item = e.target;
         itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
     }
-    const level = getCookie('level');
-    if (level) {
-        document.querySelector('#level').value = level;
-        levelItemChanged({value: level});
-    }
+
+    initSettings();
 }
 
 function itemClick(item, row, cell, eventType) {
@@ -48,9 +45,5 @@ function levelItemChanged(event) {
         case 'custom':
         break;
     }
-    window.localStorage.setItem(level, event.value);
-}
-
-getCookie = function(name) {
-    window.localStorage.getItem(name);
+    window.localStorage.setItem('level', event.value);
 }

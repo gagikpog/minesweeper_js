@@ -6,14 +6,18 @@ const Game = {
     map: null,
     status: 'newGame',
     animationSpeed: 50,
+    defaultAnimationSpeed: 50,
     remainingTime: 0,
-    featureLeftToFlag: true,
+    godMode: true,
+    openedCount: 0,
     newGame: function() {
+        clearTimeout(this.timerId);
         this.status = 'newGame';
+        this.openedCount = 0;
         resetTable();
         this.remainingTime = 0;
         this.remainingMines = this.totalMines;
-        document.querySelector('#mines').textContent = Game.remainingMines;
+        updatePanel();
     },
     start: function(pos) {
         clearTimeout(this.timerId);
@@ -39,6 +43,16 @@ const Game = {
                 });
             }
         }, 2000);
+        Game.showAllMines();
+    },
+    showAllMines: function() {
+        Game.map.forEach(function(row) {
+            row.forEach(function(_item) {
+                if (_item.val === 9) {
+                    _item.classList.add('cell9');
+                }
+            });
+        });
     },
     _generateMap(pos) {
         for (let i = 0; i < this.totalMines; i++) {
@@ -70,27 +84,20 @@ const Game = {
             this.start({x: cell, y: row});
             this.status = 'game';
         }
-        const val = this.map[row][cell].val;
         item.open(eventType === 'rightClock');
     },
     timer: function() {
         Game.remainingTime++;
-        document.querySelector('#time').textContent = `Time ${Game.remainingTime}`;
+        updatePanel();
     },
     checkEnd: function() {
-        let i = 0, j = 0;
+
         const map = Game.map;
         let count = null;
         if (map.length && map[0].length) {
             count = map.length * map[0].length - Game.totalMines;
         }
-        let openedCount = 0;
-        for (i = 0; i < map.length; i++) {
-            for (j = 0; j < map[i].length; j++) {
-                openedCount += map[i][j].opened;
-            }
-        }
-        return openedCount === count;
+        return this.openedCount === count;
     },
     setSize: function(width, height) {
         this.width = width || this.width;
@@ -111,7 +118,7 @@ const Game = {
             Game.remainingMines++;
         }
         item.flag = val;
-        document.querySelector('#mines').textContent = Game.remainingMines >= 0 ? Game.remainingMines : 0;
+        updatePanel();
     }
 }
 
@@ -135,6 +142,7 @@ function initItem(item) {
         if (!item.opened) {
             if (!isRightBtn) {
                 if (!item.flag) {
+                    Game.openedCount++;
                     item.classList.add('open', `cell${item.val}`);
                     if (item.val === 0) {
                         item.boom();
@@ -165,19 +173,13 @@ function initItem(item) {
                 Game.setFlag(item, !item.flag);
             }
         } else {
-            if (typeof(isRightBtn) === 'boolean') {
+            // if left button pressed and godMode enabled check neighbors
+            if (typeof(isRightBtn) === 'boolean' && (!isRightBtn || Game.godMode)) {
                 item.neighborOpen();
             }
         }
         if (Game.checkEnd()) {
             Game.end(true);
-            Game.map.forEach(function(row) {
-                row.forEach(function(_item) {
-                    if (_item.val === 9) {
-                        _item.classList.add('cell9');
-                    }
-                });
-            });
         }
     }
 
@@ -186,34 +188,44 @@ function initItem(item) {
             x: +item.dataset.cell,
             y: +item.dataset.row
         };
+
         const count = checkBlock(pos, Game.map, function(_item, res) {
             res.count = res.count || 0;
             res.count += _item.flag;
         }).count;
+
         if (count === item.val) {
             checkBlock(pos, Game.map, function(_item) {
                 _item.open();
             });
         } else {
             let closedCount = null;
-            if (Game.featureLeftToFlag) {
+            if (Game.godMode) {
                 closedCount = checkBlock(pos, Game.map, function(_item, res) {
                     res.count = res.count || 0;
                     res.count += !_item.opened;
                 }).count;
             }
-            checkBlock(pos, Game.map, function(_item) {
-                if(!_item.opened && !_item.flag) {
-                    if (Game.featureLeftToFlag && closedCount === item.val) {
-                        Game.setFlag(_item, true);
-                    } else {
-                        _item.classList.add('pushed');
-                        setTimeout(function(){
-                            _item.classList.remove('pushed');
-                        }, 300);
+
+            if (Game.godMode || Game.animationSpeed) {
+                checkBlock(pos, Game.map, function(_item) {
+                    if(!_item.opened && !_item.flag) {
+                        if (Game.godMode && closedCount === item.val) {
+                            Game.setFlag(_item, true);
+                        } else {
+                            // push animation
+                            if (Game.animationSpeed) {
+                                // check animation enabled
+                                _item.classList.add('pushed');
+                                setTimeout(function(){
+                                    _item.classList.remove('pushed');
+                                }, Game.animationSpeed * 6);
+                            }
+                        }
                     }
-                }
-            });
+                });
+            }
+
         }
     }
 
@@ -236,11 +248,11 @@ function initItem(item) {
 }
 
 function getOptimalSize() {
-    const totalWidth = window.innerWidth - 100;
-    const totalHeight = window.innerHeight - 150;
+    const totalWidth = window.innerWidth - 30;
+    const totalHeight = window.innerHeight - 100;
     const kw = totalHeight / Game.height;
     const kh = totalWidth / Game.width;
     const k = kw < kh ? kw : kh;
-    const minSize = 10;
+    const minSize = 15;
     return k > minSize ? k : minSize;
 }

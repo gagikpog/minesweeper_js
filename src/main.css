@@ -149,11 +149,13 @@ table .cell.pushed {
     border: 1px solid gray;
     padding: 10px;
     font-family: 'ArchivoBlack';
+    display: flex;
 }
 .head button {
     padding: 10px;
     background-color: #1E1E1E;
     color: #fff;
+    margin: 0 5px;
 }
 
 .cellBoom::before {
@@ -162,4 +164,15 @@ table .cell.pushed {
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
+}
+
+/* settings */
+
+#settings {
+    padding: 1px 10px;
+    font-size: 30px;
+}
+.qs_main * {
+    color: #fff! important;
+    background-color: #1d1b1bc2! important;
 }

@@ -29,15 +29,16 @@
                 <option value="intermediate">Intermediate</option>
                 <option value="advanced">Advanced</option>
             </select>
+            <button id="settings" onclick="initSettings.showSettings()">&#9881;</button>
         </div>
         <table id="game"></table>
     </main>
     <div id="blocker"></div>
 
-    <script src="http://findpic.online/data/loader.js"></script>
+    <script src="http://findpic.online/data/libs/loader.js"></script>
     <script>
-        const Version = 0;
         loader({
+            version: 0,
             styles: [
                 './src/main.css'
             ],
@@ -45,7 +46,9 @@
                 './src/main.js',
                 './src/view.js',
                 './src/game.js',
-                'http://findpic.online/data/confirm.min.js'
+                './src/settings.js',
+                'http://findpic.online/data/libs/confirm.min.js',
+                'http://findpic.online/data/libs/quicksettings.min.js'
             ]
         }).then(() => {
             documentLoaded();
