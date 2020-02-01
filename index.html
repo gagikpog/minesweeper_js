@@ -37,7 +37,7 @@
 
     <script src="http://findpic.online/data/libs/loader.js"></script>
     <script>
-        loader({
+        const data = {
             version: 0,
             styles: [
                 './src/main.css'
@@ -50,7 +50,12 @@
                 'http://findpic.online/data/libs/confirm.min.js',
                 'http://findpic.online/data/libs/quicksettings.min.js'
             ]
-        }).then(() => {
+        };
+        if (navigator.platform.toLowerCase().includes('mac')) {
+            data.scripts.push('src/long-press-event.js');
+            data.scripts.push('src/iPad.js');
+        }
+        loader(data).then(() => {
             documentLoaded();
         });
     </script>
