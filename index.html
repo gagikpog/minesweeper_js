@@ -53,7 +53,8 @@
                 'http://findpic.online/data/libs/quicksettings.min.js'
             ]
         };
-        if (navigator.platform.toLowerCase().includes('mac')) {
+        const platform = navigator.platform.toLowerCase();
+        if (platform.includes('mac') || platform.includes('ipad')) {
             data.scripts.push('src/long-press-event.js');
             data.scripts.push('src/iPad.js');
         }

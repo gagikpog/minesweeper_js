@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo for iPad</title>
+    <!-- <script src="https://raw.github.com/pisi/Longclick/master/jquery.longclick-min.js"></script> -->
+    <script src="./src/long-press-event.js"></script>
+
+    <style>
+        body p{
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+    </style>
+</head>
+<body>
+    <div>Platform:<span id="platform"></span></div>
+    <p id="demo" data-long-press-delay="500">LongClick me!</p>
+    <div>info:<pre id="info"></pre></div>
+
+    <script>
+        document.querySelector('#platform').textContent = navigator.platform;
+
+        const demo = document.getElementById('demo');
+        const info = document.getElementById('info');
+
+        demo.addEventListener('long-press', function(e) {
+
+            info.textContent += "Long press\n"
+
+        });
+
+
+        // $("p a").longclick(250, longClickHandler);
+    </script>
+</body>
+</html>
