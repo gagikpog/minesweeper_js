@@ -47,7 +47,7 @@ function setCellSize(size = 50) {
         ss.cssRules[0].style['line-height'] = `${size}px`;
         ss.cssRules[1].style['font-size'] = `${size*0.7}px`;
         ss.cssRules[1].style.height = `${size}px`;
-        ss.cssRules[2].style.width = `${size}px`;
+        ss.cssRules[1].style.width = `${size}px`;
     }
 }
 
