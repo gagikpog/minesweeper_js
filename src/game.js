@@ -1,6 +1,12 @@
 const Game = {
     width: 10,
     height: 10,
+    blockSize: {
+        value: 25,
+        min: 25,
+        max: 70,
+        default: 25
+    },
     totalMines: 10,
     remainingMines: 10,
     map: null,
@@ -99,12 +105,14 @@ const Game = {
         }
         return this.openedCount === count;
     },
-    setSize: function(width, height) {
+    setSize: function(width, height, needGenerate = false) {
         this.width = width || this.width;
         this.height = height || this.height;
         setCellSize(getOptimalSize());
-        tableGenerate(this.width, this.height);
-        this.newGame();
+        if (needGenerate) {
+            tableGenerate(this.width, this.height);
+            this.newGame();
+        }
     },
     setFlag(item, val = true) {
         if (item.flag === val) {
@@ -253,6 +261,6 @@ function getOptimalSize() {
     const kw = totalHeight / Game.height;
     const kh = totalWidth / Game.width;
     const k = kw < kh ? kw : kh;
-    const minSize = 25;
+    const minSize = Game.blockSize.value;
     return k > minSize ? k : minSize;
 }

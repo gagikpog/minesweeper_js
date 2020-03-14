@@ -5,7 +5,11 @@ function documentLoaded() {
     document.addEventListener('contextmenu', event => event.preventDefault(), false);
     GameTable = document.querySelector('#game');
 
-    Game.setSize();
+    initSettings();
+    initZoom();
+
+    Game.setSize(null, null, true);
+
     window.addEventListener("resize", function() {
         setCellSize(getOptimalSize());
     }, false);
@@ -19,7 +23,6 @@ function documentLoaded() {
         itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
     }
 
-    initSettings();
 }
 
 function itemClick(item, row, cell, eventType) {
@@ -32,15 +35,15 @@ function levelItemChanged(event) {
     switch(event.value) {
         case 'beginner':
             Game.totalMines = 10;
-            Game.setSize(10, 10);
+            Game.setSize(10, 10, true);
         break;
         case 'intermediate':
             Game.totalMines = 40;
-            Game.setSize(16, 16);
+            Game.setSize(16, 16, true);
         break;
         case 'advanced':
             Game.totalMines = 99;
-            Game.setSize(30, 16);
+            Game.setSize(30, 16, true);
         break;
         case 'custom':
         break;
