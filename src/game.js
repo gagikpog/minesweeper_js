@@ -253,6 +253,6 @@ function getOptimalSize() {
     const kw = totalHeight / Game.height;
     const kh = totalWidth / Game.width;
     const k = kw < kh ? kw : kh;
-    const minSize = 15;
+    const minSize = 25;
     return k > minSize ? k : minSize;
 }

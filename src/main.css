@@ -35,7 +35,23 @@ table .cell{
 }
 #game {
     border-spacing: 0;
+    margin: 0 auto;
 }
+main {
+    max-width: 100%;
+}
+.scroll-container {
+    width: 100%;
+    overflow: scroll;
+}
+
+@media screen and (min-width: 900px) {
+    .scroll-container {
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
 table .cell.open {
     background-color: #c3bec0;
     outline: inset 3px #d3cfd0;
@@ -145,12 +161,12 @@ table .cell.pushed {
 }
 .head {
     border: 1px solid gray;
-    padding: 10px;
+    padding: 5px;
     font-family: 'ArchivoBlack';
     display: flex;
 }
 .head button {
-    padding: 10px;
+    padding: 8px;
     background-color: #1E1E1E;
     color: #fff;
     margin: 0 5px;

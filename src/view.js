@@ -32,6 +32,9 @@ function resetTable() {
 }
 
 function setCellSize(size = 50) {
+
+    GameTable.style.width = `${size * Game.width}px`;
+
     const ssList = document.styleSheets;
     let ss = null;
     for (let i = 0; i< ssList.length; i++) {
