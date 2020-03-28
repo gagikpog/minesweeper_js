@@ -52,7 +52,8 @@
                 './src/game.js',
                 './src/settings.js',
                 './src/zoom.js',
-                'https://gagikpog.ru/data/libs/confirm.min.js',
+                './src/statistics.js',
+                'https://gagikpog.ru/confirm/confirm.min.js',
                 'https://gagikpog.ru/data/libs/quicksettings.min.js'
             ]
         };
@@ -65,6 +66,12 @@
             documentLoaded();
         });
     </script>
+
+    <div style="display: none;" class="text-wrapper" id="text-wrapper">
+        <div class="form-wrapper">
+            <input required name="userName" placeholder="Введите имя!" type="text">
+        </div>
+    </div>
 
 </body>
 </html>

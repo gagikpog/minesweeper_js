@@ -38,10 +38,33 @@ const Game = {
         clearTimeout(this.timerId);
         setTimeout(function () {
             if (isWin) {
-                showConfirm('Победа', '', {MBOK: true, theme: 'dark'}).then(function(){
+                showConfirm('Победа', 'Хотите сохранить результат?', {
+                    theme: 'dark',
+                    buttons: [{
+                        id: 'MBNO',
+                        title: 'Нет',
+                        backgroundColor: '#28a745',
+                        color: '#fff',
+                        order: 2
+                    }, {
+                        id: 'MBYES',
+                        title: 'Да',
+                        backgroundColor: '#6c757d',
+                        color: '#fff',
+                        order: 1
+                    }
+                ]
+            }).then(function(res) {
+                if (res.button === 'MBYES') {
+                    saveStatistics().then(() => {
+                        displayBlocker(false);
+                        Game.newGame()
+                    })
+                } else {
                     displayBlocker(false);
                     Game.newGame()
-                });
+                }
+            });
             } else {
                 showConfirm('Проигрыш', '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);

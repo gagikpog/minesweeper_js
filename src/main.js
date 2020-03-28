@@ -50,3 +50,7 @@ function levelItemChanged(event) {
     }
     window.localStorage.setItem('level', event.value);
 }
+
+function getLevel() {
+    return  document.querySelector('#level').value;
+}

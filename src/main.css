@@ -193,3 +193,22 @@ table .cell.pushed {
     color: #fff! important;
     background-color: #1d1b1bc2! important;
 }
+
+.form-wrapper {
+    display: flex;
+    width: 100%;
+    margin: 5px 10px;
+}
+
+.form-wrapper input{
+    flex: 1;
+    margin: 14px 20px 0px;
+    outline: none;
+    font-size: 17px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 14px;
+    padding: 0 10px;
+    text-align: center;
+}
