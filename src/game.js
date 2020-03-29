@@ -52,19 +52,18 @@ const Game = {
                         backgroundColor: '#6c757d',
                         color: '#fff',
                         order: 1
-                    }
-                ]
-            }).then(function(res) {
-                if (res.button === 'MBYES') {
-                    saveStatistics().then(() => {
+                    }]
+                }).then(function(res) {
+                    if (res.button === 'MBYES') {
+                        saveStatistics().then(() => {
+                            displayBlocker(false);
+                            Game.newGame()
+                        })
+                    } else {
                         displayBlocker(false);
                         Game.newGame()
-                    })
-                } else {
-                    displayBlocker(false);
-                    Game.newGame()
-                }
-            });
+                    }
+                });
             } else {
                 showConfirm('Проигрыш', '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);
@@ -89,10 +88,12 @@ const Game = {
         }
     },
     addMine: function(pos) {
+        // const nextPos = positions();
         const rand = () => {
             const x = Math.floor(Math.random()*1000) % this.width;
             const y = Math.floor(Math.random()*1000) % this.height;
             return {x, y};
+            // return nextPos.next().value;
         };
         let r = null;
         let n = 100;
@@ -173,6 +174,9 @@ function initItem(item) {
         if (!item.opened) {
             if (!isRightBtn) {
                 if (!item.flag) {
+                    if (item.val === 9) {
+                        item.checkNeedSave();
+                    }
                     Game.openedCount++;
                     item.classList.add('open', `cell${item.val}`);
                     if (item.val === 0) {
@@ -273,6 +277,67 @@ function initItem(item) {
                 });
             }, Game.animationSpeed);
         }
+    }
+
+    item.checkNeedSave = function() {
+
+        const swapItems = (a, b) => {
+            const t = a.val;
+            a.val = b.val;
+            b.val = t;
+        }
+
+        const changeMap = (gameMap, center, index) => {
+            try {
+                const map = swapMap[index];
+                const getItem = (p) => gameMap[center.y + p.y][center.x + p.x];
+                map.forEach((_item) => {
+                    item0 = getItem(_item.p0);
+                    item1 = getItem(_item.p1);
+                    if (item0.opened || item1.opened) {
+                        return;
+                    }
+                    swapItems(item0, item1);
+
+                    if (item0.val !== 9) {
+                        item0.val = checkBlock({x : _item.p0.x + center.x, y: _item.p0.y + center.y}, gameMap, function(_item, res) {
+                            res.count = res.count || 0;
+                            res.count += _item.val === 9;
+                        }).count;
+                    }
+
+                    if (item1.val !== 9) {
+                        item1.val = checkBlock({x : _item.p1.x + center.x, y: _item.p1.y + center.y}, gameMap, function(_item, res) {
+                            res.count = res.count || 0;
+                            res.count += _item.val === 9;
+                        }).count;
+                    }
+
+                })
+            } catch (error) {
+                return false;
+            }
+            return true;
+        };
+
+        let map = 0;
+        const x = +this.dataset.cell;
+        const y = +this.dataset.row;
+
+        let n = 16777216;
+
+        for (let i = y - 2; i <= y + 2; i++) {
+            for (let j = x - 2; j <= x + 2; j++) {
+                let itemVal = Game.map[i] && Game.map[i][j] && Game.map[i][j].val;
+                itemVal = itemVal === undefined ? 9 : itemVal;
+                map = map | (itemVal === 9 ? n : 0);
+                n /= 2;
+            }
+        }
+
+        const index = maps.findIndex((v) => v === (v & map))
+
+        return index >= 0 ? changeMap(Game.map, {x, y}, index) : false;
     }
 
     return item;
