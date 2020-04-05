@@ -1,4 +1,5 @@
 const Game = {
+    userName: '',
     width: 10,
     height: 10,
     blockSize: {
@@ -38,22 +39,13 @@ const Game = {
         clearTimeout(this.timerId);
         setTimeout(function () {
             if (isWin) {
-                showConfirm('Победа', 'Хотите сохранить результат?', {
-                    theme: 'dark',
-                    buttons: [{
-                        id: 'MBNO',
-                        title: 'Нет',
-                        backgroundColor: '#28a745',
-                        color: '#fff',
-                        order: 2
-                    }, {
-                        id: 'MBYES',
-                        title: 'Да',
-                        backgroundColor: '#6c757d',
-                        color: '#fff',
-                        order: 1
-                    }]
-                }).then(function(res) {
+
+                const winConfirmRemember = window.localStorage.getItem('winConfirmRemember');
+
+                const resolveCallBack = (res) => {
+                    if (res.formData && res.formData.remember) {
+                        window.localStorage.setItem('winConfirmRemember', res.button);
+                    }
                     if (res.button === 'MBYES') {
                         saveStatistics().then(() => {
                             displayBlocker(false);
@@ -63,7 +55,42 @@ const Game = {
                         displayBlocker(false);
                         Game.newGame()
                     }
-                });
+                }
+                if (winConfirmRemember) {
+                    resolveCallBack({button: winConfirmRemember});
+                } else {
+                    showConfirm('Победа', 'Хотите сохранить результат?', {
+                        theme: 'dark',
+                        buttons: [{
+                            id: 'MBNO',
+                            title: 'Нет',
+                            backgroundColor: '#28a745',
+                            color: '#fff',
+                            order: 2
+                        }, {
+                            id: 'MBYES',
+                            title: 'Да',
+                            backgroundColor: '#6c757d',
+                            color: '#fff',
+                            order: 1
+                        }],
+                        templateCallBack: () => {
+                            const content = document.createElement('div');
+                            content.classList.add('form-remember');
+                            const label = document.createElement('label');
+                            label.for = 'remember';
+                            label.textContent = 'Запомнить выбор';
+                            const input = document.createElement('input');
+                            input.name = 'remember';
+                            input.type = 'checkbox';
+        
+                            content.appendChild(label);
+                            content.appendChild(input);
+                            return content;
+                        }
+                    }).then(resolveCallBack);
+                }
+
             } else {
                 showConfirm('Проигрыш', '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);

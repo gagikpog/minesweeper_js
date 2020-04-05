@@ -4,6 +4,35 @@ function saveStatistics() {
 
     const time = Game.remainingTime;
     const level = getLevel();
+    if (!time || !level) {
+        return Promise.resolve(false);
+    }
+    const save = (name) => {
+        const basePath = 'api/add.php'
+        let path = apiRoot + basePath;
+        const body = {
+            name,
+            time,
+            level
+        };
+        return fetch(path, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(body)
+        }).then((data) => {
+            return data.json();
+        }).then((result) => {
+            if (result && result.status === 'error') {
+                showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
+            }
+        });
+    }
+
+    if (Game.userName) {
+        return save(Game.userName);
+    }
 
     const message = 'Введите свое имя';
     const detailed = `Длительность игры ${time} секунд`;
@@ -30,29 +59,17 @@ function saveStatistics() {
 
     return showConfirm(message, detailed, config).then((res) => {
         if (res.button === 'MBOK' && 'endGame' === Game.status) {
-            const name = res.formData && res.formData.userName;
-            if (name && time && level) {
-                const basePath = 'api/add.php'
-                let path = apiRoot + basePath;
-                const body = {
-                    name,
-                    time,
-                    level
-                };
-                return fetch(path, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify(body)
-                }).then((data) => {
-                    return data.json();
-                }).then((result) => {
-                    if (result && result.status === 'error') {
-                        showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
-                    }
-                });
+            const formData = res.formData || {};
+            const name = formData.userName;
+            const rememberName = formData.rememberName;
+            if (rememberName === 'on') {
+                window.localStorage.setItem('userName', name);
+                Game.userName = name;
             }
+            if (name) {
+                return save(name)
+            }
+            return Promise.resolve(false);
         }
     });
 

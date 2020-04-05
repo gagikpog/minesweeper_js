@@ -35,6 +35,7 @@ function loadSettings() {
     const animation = window.localStorage.getItem('animation') !== 'false';
     const level = window.localStorage.getItem('level') || 'beginner';
     const blockSizeValue = +(window.localStorage.getItem('blockSize') || Game.blockSize.default);
+    const userName = window.localStorage.getItem('userName') || '';
 
     document.querySelector('#level').value = level;
     levelItemChanged({value: level});
@@ -46,4 +47,5 @@ function loadSettings() {
     Game.blockSize.value = blockSizeValue;
     Game.godMode = godMode;
     Game.animationSpeed = animation ? Game.defaultAnimationSpeed : 0;
+    Game.userName = userName;
 }
