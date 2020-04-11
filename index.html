@@ -59,7 +59,7 @@
             ]
         };
         const platform = navigator.platform.toLowerCase();
-        if (platform.includes('mac') || platform.includes('ipad')) {
+        if (platform.includes('mac') || platform.includes('ipad') ||  platform.includes('iphone')) {
             data.scripts.push('src/long-press-event.js');
             data.scripts.push('src/iPad.js');
         }
