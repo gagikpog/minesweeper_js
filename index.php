@@ -89,5 +89,9 @@
         </div>
     </div>
 
+    <script>
+        window.translate = <?php echo $GLOBALS['translate']; ?> ;
+    </script>
+
 </body>
 </html>

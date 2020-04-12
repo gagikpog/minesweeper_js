@@ -20,7 +20,7 @@ function initSettings() {
 
     settings.addDropDown(rk('language'), ['ru', 'en'], (val) => {
 
-        if (getCookie('lang') !== val.value) {
+        if (getLang() !== val.value) {
             showConfirm('', rk('To change the language you need to reload the page'), {
                 theme: 'dark',
                 buttons: [{
@@ -41,8 +41,7 @@ function initSettings() {
                     document.cookie = `lang=${val.value}`;
                     document.location.reload(true);
                 } else {
-                    const langs = {'ru' : 0, 'en' : 1};
-                    settings.setValue(rk('language'), { index: langs[getCookie('lang')]});
+                    settings.setValue(rk('language'), { index: langs[getLang()]});
                 }
             });
         }
@@ -55,8 +54,7 @@ function initSettings() {
             settings.hide();
         } else {
             settings.setValue(rk('Zoom'), Game.blockSize.value);
-            const langs = {'ru' : 0, 'en' : 1};
-            settings.setValue(rk('language'), { index: langs[getCookie('lang')]});
+            settings.setValue(rk('language'), { index: langs[getLang()]});
             settings.show();
         }
         show = !show;

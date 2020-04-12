@@ -9,9 +9,10 @@ function rk(str) {
     return translateMap[str] ? translateMap[str] : rmContext(str);
 }
 
-fetch('/minesweeper/api/en-ru.json').then((res) => {
-    return res.json();
-}).then((data) => {
-    window.translate = data;
-    rk.lang = getCookie('lang') || 'ru';
-});
+rk.lang = getLang();
+
+const langs = {'ru' : 0, 'en' : 1};
+
+function getLang() {
+    return getCookie('lang') || 'ru';
+}
