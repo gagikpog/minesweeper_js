@@ -61,5 +61,5 @@ function displayBlocker(enabled = true) {
 
 function updatePanel() {
     document.querySelector('#mines').textContent = Game.remainingMines;
-    document.querySelector('#time').textContent = `Time ${Game.remainingTime}`;
+    document.querySelector('#time').textContent = `${rk('Time')} ${Game.remainingTime}`;
 }

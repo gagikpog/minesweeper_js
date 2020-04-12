@@ -54,3 +54,10 @@ function levelItemChanged(event) {
 function getLevel() {
     return  document.querySelector('#level').value;
 }
+
+function getCookie(name) {
+    // https://stackoverflow.com/questions/10730362/get-cookie-by-name
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  }

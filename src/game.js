@@ -56,20 +56,34 @@ const Game = {
                         Game.newGame()
                     }
                 }
+
+                let conformConfig = null;
+                let message = '';
+
                 if (winConfirmRemember) {
-                    resolveCallBack({button: winConfirmRemember});
+                    conformConfig = {
+                        theme: 'dark',
+                        buttons: [{
+                            id: winConfirmRemember,
+                            title: rk('OK'),
+                            backgroundColor: '#6c757d',
+                            color: '#fff',
+                            order: 1
+                        }]
+                    };
                 } else {
-                    showConfirm('Победа', 'Хотите сохранить результат?', {
+                    message = rk('Want to save the result?');
+                    conformConfig = {
                         theme: 'dark',
                         buttons: [{
                             id: 'MBNO',
-                            title: 'Нет',
+                            title: rk('No'),
                             backgroundColor: '#28a745',
                             color: '#fff',
                             order: 2
                         }, {
                             id: 'MBYES',
-                            title: 'Да',
+                            title: rk('Yes'),
                             backgroundColor: '#6c757d',
                             color: '#fff',
                             order: 1
@@ -79,7 +93,7 @@ const Game = {
                             content.classList.add('form-remember');
                             const label = document.createElement('label');
                             label.for = 'remember';
-                            label.textContent = 'Запомнить выбор';
+                            label.textContent = rk('Remember selection');
                             const input = document.createElement('input');
                             input.name = 'remember';
                             input.type = 'checkbox';
@@ -88,11 +102,13 @@ const Game = {
                             content.appendChild(input);
                             return content;
                         }
-                    }).then(resolveCallBack);
+                    };
                 }
 
+                showConfirm(rk('You win'), message, conformConfig).then(resolveCallBack);
+
             } else {
-                showConfirm('Проигрыш', '', {MBOK: true, theme: 'dark'}).then(function(){
+                showConfirm(rk('You lose'), '', {MBOK: true, theme: 'dark'}).then(function(){
                     displayBlocker(false);
                     Game.newGame()
                 });

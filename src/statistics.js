@@ -34,20 +34,20 @@ function saveStatistics() {
         return save(Game.userName);
     }
 
-    const message = 'Введите свое имя';
-    const detailed = `Длительность игры ${time} секунд`;
+    const message = rk('Enter your name');
+    const detailed = rk('The game lasts ${time} seconds').replace('${time}', time);
     const config = {
         theme: 'dark',
         buttons: [{
                 id: 'MBCANCEL',
-                title: 'Отмена',
+                title: rk('Cancel'),
                 backgroundColor: '#28a745',
                 color: '#fff',
                 order: 3,
                 validate: false
             }, {
                 id: 'MBOK',
-                title: 'ОК',
+                title: rk('OK'),
                 backgroundColor: '#6c757d',
                 color: '#fff',
                 order: 2,

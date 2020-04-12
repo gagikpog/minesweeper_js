@@ -1,5 +1,15 @@
+
+<?php
+
+    require_once('./rk.php');
+
+    $lang = htmlspecialchars($_COOKIE["lang"]);
+
+    initLang($lang);
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?php echo $lang ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320,
@@ -23,13 +33,13 @@
 <body>
     <main>
         <div class="head">
-            <button onclick="Game.newGame()">New game</button>
+            <button onclick="Game.newGame()"><?php echoRk('New game'); ?></button>
             <button id="mines">10</button>
-            <button id="time">time 0</button>
+            <button id="time"><?php echoRk('Time'); ?> 0</button>
             <select name="level" id="level" onchange="levelItemChanged(this)">
-                <option selected value="beginner">Beginner</option>
-                <option value="intermediate">Intermediate</option>
-                <option value="advanced">Advanced</option>
+                <option selected value="beginner"><?php echoRk('Beginner'); ?></option>
+                <option value="intermediate"><?php echoRk('Intermediate'); ?></option>
+                <option value="advanced"><?php echoRk('Advanced'); ?></option>
             </select>
             <button id="settings" onclick="initSettings.showSettings()">&#9881;</button>
         </div>
@@ -54,6 +64,7 @@
                 './src/zoom.js',
                 './src/statistics.js',
                 './src/maps.js',
+                './src/localizate/rk.js',
                 'https://gagikpog.ru/confirm/confirm.min.js',
                 'https://gagikpog.ru/data/libs/quicksettings.min.js'
             ]
@@ -70,9 +81,9 @@
 
     <div style="display: none;" class="text-wrapper" id="text-wrapper">
         <div class="form-wrapper">
-            <input required name="userName" placeholder="Введите имя!" type="text">
+            <input required name="userName" placeholder="<?php echoRk('Enter name!'); ?> " type="text">
             <div class="form-remember">
-                <label for="rememberName">Запомнить это имя</label>
+                <label for="rememberName"> <?php echoRk('Remember this name'); ?> </label>
                 <input name="rememberName" type="checkbox">
             </div>
         </div>
