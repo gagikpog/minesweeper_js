@@ -224,3 +224,20 @@ table .cell.pushed {
 .form-remember label {
     margin-right: 10px
 }
+
+@media screen and (max-width: 446px) {
+    .head button {
+        margin: 0 3px;
+        padding: 3px;
+    }
+    .head {
+        padding: 3px;
+    }
+    .head #settings {
+        padding: 1px;
+    }
+    .head select {
+        max-width: 134px;
+        padding: 3px;
+    }
+}
