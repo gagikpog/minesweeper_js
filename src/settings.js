@@ -48,6 +48,35 @@ function initSettings() {
 
     });
 
+    settings.addButton(rk('Reset settings'), () => {
+        showConfirm('', rk('Are you sure you want to reset the settings?'), {
+            theme: 'dark',
+            buttons: [{
+                id: 'MBYES',
+                title: rk('Yes'),
+                backgroundColor: '#6c757d',
+                color: '#fff',
+                order: 2
+            }, {
+                id: 'MBNO',
+                title: rk('No'),
+                backgroundColor: '#28a745',
+                color: '#fff',
+                order: 3
+            }],
+        }).then((res) => {
+            if (res.button === 'MBYES') {
+                document.cookie = 'lang=ru';
+                window.localStorage.setItem('blockSize', 25);
+                window.localStorage.setItem('godMode', false);
+                window.localStorage.setItem('level', 'beginner');
+                window.localStorage.setItem('winConfirmRemember', '');
+                window.localStorage.setItem('userName', '');
+                document.location.reload(true);
+            }
+        });
+    });
+
     let show = false;
     initSettings.showSettings = () => {
         if (show) {

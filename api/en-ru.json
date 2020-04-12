@@ -22,5 +22,7 @@
     "The game lasts ${time} seconds" : "Длительность игры ${time} секунд",
     "To change the language you need to reload the page" : "Чтобы сменить язык необходимо перезагрузить страницу",
     "Reload" : "Перезагрузить",
-    "language" : "Язык"
+    "language" : "Язык",
+    "Reset settings" : "Сбросить настройки",
+    "Are you sure you want to reset the settings?": "Вы уверены, что хотите сбросить настройки?"
 }
