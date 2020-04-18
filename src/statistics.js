@@ -74,3 +74,25 @@ function saveStatistics() {
     });
 
 }
+
+
+function getStatisticByLevel(level) {
+
+    const basePath = 'api/getTop.php'
+    let path = apiRoot + basePath;
+
+    return fetch(path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({level})
+    }).then((data) => {
+        return data.json();
+    }).then((result) => {
+        if (result && result.status === 'error') {
+            showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
+        }
+        return result.data;
+    });
+}
