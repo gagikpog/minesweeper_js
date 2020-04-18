@@ -89,6 +89,9 @@
         </div>
     </div>
 
+    <!-- fake item for loading mine icon -->
+    <div class="cell9"></div>
+
     <script>
         window.translate = <?php echo $GLOBALS['translate']; ?> ;
     </script>
