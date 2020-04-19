@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: "ArchivoBlack";
-    src: url("./ArchivoBlack-Regular.ttf");
+    src: url("../ArchivoBlack-Regular.ttf");
 }
 
 html, body {
@@ -68,7 +68,7 @@ table .cellX::after {
     font-family: "ArchivoBlack";
     width: calc(100% - 3px);
     height: calc(100% - 3px);
-    background-image: url(x-mark.png);
+    background-image: url(./images/x-mark.png);
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
@@ -150,7 +150,7 @@ table .cell.pushed {
 }
 .cell9::before {
     content: "";
-    background-image: url(./mine.png);
+    background-image: url(../images/mine.png);
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
@@ -175,9 +175,17 @@ table .cell.pushed {
     margin: 0 5px;
 }
 
+.head-menu__leader-board {
+    width: 30px;
+    fill: #fff;
+    cursor: pointer;
+    border: 2px solid #f0f0f0;
+    min-width: 15px;
+}
+
 .cellBoom::before {
     content: "";
-    background-image: url(./boom.gif);
+    background-image: url(./images/boom.gif);
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
@@ -193,7 +201,26 @@ table .cell.pushed {
     color: #fff! important;
     background-color: #1d1b1bc2! important;
 }
-
+.qs_main {
+    height: 100%;
+    background-color: #1d1b1bc2!important;
+}
+.qs_title_bar::after {
+    content: 'X';
+    right: 5px;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+.qs_title_bar {
+    width: min-content;
+}
+.qs_title_bar:hover::after {
+    background-color: #f00;
+    color: #000;
+}
 .form-wrapper {
     display: flex;
     flex-direction: column;
@@ -239,5 +266,8 @@ table .cell.pushed {
     .head select {
         max-width: 134px;
         padding: 3px;
+    }
+    .qs_main {
+        width: 100%!important;
     }
 }

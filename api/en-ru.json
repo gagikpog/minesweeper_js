@@ -24,5 +24,9 @@
     "Reload" : "Перезагрузить",
     "language" : "Язык",
     "Reset settings" : "Сбросить настройки",
-    "Are you sure you want to reset the settings?": "Вы уверены, что хотите сбросить настройки?"
+    "Are you sure you want to reset the settings?": "Вы уверены, что хотите сбросить настройки?",
+    "Leaderboard": "Таблица лидеров",
+    "Name" : "Имя",
+    "Date" : "Дата",
+    "Duration" : "Длительность"
 }

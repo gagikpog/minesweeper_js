@@ -21,7 +21,7 @@
 
     if ($level && $levelsChecked) {
         $res = getLeaderBoardTyLevel($level);
-        if ($res) {
+        if ($res !== false) {
             $result['status'] = 'done';
             $result['message'] = 'Результат успешно поучен.';
             $result['data'] = $res;

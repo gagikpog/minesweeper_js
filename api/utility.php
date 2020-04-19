@@ -35,7 +35,7 @@
             // set the PDO error mode to exception
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $sql = "SELECT `name`, MIN(time) as time FROM `record` WHERE `level` = '$level' GROUP BY `name` ORDER BY `time` LIMIT 10";
+            $sql = "SELECT `name`, MIN(time) as time, `created` FROM `record` WHERE `level` = '$level' GROUP BY `name` ORDER BY `time`";
 
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -44,7 +44,7 @@
             $res = [];
 
             foreach ($data as $row) {
-                $res[] = ['name' => $row['name'], 'time' => $row['time']];
+                $res[] = ['name' => $row['name'], 'time' => $row['time'], 'date' => $row['created']];
             }
 
             return $res;

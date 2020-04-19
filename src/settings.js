@@ -88,6 +88,15 @@ function initSettings() {
         }
         show = !show;
     }
+
+    const titleBar = document.querySelector('.qs_title_bar');
+
+    titleBar.addEventListener('click', function (e) {
+        if (e.offsetX > titleBar.offsetWidth) {
+            initSettings.showSettings();
+        } 
+    });
+
 }
 
 function loadSettings() {
