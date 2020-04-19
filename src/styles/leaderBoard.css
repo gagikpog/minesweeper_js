@@ -7,6 +7,7 @@
     display: none;
     flex-direction: column;
     z-index: 100;
+    border: 1px solid gray;
 }
 
 .leader-board__head {
