@@ -17,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320,
-            height=device-height, target-densitydpi=medium-dpi">
+            height=device-height">
     <link rel="shortcut icon" href="./src/images/mine.png" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Minesweeper</title>
