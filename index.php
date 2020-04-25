@@ -72,6 +72,7 @@
                 './src/maps.js',
                 './src/localizate/rk.js',
                 './src/scripts/leaderBoard.js',
+                './src/scripts/swapUtility.js',
                 'https://gagikpog.ru/confirm/confirm.min.js',
                 'https://gagikpog.ru/data/libs/quicksettings.min.js'
             ]

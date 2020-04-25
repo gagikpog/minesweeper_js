@@ -68,7 +68,7 @@ table .cellX::after {
     font-family: "ArchivoBlack";
     width: calc(100% - 3px);
     height: calc(100% - 3px);
-    background-image: url(./images/x-mark.png);
+    background-image: url(../images/x-mark.png);
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
@@ -185,7 +185,7 @@ table .cell.pushed {
 
 .cellBoom::before {
     content: "";
-    background-image: url(./images/boom.gif);
+    background-image: url(../images/boom.gif);
     background-size: contain;
     background-position-y: center;
     background-repeat: no-repeat;
