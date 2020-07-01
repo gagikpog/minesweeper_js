@@ -324,9 +324,11 @@ class Item {
 
         const caseId = maps[index];
 
-        const inversed = swapMap[caseId] && swapMap[caseId].inversed || map;
+        const inversed = swapMap[caseId] && swapMap[caseId].inversed;
 
-        return (index >= 0 && (inversed & map) === 0) ? changeMap(currentGame.map, {x, y}, caseId) : false;
+        const mask = inversed === void 0 ? map : inversed;
+
+        return (index >= 0 && (mask & map) === 0) ? changeMap(currentGame.map, {x, y}, caseId) : false;
     }
 
     setFlag(val = true) {
