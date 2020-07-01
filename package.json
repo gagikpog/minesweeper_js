@@ -1,0 +1,29 @@
+{
+  "name": "minesweeper",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000M\u0000i\u0000n\u0000e\u0000s\u0000w\u0000e\u0000e\u0000p\u0000e\u0000r\u0000\r\u0000 \u0000\r\u0000 \u0000[\u0000D\u0000e\u0000m\u0000o\u0000]\u0000(\u0000h\u0000t\u0000t\u0000p\u0000s\u0000:\u0000/\u0000/\u0000g\u0000a\u0000g\u0000i\u0000k\u0000p\u0000o\u0000g\u0000.\u0000r\u0000u\u0000/\u0000m\u0000i\u0000n\u0000e\u0000s\u0000w\u0000e\u0000e\u0000p\u0000e\u0000r\u0000)\u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx babel src --out-dir dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagikpog/minesweeper_js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagikpog/minesweeper_js/issues"
+  },
+  "homepage": "https://github.com/gagikpog/minesweeper_js#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/node": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.10.4",
+    "babel-eslint": "^9.0.0"
+  }
+}

@@ -1,8 +1,8 @@
-const apiRoot = '/minesweeper/'
+const apiRoot = '/'
 
 function saveStatistics() {
 
-    const time = Game.remainingTime;
+    const time = currentGame.remainingTime;
     const level = getLevel();
     if (!time || !level) {
         return Promise.resolve(false);
@@ -58,7 +58,7 @@ function saveStatistics() {
     };
 
     return showConfirm(message, detailed, config).then((res) => {
-        if (res.button === 'MBOK' && 'endGame' === Game.status) {
+        if (res.button === 'MBOK' && 'endGame' === currentGame.status) {
             const formData = res.formData || {};
             const name = formData.userName;
             const rememberName = formData.rememberName;

@@ -1,4 +1,6 @@
 let GameTable = null;
+let currentGame = null;
+
 document.addEventListener("DOMContentLoaded", documentLoaded);
 
 function documentLoaded() {
@@ -8,7 +10,7 @@ function documentLoaded() {
     initSettings();
     initZoom();
 
-    Game.setSize(null, null, true);
+    Game.newGame();
 
     window.addEventListener("resize", function() {
         setCellSize(getOptimalSize());
@@ -27,7 +29,8 @@ function documentLoaded() {
 
 function itemClick(item, row, cell, eventType) {
     if (item.nodeName === 'TD') {
-        Game.itemClick(item, row, cell, eventType);
+        const baseItem = currentGame.map[row][cell];
+        currentGame.itemClick(baseItem, row, cell, eventType);
     }
 }
 
@@ -35,19 +38,20 @@ function levelItemChanged(event) {
     switch(event.value) {
         case 'beginner':
             Game.totalMines = 10;
-            Game.setSize(10, 10, true);
+            Game.setSize(10, 10);
         break;
         case 'intermediate':
             Game.totalMines = 40;
-            Game.setSize(16, 16, true);
+            Game.setSize(16, 16);
         break;
         case 'advanced':
             Game.totalMines = 99;
-            Game.setSize(30, 16, true);
+            Game.setSize(30, 16);
         break;
         case 'custom':
         break;
     }
+    Game.newGame();
     window.localStorage.setItem('level', event.value);
 }
 

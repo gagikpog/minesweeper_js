@@ -56,6 +56,8 @@
 
     <script src="https://gagikpog.ru/data/libs/loader.js"></script>
     <script>
+        const debugMode = localStorage.getItem('debug') === 'true';
+        const jsPath = debugMode ? 'src' : 'dist';
         const data = {
             version: 0,
             styles: [
@@ -63,24 +65,24 @@
                 './src/styles/leaderBoard.css'
             ],
             scripts: [
-                './src/main.js',
-                './src/view.js',
-                './src/game.js',
-                './src/settings.js',
-                './src/zoom.js',
-                './src/statistics.js',
-                './src/maps.js',
-                './src/localizate/rk.js',
-                './src/scripts/leaderBoard.js',
-                './src/scripts/swapUtility.js',
+                `./${ jsPath }/main.js`,
+                `./${ jsPath }/view.js`,
+                `./${ jsPath }/game.js`,
+                `./${ jsPath }/settings.js`,
+                `./${ jsPath }/zoom.js`,
+                `./${ jsPath }/statistics.js`,
+                `./${ jsPath }/maps.js`,
+                `./${ jsPath }/localizate/rk.js`,
+                `./${ jsPath }/scripts/leaderBoard.js`,
+                `./${ jsPath }/scripts/utility.js`,
                 'https://gagikpog.ru/confirm/confirm.min.js',
                 'https://gagikpog.ru/data/libs/quicksettings.min.js'
             ]
         };
         const platform = navigator.platform.toLowerCase();
         if (platform.includes('mac') || platform.includes('ipad') ||  platform.includes('iphone')) {
-            data.scripts.push('src/long-press-event.js');
-            data.scripts.push('src/iPad.js');
+            data.scripts.push(`${ jsPath }/long-press-event.js`);
+            data.scripts.push(`${ jsPath }/iPad.js`);
         }
         loader(data).then(() => {
             documentLoaded();

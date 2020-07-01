@@ -101,6 +101,7 @@ const swapMap = {
 };
 
 // map for testing game
+/*
 function* positions() {
     yield {x: 0 + 5, y: 0 + 3};
     yield {x: 3 + 5, y: 0 + 3};
@@ -140,3 +141,4 @@ function* positionsForBug() {
     yield {x: 9 + offsetX, y: 6 + offsetY};
     return 3;
 }
+*/

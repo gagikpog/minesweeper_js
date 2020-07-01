@@ -49,3 +49,25 @@ function changeMap(gameMap, center, caseId) {
     }
     return true;
 };
+
+function getOptimalSize() {
+    const totalWidth = window.innerWidth - 30;
+    const totalHeight = window.innerHeight - 100;
+    const kw = totalHeight / Game.height;
+    const kh = totalWidth / Game.width;
+    const k = kw < kh ? kw : kh;
+    const minSize = Game.blockSize.value;
+    return k > minSize ? k : minSize;
+}
+
+function checkBlock(point, map, callback) {
+    const startX = point.x - 1 >= 0 ? point.x - 1 : point.x;
+    const startY = point.y - 1 >= 0 ? point.y - 1 : point.y;
+    let res = {};
+    for (let i = startY; i < map.length && i <= point.y + 1; i++) {
+        for (let j = startX; j < map[i].length && j <= point.x + 1; j++) {
+            callback(map[i][j], res);
+        }
+    }
+    return res;
+}

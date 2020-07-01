@@ -4,7 +4,7 @@ function tableGenerate(width, height) {
         GameTable.removeChild(GameTable.lastChild);
     }
 
-    Game.map = Array(height).fill().map(() => []);
+    const map = Array(height).fill().map(() => []);
 
     let i = 0;
     for(i = 0; i < height; i++) {
@@ -16,9 +16,10 @@ function tableGenerate(width, height) {
             td.id = `ts${i}_${j}`;
             td.dataset.row = i;
             td.dataset.cell = j;
-            Game.map[i][j] = initItem(td);
+            map[i][j] = new Item(td);
         }
     }
+    return map;
 }
 
 function resetTable() {
@@ -60,6 +61,8 @@ function displayBlocker(enabled = true) {
 }
 
 function updatePanel() {
-    document.querySelector('#mines').textContent = Game.remainingMines;
-    document.querySelector('#time').textContent = `${rk('Time')} ${Game.remainingTime}`;
+    if (currentGame) {
+        document.querySelector('#mines').textContent = currentGame.remainingMines;
+        document.querySelector('#time').textContent = `${rk('Time')} ${currentGame.remainingTime}`;
+    }
 }
