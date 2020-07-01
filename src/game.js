@@ -329,7 +329,7 @@ class Item {
         return (index >= 0 && (inversed & map) === 0) ? changeMap(currentGame.map, {x, y}, caseId) : false;
     }
 
-    setFlag(item, val = true) {
+    setFlag(val = true) {
         if (this.flag === val) {
             return;
         }
