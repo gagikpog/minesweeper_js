@@ -67,7 +67,7 @@ const leaderBoard = {
 
     activateTab: function(tabs, event) {
 
-        for (i = 0; i < tabs.childElementCount; i++) {
+        for (let i = 0; i < tabs.childElementCount; i++) {
             tabs.children[i].classList.remove('leader-board__tab-active');
         }
         event.target.classList.add('leader-board__tab-active');
