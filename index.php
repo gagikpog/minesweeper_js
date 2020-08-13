@@ -38,8 +38,6 @@
             margin: 0;
             padding: 0;
         }
-        
-
         html, body {
             height: 100%;
         }
@@ -58,6 +56,10 @@
             text-transform: uppercase;
         }
     </style>
+    <script>
+        // get git hash for version
+        const VERSION = '<?php echo trim(shell_exec('git rev-parse --short HEAD')) ?>';
+    </script>
 </head>
 <body>
     <main id="mainContent" style="display: none;">

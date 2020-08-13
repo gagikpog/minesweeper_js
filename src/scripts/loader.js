@@ -1,9 +1,9 @@
-const VERSION = '13.08.20';
 let GameTable = null;
 let currentGame = null;
 
 const debugMode = localStorage.getItem('debug') === 'true';
-const jsPath = debugMode ? '/src' : '/dist';
+const isLocalhost = /minesweeper.ru|localhost/.test(document.location.href);
+const jsPath = `${isLocalhost ? '' : '/minesweeper'}${debugMode ? '/src' : '/dist'}`;
 
 require.config({
     baseUrl: jsPath,
