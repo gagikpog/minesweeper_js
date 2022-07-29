@@ -149,6 +149,6 @@ define('modules/maps', [], function () {
     return {
         maps,
         swapMap
-    }
+    };
 
 });

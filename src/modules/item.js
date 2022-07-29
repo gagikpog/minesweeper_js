@@ -2,6 +2,7 @@ define('modules/item', ['modules/utility', 'modules/maps'], function (utility, M
     'use strict';
 
     const checkBlock = utility.checkBlock;
+    const changeMap = utility.changeMap;
     let Game = null;
     let view = null;
     const maps = Maps.maps;

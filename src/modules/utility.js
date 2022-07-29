@@ -1,5 +1,7 @@
-define('modules/utility', [], function() {
+define('modules/utility', ['modules/maps'], function(maps) {
     'use strict';
+
+    const swapMap = maps.swapMap;
 
     function swapItems (a, b) {
         const t = a.val;
