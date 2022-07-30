@@ -40,8 +40,9 @@ define('modules/view', ['modules/item', 'localizate/lang'], function (Item, lang
         mapSize.width = mapSize.width || 1;
         mapSize.height = mapSize.height || 1;
         const newSize = size || 50;
+        const padding = 2;
 
-        GameTable.style.width = `${newSize * mapSize.width}px`;
+        GameTable.style.width = `${newSize * (mapSize.width + padding)}px`;
         GameTable.style.height = `${newSize * mapSize.height}px`;
 
         const ssList = document.styleSheets;

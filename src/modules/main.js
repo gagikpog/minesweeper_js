@@ -10,7 +10,7 @@ define('modules/main', [
         view) {
     'use strict';
 
-    function documentLoaded() {
+    function documentLoaded(resolver) {
         document.addEventListener('contextmenu', event => event.preventDefault(), false);
         GameTable = document.querySelector('#game');
 
@@ -36,8 +36,10 @@ define('modules/main', [
             itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
         }
 
-        document.querySelector('#stub').style.display = 'none';
-        document.querySelector('#mainContent').style.display = 'flex';
+        Promise.resolve(resolver).then(() => {
+            document.querySelector('#stub').style.display = 'none';
+            document.querySelector('#mainContent').style.display = 'flex';
+        });
 
     }
 

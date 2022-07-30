@@ -63,11 +63,13 @@ requirejs.createNode = (config, moduleName, url) => {
     return node;
 };
 
+const resolver = new Promise((resolve) => setTimeout(resolve, 1000));
+
 require(['modules/main', 'confirm', 'global', 'mainStyle', 'leaderBoardStyle'], (main, mainStyle, leaderBoardStyle) => {
-    main.documentLoaded();
+    main.documentLoaded(resolver);
 
     if (isTouchDevice()) {
-        require(['zoom']);
+        require(['modules/zoom']);
     }
 
 });
