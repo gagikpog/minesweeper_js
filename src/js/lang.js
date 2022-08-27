@@ -1,4 +1,4 @@
-import * as utility from '../modules/utility.js';
+import * as utility from './utility.js';
 
 export const getLang = () => utility.getCookie('lang') || 'ru';
 

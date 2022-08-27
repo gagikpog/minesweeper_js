@@ -1,4 +1,4 @@
-import { rk } from '../localizate/lang.js';
+import { rk } from './lang.js';
 
 const apiRoot = '/';
 

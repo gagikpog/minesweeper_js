@@ -2,7 +2,7 @@
 
     $lang = 'ru';
 
-    $translate = file_get_contents('./api/en-ru.json');
+    $translate = file_get_contents('../api/en-ru.json');
 
     $json = (array)json_decode("$translate");
 

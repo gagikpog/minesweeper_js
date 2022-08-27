@@ -1,4 +1,4 @@
-import { rk } from '../localizate/lang.js';
+import { rk } from './lang.js';
 import { Item } from './item.js';
 
 export function tableGenerate(width, height) {

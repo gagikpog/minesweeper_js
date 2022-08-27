@@ -1,6 +1,6 @@
 import { Game } from './game.js';
 import * as utility from './utility.js';
-import { rk, langs, getLang } from '../localizate/lang.js';
+import { rk, langs, getLang } from './lang.js';
 
 export function initSettings() {
     loadSettings();

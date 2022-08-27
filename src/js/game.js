@@ -1,6 +1,6 @@
 import * as view from './view.js';
 import * as utility from './utility.js';
-import { rk } from '../localizate/lang.js';
+import { rk } from './lang.js';
 import * as statistics from './statistics.js';
 
 const updatePanel = view.updatePanel;

@@ -1,6 +1,6 @@
 
 window.levelItemChanged = function (event) {
-    import('../modules/game.js').then(({Game}) => {
+    import('./game.js').then(({Game}) => {
         switch (event.value) {
             case 'beginner':
                 Game.totalMines = 10;
@@ -26,27 +26,27 @@ window.notify = function (eventName) {
     let res = new Promise((resolve) => {
         switch (eventName) {
             case 'showSettings':
-                import('../modules/settings.js').then(({initSettings}) => {
+                import('./settings.js').then(({initSettings}) => {
                     resolve(initSettings.showSettings);
                 })
                 break;
             case 'newGame':
-                import('../modules/game.js').then(({Game}) => {
+                import('./game.js').then(({Game}) => {
                     resolve(Game.newGame);
                 });
                 break;
             case 'leaderBoardToggle':
-                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
+                import('./leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.toggle);
                 });
                 break;
             case 'leaderBoardActivateTab':
-                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
+                import('./leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.activateTab);
                 });
                 break;
             case 'leaderBoardClose':
-                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
+                import('./leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.close);
                 });
                 break;
