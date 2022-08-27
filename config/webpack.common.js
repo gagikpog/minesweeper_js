@@ -36,12 +36,7 @@ module.exports = {
           from: paths.src + '/.webmanifest',
           to: '',
           noErrorOnMissing: true,
-        },
-        {
-          from: paths.src + '/sw.js',
-          to: '',
-          noErrorOnMissing: true,
-        },
+        }
       ],
     }),
 

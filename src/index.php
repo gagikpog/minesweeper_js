@@ -17,7 +17,7 @@ initLang($lang);
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320,
         height=device-height">
-<link rel="manifest" href="/.webmanifest">
+<link rel="manifest" href="/dist/.webmanifest">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>Minesweeper</title>
 <style title="dynamic">

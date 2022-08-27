@@ -15,6 +15,14 @@ Promise.all([
     }
 });
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        console.log('Service worker зарегистрирован:', registration);
+    }).catch(function(error) {
+        console.log('Ошибка при регистрации service worker-а:', error);
+    });
+}
+
 const platform = navigator.platform.toLowerCase();
 if (platform.includes('mac') || platform.includes('ipad') ||  platform.includes('iphone')) {
     import('./js/longPressEvent.js');
