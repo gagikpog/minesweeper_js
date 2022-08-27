@@ -119,8 +119,20 @@
         window.translate = <?php echo $GLOBALS['translate']; ?> ;
     </script>
 
-    <script src="https://gagikpog.ru/data/libs/require.js"></script>
-    <script src="./src/scripts/loader.js"></script>
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/leaderBoard.css">
+    <script src="https://gagikpog.ru/data/libs/quicksettings.min.js"></script>
+    <script src="https://gagikpog.ru/confirm/confirm.min.js"></script>
+
+    <script>
+        const debugMode = localStorage.getItem('debug') === 'true';
+        const isLocalhost = /minesweeper.ru|localhost/.test(document.location.href);
+        const jsPath = `${isLocalhost ? '' : '/minesweeper'}${debugMode ? '/src' : '/dist'}`;
+        const loader = document.createElement('script');
+
+        loader.src = `./${jsPath}/scripts/loader.js`;
+        document.body.appendChild(loader);
+    </script>
 
 </body>
 </html>

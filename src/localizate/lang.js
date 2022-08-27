@@ -1,25 +1,17 @@
-define('localizate/lang', ['modules/utility'], function(utility) {
-    'use strict';
+import * as utility from '../modules/utility.js';
 
-    const getLang = () => utility.getCookie('lang') || 'ru';
+export const getLang = () => utility.getCookie('lang') || 'ru';
 
-    const currentLang = getLang();
-    const rk = (str) => {
+const currentLang = getLang();
+export const rk = (str) => {
 
-        const rmContext = (s) => (s || '').replace(/^.*@@s@/, '');
+    const rmContext = (s) => (s || '').replace(/^.*@@s@/, '');
 
-        if (currentLang === 'en') {
-            return rmContext(str);
-        }
-        const translateMap = window.translate || {};
-        return translateMap[str] ? translateMap[str] : rmContext(str);
+    if (currentLang === 'en') {
+        return rmContext(str);
     }
+    const translateMap = window.translate || {};
+    return translateMap[str] ? translateMap[str] : rmContext(str);
+}
 
-    const langs = {'ru' : 0, 'en' : 1};
-
-    return {
-        rk,
-        langs,
-        getLang
-    }
-});
+export const langs = {'ru' : 0, 'en' : 1};

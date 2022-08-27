@@ -1,117 +1,110 @@
-define('modules/statistics', ['localizate/lang'], function (lang) {
-    'use strict';
-    const apiRoot = '/'
+import { rk } from '../localizate/lang.js';
 
-    let Game = null;
-    const rk = lang.rk;
+const apiRoot = '/';
 
-    require(['modules/game'], (game) => {
-        Game = game;
-    });
+let Game = null;
+// const rk = lang.rk;
 
-    function saveStatistics() {
+import('./game.js').then((game) => {
+    Game = game.Game;
+});
 
-        const time = currentGame.remainingTime;
-        const level = getLevel();
-        if (!time || !level) {
-            return Promise.resolve(false);
-        }
-        const save = (name) => {
-            const basePath = 'api/add.php'
-            let path = apiRoot + basePath;
-            const body = {
-                name,
-                time,
-                level
-            };
-            return fetch(path, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify(body)
-            }).then((data) => {
-                return data.json();
-            }).then((result) => {
-                if (result && result.status === 'error') {
-                    showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
-                }
-            });
-        }
+export function saveStatistics() {
 
-        if (Game.userName) {
-            return save(Game.userName);
-        }
-
-        const message = rk('Enter your name');
-        const detailed = rk('The game lasts ${time} seconds').replace('${time}', time);
-        const config = {
-            theme: 'dark',
-            buttons: [{
-                id: 'MBCANCEL',
-                title: rk('Cancel'),
-                backgroundColor: '#28a745',
-                color: '#fff',
-                order: 3,
-                validate: false
-            }, {
-                id: 'MBOK',
-                title: rk('OK'),
-                backgroundColor: '#6c757d',
-                color: '#fff',
-                order: 2,
-                validate: true
-            }
-            ],
-            templateId: 'text-wrapper'
-        };
-
-        return showConfirm(message, detailed, config).then((res) => {
-            if (res.button === 'MBOK' && 'endGame' === currentGame.status) {
-                const formData = res.formData || {};
-                const name = formData.userName;
-                const rememberName = formData.rememberName;
-                if (rememberName === 'on') {
-                    window.localStorage.setItem('userName', name);
-                    Game.userName = name;
-                }
-                if (name) {
-                    return save(name)
-                }
-                return Promise.resolve(false);
-            }
-        });
-
+    const time = currentGame.remainingTime;
+    const level = getLevel();
+    if (!time || !level) {
+        return Promise.resolve(false);
     }
-
-
-    function getStatisticByLevel(level) {
-
-        const basePath = 'api/getTop.php'
+    const save = (name) => {
+        const basePath = 'api/add.php'
         let path = apiRoot + basePath;
-
+        const body = {
+            name,
+            time,
+            level
+        };
         return fetch(path, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
-            body: JSON.stringify({ level })
+            body: JSON.stringify(body)
         }).then((data) => {
             return data.json();
         }).then((result) => {
             if (result && result.status === 'error') {
                 showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
             }
-            return result.data;
         });
     }
 
-    function getLevel() {
-        return document.querySelector('#level').value;
+    if (Game.userName) {
+        return save(Game.userName);
     }
 
-    return {
-        saveStatistics,
-        getStatisticByLevel
+    const message = rk('Enter your name');
+    const detailed = rk('The game lasts ${time} seconds').replace('${time}', time);
+    const config = {
+        theme: 'dark',
+        buttons: [{
+            id: 'MBCANCEL',
+            title: rk('Cancel'),
+            backgroundColor: '#28a745',
+            color: '#fff',
+            order: 3,
+            validate: false
+        }, {
+            id: 'MBOK',
+            title: rk('OK'),
+            backgroundColor: '#6c757d',
+            color: '#fff',
+            order: 2,
+            validate: true
+        }
+        ],
+        templateId: 'text-wrapper'
     };
-});
+
+    return showConfirm(message, detailed, config).then((res) => {
+        if (res.button === 'MBOK' && 'endGame' === currentGame.status) {
+            const formData = res.formData || {};
+            const name = formData.userName;
+            const rememberName = formData.rememberName;
+            if (rememberName === 'on') {
+                window.localStorage.setItem('userName', name);
+                Game.userName = name;
+            }
+            if (name) {
+                return save(name)
+            }
+            return Promise.resolve(false);
+        }
+    });
+
+}
+
+export function getStatisticByLevel(level) {
+
+    const basePath = 'api/getTop.php'
+    let path = apiRoot + basePath;
+
+    return fetch(path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({ level })
+    }).then((data) => {
+        return data.json();
+    }).then((result) => {
+        if (result && result.status === 'error') {
+            showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
+        }
+        return result.data;
+    });
+}
+
+function getLevel() {
+    return document.querySelector('#level').value;
+}

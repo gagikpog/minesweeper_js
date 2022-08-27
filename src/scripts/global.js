@@ -1,6 +1,6 @@
 
-function levelItemChanged(event) {
-    require(['modules/game'], (Game) => {
+window.levelItemChanged = function (event) {
+    import('../modules/game.js').then(({Game}) => {
         switch (event.value) {
             case 'beginner':
                 Game.totalMines = 10;
@@ -22,31 +22,31 @@ function levelItemChanged(event) {
     });
 }
 
-function notify(eventName) {
+window.notify = function (eventName) {
     let res = new Promise((resolve) => {
         switch (eventName) {
             case 'showSettings':
-                require(['modules/settings'], (initSettings) => {
+                import('../modules/settings.js').then(({initSettings}) => {
                     resolve(initSettings.showSettings);
                 })
                 break;
             case 'newGame':
-                require(['modules/game'], (Game) => {
+                import('../modules/game.js').then(({Game}) => {
                     resolve(Game.newGame);
                 });
                 break;
             case 'leaderBoardToggle':
-                require(['modules/leaderBoard'], (leaderBoard) => {
+                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.toggle);
                 });
                 break;
             case 'leaderBoardActivateTab':
-                require(['modules/leaderBoard'], (leaderBoard) => {
+                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.activateTab);
                 });
                 break;
             case 'leaderBoardClose':
-                require(['modules/leaderBoard'], (leaderBoard) => {
+                import('../modules/leaderBoard.js').then(({leaderBoard}) => {
                     resolve(leaderBoard.close);
                 });
                 break;
@@ -62,12 +62,10 @@ function notify(eventName) {
             args.shift()
             func(...args);
         }
-
-    })
-
+    });
 }
 
-function isTouchDevice() {
+window.isTouchDevice = function () {
     try {
         document.createEvent("TouchEvent");
         return true;
