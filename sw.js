@@ -42,8 +42,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    // ignore fetch
+    const isFetch = /\/api\//.test(event.request.url);
     // ignore chrome extensions
-    if (!event.request.url.startsWith('chrome')) {
+    const isExtensions = event.request.url.startsWith('chrome');
+    if (!isExtensions && !isFetch) {
         event.respondWith(
             loadFromOrigin(event.request)
             .then((response) => addToCache(event.request, response))
