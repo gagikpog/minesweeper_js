@@ -1,4 +1,3 @@
-import '@/styles/index.scss';
 window.GameTable = null;
 window.currentGame = null;
 
