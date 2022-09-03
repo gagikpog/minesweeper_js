@@ -1,17 +1,23 @@
 import { rk } from './lang.js';
 import { Item } from './item.js';
 
+/**
+ * 
+ * @param { number } width
+ * @param { number } height
+ * @returns { Item[][] }
+ */
 export function tableGenerate(width, height) {
     // clear table
-    while (GameTable.hasChildNodes()) {
-        GameTable.removeChild(GameTable.lastChild);
+    while (window.GameTable.hasChildNodes()) {
+        window.GameTable.removeChild(window.GameTable.lastChild);
     }
 
     const map = Array(height).fill().map(() => []);
 
     let i = 0;
     for (i = 0; i < height; i++) {
-        let tr = GameTable.insertRow();
+        let tr = window.GameTable.insertRow();
         let j = 0;
         for (j = 0; j < width; j++) {
             let td = tr.insertCell();
@@ -42,8 +48,8 @@ export function setCellSize(size, mapSize = {}) {
     const newSize = size || 50;
     const padding = 2;
 
-    GameTable.style.width = `${newSize * (mapSize.width + padding)}px`;
-    GameTable.style.height = `${newSize * mapSize.height}px`;
+    window.GameTable.style.width = `${newSize * (mapSize.width + padding)}px`;
+    window.GameTable.style.height = `${newSize * mapSize.height}px`;
 
     const ssList = document.styleSheets;
     let ss = null;
@@ -69,8 +75,8 @@ export function displayBlocker(enabled = true) {
 }
 
 export function updatePanel() {
-    if (currentGame) {
-        document.querySelector('#mines').textContent = currentGame.remainingMines;
-        document.querySelector('#time').textContent = `${rk('Time')} ${currentGame.remainingTime}`;
+    if (window.currentGame) {
+        document.querySelector('#mines').textContent = window.currentGame.remainingMines;
+        document.querySelector('#time').textContent = `${rk('Time')} ${window.currentGame.remainingTime}`;
     }
 }

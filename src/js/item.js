@@ -29,7 +29,7 @@ export class Item {
                     if (this.val === 9) {
                         this.checkNeedSave();
                     }
-                    currentGame.openedCount++;
+                    window.currentGame.openedCount++;
                     this.view.classList.add('open', `cell${this.val}`);
                     if (this.val === 0) {
                         this.boom();
@@ -37,10 +37,10 @@ export class Item {
                     this.opened = true;
                     if (this.val === 9) {
                         view.displayBlocker(true);
-                        currentGame.end(false);
+                        window.currentGame.end(false);
                         this.view.classList.add('cellBoom');
                         this.view.classList.add('cellX');
-                        currentGame.map.forEach((row) => {
+                        window.currentGame.map.forEach((row) => {
                             row.forEach((_item) => {
                                 if (_item.val === 9) {
                                     _item.view.classList.add('open', `cell${this.val}`);
@@ -65,8 +65,8 @@ export class Item {
                 this.neighborOpen();
             }
         }
-        if (currentGame.checkEnd()) {
-            currentGame.end(true);
+        if (window.currentGame.checkEnd()) {
+            window.currentGame.end(true);
         }
     }
 
@@ -76,26 +76,26 @@ export class Item {
             y: +this.view.dataset.row
         };
 
-        const count = checkBlock(pos, currentGame.map, (_item, res) => {
+        const count = checkBlock(pos, window.currentGame.map, (_item, res) => {
             res.count = res.count || 0;
             res.count += _item.flag;
         }).count;
 
         if (count === this.val) {
-            checkBlock(pos, currentGame.map, (_item) => {
+            checkBlock(pos, window.currentGame.map, (_item) => {
                 _item.open();
             });
         } else {
             let closedCount = null;
             if (Game.godMode) {
-                closedCount = checkBlock(pos, currentGame.map, (_item, res) => {
+                closedCount = checkBlock(pos, window.currentGame.map, (_item, res) => {
                     res.count = res.count || 0;
                     res.count += !_item.opened;
                 }).count;
             }
 
             if (Game.godMode || Game.animationSpeed) {
-                checkBlock(pos, currentGame.map, (_item) => {
+                checkBlock(pos, window.currentGame.map, (_item) => {
                     if (!_item.opened && !_item.flag) {
                         if (Game.godMode && closedCount === this.val) {
                             _item.setFlag(true);
@@ -124,7 +124,7 @@ export class Item {
                     x: +this.view.dataset.cell,
                     y: +this.view.dataset.row
                 }
-                checkBlock(pos, currentGame.map, (_item) => {
+                checkBlock(pos, window.currentGame.map, (_item) => {
                     _item.open();
                 });
             }, Game.animationSpeed);
@@ -141,7 +141,7 @@ export class Item {
 
         for (let i = y - 2; i <= y + 2; i++) {
             for (let j = x - 2; j <= x + 2; j++) {
-                let itemVal = currentGame.map[i] && currentGame.map[i][j] && currentGame.map[i][j].val;
+                let itemVal = window.currentGame.map[i] && window.currentGame.map[i][j] && window.currentGame.map[i][j].val;
                 itemVal = itemVal === undefined ? 9 : itemVal;
                 map = map | (itemVal === 9 ? n : 0);
                 n /= 2;
@@ -156,7 +156,7 @@ export class Item {
 
         const mask = inversed === void 0 ? map : inversed;
 
-        return (index >= 0 && (mask & map) === 0) ? changeMap(currentGame.map, { x, y }, caseId) : false;
+        return (index >= 0 && (mask & map) === 0) ? changeMap(window.currentGame.map, { x, y }, caseId) : false;
     }
 
     setFlag(val = true) {
@@ -165,10 +165,10 @@ export class Item {
         }
         if (val) {
             this.view.classList.add('cellFlag');
-            currentGame.remainingMines--;
+            window.currentGame.remainingMines--;
         } else {
             this.view.classList.remove('cellFlag');
-            currentGame.remainingMines++;
+            window.currentGame.remainingMines++;
         }
         this.flag = val;
         view.updatePanel();

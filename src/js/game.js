@@ -30,16 +30,18 @@ export class Game {
         view.resetTable();
         updatePanel();
     }
+
     destroy() {
         clearTimeout(this.timerId);
-
     }
+
     start(pos) {
         this.status = 'Game'
         clearTimeout(this.timerId);
         this.timerId = setInterval(this.timer.bind(this), 1000);
         this._generateMap(pos);
     }
+
     end(isWin) {
         if (this.status === 'endGame') {
             return;
@@ -189,8 +191,8 @@ export class Game {
         });
     }
     static newGame() {
-        currentGame && currentGame.destroy();
-        currentGame = new Game();
+        window.currentGame && window.currentGame.destroy();
+        window.currentGame = new Game();
         updatePanel();
     }
 }

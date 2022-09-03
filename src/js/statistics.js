@@ -3,7 +3,6 @@ import { rk } from './lang.js';
 const apiRoot = '/';
 
 let Game = null;
-// const rk = lang.rk;
 
 import('./game.js').then((game) => {
     Game = game.Game;
@@ -11,7 +10,7 @@ import('./game.js').then((game) => {
 
 export function saveStatistics() {
 
-    const time = currentGame.remainingTime;
+    const time = window.currentGame.remainingTime;
     const level = getLevel();
     if (!time || !level) {
         return Promise.resolve(false);
@@ -30,9 +29,7 @@ export function saveStatistics() {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify(body)
-        }).then((data) => {
-            return data.json();
-        }).then((result) => {
+        }).then((data) => data.json()).then((result) => {
             if (result && result.status === 'error') {
                 showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
             }
@@ -67,7 +64,7 @@ export function saveStatistics() {
     };
 
     return showConfirm(message, detailed, config).then((res) => {
-        if (res.button === 'MBOK' && 'endGame' === currentGame.status) {
+        if (res.button === 'MBOK' && 'endGame' === window.currentGame.status) {
             const formData = res.formData || {};
             const name = formData.userName;
             const rememberName = formData.rememberName;
@@ -95,9 +92,7 @@ export function getStatisticByLevel(level) {
             'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify({ level })
-    }).then((data) => {
-        return data.json();
-    }).then((result) => {
+    }).then((data) => data.json()).then((result) => {
         if (result && result.status === 'error') {
             showConfirm('Ошибка', result.message, { MBOK: true, theme: 'dark' })
         }
