@@ -2,12 +2,12 @@
   "name": "minesweeper",
   "version": "1.0.0",
   "description": "��#\u0000 \u0000M\u0000i\u0000n\u0000e\u0000s\u0000w\u0000e\u0000e\u0000p\u0000e\u0000r\u0000\r\u0000 \u0000\r\u0000 \u0000[\u0000D\u0000e\u0000m\u0000o\u0000]\u0000(\u0000h\u0000t\u0000t\u0000p\u0000s\u0000:\u0000/\u0000/\u0000g\u0000a\u0000g\u0000i\u0000k\u0000p\u0000o\u0000g\u0000.\u0000r\u0000u\u0000/\u0000m\u0000i\u0000n\u0000e\u0000s\u0000w\u0000e\u0000e\u0000p\u0000e\u0000r\u0000)\u0000",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
-    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
-    "lint": "eslint 'src/**/*.js' || true",
-    "prettify": "prettier --write 'src/**/*.js'"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -18,32 +18,23 @@
   "bugs": {
     "url": "https://github.com/gagikpog/minesweeper_js/issues"
   },
-  "homepage": "https://github.com/gagikpog/minesweeper_js#readme",
+  "dependencies": {
+    "@next/font": "13.1.1",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.10",
+    "next": "13.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.4"
+  },
   "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/preset-env": "^7.15.8",
-    "babel-loader": "^8.2.2",
-    "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^9.0.1",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.4.0",
-    "css-minimizer-webpack-plugin": "^3.1.1",
-    "eslint": "^7.28.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-import-resolver-webpack": "^0.13.1",
-    "eslint-plugin-prettier": "^4.0.0",
-    "html-webpack-plugin": "^5.3.2",
-    "mini-css-extract-plugin": "^2.4.2",
-    "sass": "^1.43.5",
-    "postcss-loader": "^6.2.0",
-    "postcss-preset-env": "^6.7.0",
-    "prettier": "^2.4.1",
-    "sass-loader": "^12.2.0",
-    "style-loader": "^3.3.0",
-    "webpack": "^5.58.2",
-    "webpack-cli": "^4.9.0",
-    "webpack-dev-server": "^4.3.1",
-    "webpack-merge": "^5.8.0"
+    "@zeit/next-sass": "^1.0.1",
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.2",
+    "node-sass": "^8.0.0",
+    "sass": "^1.57.1",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1"
   }
 }

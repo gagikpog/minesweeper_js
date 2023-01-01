@@ -15,6 +15,7 @@ Promise.all([
 });
 
 if ('serviceWorker' in navigator) {
+    const VERSION = '1';
     navigator.serviceWorker.register(`/sw.js?v=${VERSION}`).then(function(registration) {
         console.log('Service worker зарегистрирован:', registration);
     }).catch(function(error) {

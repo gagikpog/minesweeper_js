@@ -13,10 +13,10 @@ npm i
 ### Development server
 
 ```bash
-npm start
+npm run dev
 ```
 
-You can view the development server at `localhost:8080`.
+You can view the development server at `localhost:3000`.
 
 ### Production build
 
