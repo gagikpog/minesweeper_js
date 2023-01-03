@@ -8,7 +8,7 @@
     font-family: "ArchivoBlack";
     src: url("../public/fonts/ArchivoBlack-Regular.ttf");
 }
-table .cell{
+.cell{
     text-align: center;
     position: relative;
     background-color: #50A0A0;
@@ -35,12 +35,12 @@ main {
     display: none;
 }
 
-table .cell.open {
+.cell.open {
     background-color: #c3bec0;
     outline: inset 3px #d3cfd0;
 }
 
-table .cellX::after {
+.cellX::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -72,7 +72,7 @@ select {
     color: #fff;
 }
 
-table .cell.pushed {
+.cell.pushed {
     outline: inset 3px #60b8b8;
     outline-offset: -3px;
 }

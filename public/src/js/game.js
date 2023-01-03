@@ -28,7 +28,7 @@ export class Game {
         Game.setSize();
         this.map = view.tableGenerate(Game.width, Game.height);
         view.resetTable();
-        updatePanel();
+        // updatePanel();
     }
 
     destroy() {

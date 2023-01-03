@@ -9,7 +9,7 @@ export function documentLoaded(resolver) {
 
     initSettings();
 
-    Game.newGame();
+    // Game.newGame();
 
     window.onbeforeunload = () => window.currentGame.status === 'Game' ? 'no reload' : void 0;
 
@@ -20,19 +20,19 @@ export function documentLoaded(resolver) {
         });
     }, false);
 
-    window.GameTable.onclick = function (e) {
-        const item = e.target;
-        itemClick(item, +item.dataset.row, +item.dataset.cell, 'leftClock');
-    }
-    window.GameTable.oncontextmenu = function (e) {
-        const item = e.target;
-        itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
-    }
+    // window.GameTable.onclick = function (e) {
+    //     const item = e.target;
+    //     itemClick(item, +item.dataset.row, +item.dataset.cell, 'leftClock');
+    // }
+    // window.GameTable.oncontextmenu = function (e) {
+    //     const item = e.target;
+    //     itemClick(item, +item.dataset.row, +item.dataset.cell, 'rightClock');
+    // }
 
-    Promise.resolve(resolver).then(() => {
-        document.querySelector('#stub').style.display = 'none';
-        document.querySelector('#mainContent').style.display = 'flex';
-    });
+    // Promise.resolve(resolver).then(() => {
+    //     document.querySelector('#stub').style.display = 'none';
+    //     document.querySelector('#mainContent').style.display = 'flex';
+    // });
 
 }
 

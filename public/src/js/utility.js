@@ -90,6 +90,9 @@ export function checkBlock(point, map, callback) {
 }
 
 export function getCookie(name) {
+    if (typeof window === 'undefined') {
+        return '';
+    }
     // https://stackoverflow.com/questions/10730362/get-cookie-by-name
     var value = "; " + document.cookie;
     var parts = value.split("; " + name + "=");

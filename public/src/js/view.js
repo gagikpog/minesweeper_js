@@ -8,27 +8,12 @@ import { Item } from './item.js';
  * @returns { Item[][] }
  */
 export function tableGenerate(width, height) {
-    // clear table
-    while (window.GameTable.hasChildNodes()) {
-        window.GameTable.removeChild(window.GameTable.lastChild);
-    }
-
-    const map = Array(height).fill().map(() => []);
-
-    let i = 0;
-    for (i = 0; i < height; i++) {
-        let tr = window.GameTable.insertRow();
-        let j = 0;
-        for (j = 0; j < width; j++) {
-            let td = tr.insertCell();
-            td.classList.add('cell');
-            td.id = `ts${i}_${j}`;
-            td.dataset.row = i;
-            td.dataset.cell = j;
-            map[i][j] = new Item(td);
-        }
-    }
-    return map;
+    
+    return Array(height).fill(null).map((_, i) => {
+        return Array(width).fill(null).map((_, j) => (
+            new Item({id: `ts${i}_${j}`, classList: 'cell', dataset: {row: i, cell: j}})
+        ));
+    });
 }
 
 export function resetTable() {
@@ -48,8 +33,8 @@ export function setCellSize(size, mapSize = {}) {
     const newSize = size || 50;
     const padding = 2;
 
-    window.GameTable.style.width = `${newSize * (mapSize.width + padding)}px`;
-    window.GameTable.style.height = `${newSize * mapSize.height}px`;
+    // window.GameTable.style.width = `${newSize * (mapSize.width + padding)}px`;
+    // window.GameTable.style.height = `${newSize * mapSize.height}px`;
 
     const ssList = document.styleSheets;
     let ss = null;

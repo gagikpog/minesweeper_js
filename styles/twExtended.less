@@ -1,0 +1,88 @@
+@import "./tailwind.min.css";
+
+.tw-transition-default {
+    transition: var(--transition-default);
+}
+
+.tw-transition-color {
+    transition: var(--transition-color);
+}
+
+.tw-no-select {
+    -webkit-touch-callout: none;
+    user-select: none;
+}
+
+.tw-no-highlights {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tw-scroll {
+    flex: 1;
+    overflow: overlay;
+    height: 100%;
+}
+
+:root {
+
+    --transition-default-time: 1s;
+    --transition-default: var(--transition-default-time) all;
+    --transition-color: background-color var(--transition-default-time) all, color var(--transition-default-time) all;
+
+    --offset-2: 2px;
+    --offset-4: 4px;
+    --offset-8: 8px;
+    --offset-10: 10px;
+    --offset-20: 20px;
+}
+
+.get-sizes(@prop, @dir, @size, @value) {
+    &-@{size} {
+        & when not (@dir = full) {
+            @{prop}-@{dir}: @value;
+        }
+        & when (@dir = full) {
+            @{prop}: @value;
+        }
+    }
+}
+
+.sizes-mixin(@prop, @dir) {
+    .get-sizes(@prop, @dir, auto, auto);
+    .get-sizes(@prop, @dir, 2, var(--offset-2));
+    .get-sizes(@prop, @dir, 4, var(--offset-4));
+    .get-sizes(@prop, @dir, 8, var(--offset-8));
+    .get-sizes(@prop, @dir, 10, var(--offset-10));
+    .get-sizes(@prop, @dir, 20, var(--offset-20));
+}
+
+.direction-mixin(@prefix) {
+    .sizes-mixin(@prefix, full);
+    &t {
+        .sizes-mixin(@prefix, top);
+    }
+    &r {
+        .sizes-mixin(@prefix, right);
+    }
+    &b {
+        .sizes-mixin(@prefix, bottom);
+    }
+    &l {
+        .sizes-mixin(@prefix, left);
+    }
+}
+
+.tw {
+    &-m {
+        .direction-mixin(margin);
+    }
+    &-p {
+        .direction-mixin(padding);
+    }
+}

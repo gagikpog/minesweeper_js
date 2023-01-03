@@ -1,6 +1,10 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
+import { useState } from 'react';
+import View from '../components/view';
+import { Game } from '../public/src/js/game';
+import { Item } from '../public/src/js/item';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -8,15 +12,28 @@ export default function Home() {
     /** @ts-ignore */
     const notify = (eventName: string) => window.notify(eventName);
 
-    const options = [
+    const [options] = useState(() => [
         { value: 'beginner', text: 'Beginner' },
         { value: 'intermediate', text: 'Intermediate' },
         { value: 'advanced', text: 'Advanced' },
-    ]
+    ]);
+
+    let [game] = typeof window !== 'undefined' ? useState(() => new Game()) : [];
+
+    if (typeof window !== 'undefined') {
+        // @ts-ignore
+        window.currentGame = game;
+    }
+
+    const itemClick = (item: Item, row: number, cell: number, eventType: string): void => {
+        if (game) {
+            game.itemClick(item, row, cell, eventType);
+        }
+    }
 
     return (
         <>
-            <main id="mainContent" style={{ display: 'none' }}>
+            <main id="mainContent">
                 <div className="head">
                     <button onClick={() => notify('newGame')}>New game</button>
                     <button id="mines">10</button>
@@ -45,13 +62,14 @@ export default function Home() {
                     </svg>
                 </div>
                 <div className="scroll-container">
-                    <table>
-                        <tbody id="game"></tbody>
-                    </table>
+                    {
+                        // @ts-ignore
+                        game ? <View map={game.map} size={Game.blockSize.value} itemClick={itemClick}></View> : null
+                    }
                 </div>
             </main>
-            <div id="stub">Minesweeper</div>
-            <div id="blocker"></div>
+            {/* <div id="stub">Minesweeper</div> */}
+            {/* <div id="blocker"></div> */}
 
             <div style={{ display: 'none' }} className="text-wrapper" id="text-wrapper">
                 <div className="form-wrapper">
@@ -104,7 +122,6 @@ export default function Home() {
             <script src="https://gagikpog.ru/data/libs/quicksettings.min.js"></script>
             <script src="https://gagikpog.ru/confirm/confirm.min.js"></script>
 
-            <script src="/src/index.js"></script>
         </>
     )
 }

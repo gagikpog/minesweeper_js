@@ -111,7 +111,7 @@ function loadSettings() {
     const userName = window.localStorage.getItem('userName') || '';
 
     document.querySelector('#level').value = level;
-    levelItemChanged({ value: level });
+    // levelItemChanged({ value: level });
 
     const blocksOptimalSize = Math.floor(utility.getOptimalSize(Game));
 

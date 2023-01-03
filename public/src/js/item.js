@@ -13,13 +13,45 @@ Promise.all([import('./game.js'), import('./view.js')]).then(([game, _view]) => 
     view = _view;
 });
 
+class ClassList {
+
+    get value() {
+        return this._values.join(' ');
+    }
+
+    constructor(classList) {
+        this._values = classList?.split(' ') || [];
+    }
+
+    add(...args) {
+        args.map((value) => {
+            if (!this._values.includes(value)) {
+                this._values.push(value);
+            }
+        });
+    }
+
+    remove(...args) {
+        this._values = this._values.filter((value) => !args?.includes(value));
+    }
+}
+
+export class ViewModel {
+    constructor({dataset, id, classList}) {
+        this.classList = new ClassList(classList);
+        this.dataset = dataset;
+        this.id = id;
+    }
+}
+
 export class Item {
 
-    constructor(tdItem) {
+    constructor(data) {
         this.val = 0;
         this.opened = false;
         this.flag = false;
-        this.view = tdItem;
+
+        this.view = new ViewModel(data);
     }
 
     open(isRightBtn) {
