@@ -13,12 +13,12 @@ export function documentLoaded(resolver) {
 
     window.onbeforeunload = () => window.currentGame.status === 'Game' ? 'no reload' : void 0;
 
-    window.addEventListener("resize", function () {
-        view.setCellSize(utility.getOptimalSize(Game), {
-            width: Game.width,
-            height: Game.height
-        });
-    }, false);
+    // window.addEventListener("resize", function () {
+    //     view.setCellSize(utility.getOptimalSize(Game), {
+    //         width: Game.width,
+    //         height: Game.height
+    //     });
+    // }, false);
 
     // window.GameTable.onclick = function (e) {
     //     const item = e.target;

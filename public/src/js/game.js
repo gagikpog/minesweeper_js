@@ -20,7 +20,9 @@ export class Game {
     static animationSpeed = 50;
     static defaultAnimationSpeed = 50;
 
-    constructor() {
+    _hasChanged = false;
+
+    constructor(updateHandler) {
         this.remainingMines = Game.totalMines;
         this.status = 'newGame';
         this.remainingTime = 0;
@@ -28,6 +30,7 @@ export class Game {
         Game.setSize();
         this.map = view.tableGenerate(Game.width, Game.height);
         view.resetTable();
+        this._updateHandler = updateHandler;
         // updatePanel();
     }
 
@@ -168,10 +171,13 @@ export class Game {
             this.start({ x: cell, y: row });
         }
         item.open(eventType === 'rightClock');
+        this._update();
     }
     timer() {
         this.remainingTime++;
+        this._hasChanged = true;
         updatePanel();
+        this._update()
     }
     checkEnd() {
 
@@ -182,6 +188,15 @@ export class Game {
         }
         return this.openedCount === count;
     }
+
+    _update() {
+        if (this._hasChanged) {
+            this._hasChanged = false;
+            this.map = this.map.map((items) => [...items]);
+            this._updateHandler?.(this.map);
+        }
+    }
+
     static setSize(width, height) {
         this.width = width || this.width;
         this.height = height || this.height;
