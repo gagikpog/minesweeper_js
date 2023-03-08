@@ -1,4 +1,6 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { MAX_GAME_HEIGHT, MAX_GAME_WIDTH } from '../game/constants';
+import { generateMap } from '../game/function';
 
 const gameSlice = createSlice({
     name: 'game',
@@ -6,7 +8,7 @@ const gameSlice = createSlice({
         width: 10,
         height: 10,
         blockSize: {
-            value: 25,
+            value: 50,
             min: 25,
             max: 70,
             default: 25
@@ -16,7 +18,7 @@ const gameSlice = createSlice({
         godMode: true,
         animationSpeed: 50,
         defaultAnimationSpeed: 50,
-        gameMap: []
+        gameMap: generateMap(MAX_GAME_WIDTH, MAX_GAME_HEIGHT)
     },
     reducers: {
         setGameMap: (state, action) => {

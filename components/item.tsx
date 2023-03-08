@@ -1,25 +1,13 @@
 import { MouseEvent } from "react";
-import { Item as ItemModel, ViewModel } from "../public/src/js/item";
-
-export enum ItemState {
-    opened = 'opened',
-    flag = 'flag',
-    hidden = 'hidden'
-}
-
-export interface IItem extends ItemModel {
-    val: number;
-    opened: boolean;
-    flag: boolean;
-    view: ViewModel;
-}
+import { getKey } from "../game/function";
+import { MapItem } from "../game/mapItem";
+import { GameMap } from "../game/types";
 
 interface IItemProps {
-    item: IItem;
-    size: number;
+    map: GameMap;
     row: number;
     cell: number;
-    onClick: (item: ItemModel, row: number, cell: number, eventType: string) => void;
+    onClick: (item: MapItem, row: number, cell: number, eventType: string) => void;
 }
 
 interface IEnets {
@@ -28,41 +16,19 @@ interface IEnets {
 
 export default function Item(props: IItemProps): JSX.Element {
 
-    const style = {
-        width: props.size,
-        height: props.size
-    };
+    const style = {};
 
-    const classes = props.item?.view?.classList?.value || '';
+    const classes = 'cell';
 
     const onClick = (event: MouseEvent<HTMLDivElement>) => {
-        props.onClick(props.item, props.row, props.cell, 'click');
+        props.onClick(item, props.row, props.cell, 'click');
     }
 
-    if (props.item.opened) {
-        return opened(props.item, style, classes, {onClick});
-    } else if (props.item.flag) {
-        return flag(props.item, style, classes, {onClick});
-    } else {
-        return hidden(props.item, style, classes, {onClick});
-    }
-}
+    const item = props.map?.[getKey(props.row, props.cell)];
 
-
-function opened(item: IItem, style: object, classes: string, events: IEnets): JSX.Element {
     return (
-        <div style={style} className={classes} {...events} ></div>
-    );
-}
-
-function hidden(item: IItem, style: object, classes: string, events: IEnets): JSX.Element {
-    return (
-        <div style={style} className={classes} {...events}></div>
-    );
-}
-
-function flag(item: IItem, style: object, classes: string, events: IEnets): JSX.Element {
-    return (
-        <div style={style} className={classes} {...events}></div>
+        <div style={style} className={classes} onClick={onClick} >
+            <div className="cell-content"></div>
+        </div>
     );
 }

@@ -3,7 +3,6 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import View from '../components/view';
-import { Game } from '../public/src/js/game';
 import { Item } from '../public/src/js/item';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, setGameMap } from '../store/main';
@@ -17,6 +16,9 @@ export default function Home() {
     const dispatch =  useDispatch();
 
     const gameMap = useSelector((state: RootState) => state.gameMap);
+    const width = useSelector((state: RootState) => state.width);
+    const height = useSelector((state: RootState) => state.height);
+    const blockSize = useSelector((state: RootState) => state.blockSize);
 
     const [options] = useState(() => [
         { value: 'beginner', text: 'Beginner' },
@@ -24,21 +26,8 @@ export default function Home() {
         { value: 'advanced', text: 'Advanced' },
     ]);
 
-    const onMapChanged = (newMap) => {
-        dispatch(setGameMap(newMap));
-    };
-
-    let [game] = typeof window !== 'undefined' ? useState(() => new Game(onMapChanged)) : [];
-
-    if (typeof window !== 'undefined') {
-        // @ts-ignore
-        window.currentGame = game;
-    }
-
     const itemClick = (item: Item, row: number, cell: number, eventType: string): void => {
-        if (game) {
-            game.itemClick(item, row, cell, eventType);
-        }
+
     }
 
     return (
@@ -73,8 +62,12 @@ export default function Home() {
                 </div>
                 <div className="scroll-container">
                     {
-                        // @ts-ignore
-                        game ? <View map={game.map} size={Game.blockSize.value} itemClick={itemClick}></View> : null
+                        <View
+                            map={gameMap}
+                            size={blockSize.value}
+                            width={width}
+                            height={height}
+                            itemClick={itemClick}/>
                     }
                 </div>
             </main>

@@ -1,9 +1,13 @@
-import Item, { IItem } from "./item";
+import { MapItem } from "../game/mapItem";
+import { GameMap } from "../game/types";
+import Item from "./item";
 
 interface IViewProps {
-    map: IItem[][];
+    map: GameMap;
     size: number;
-    itemClick: (item: IItem, row: number, cell: number, eventType: string) => void;
+    width: number;
+    height: number;
+    itemClick: (item: MapItem, row: number, cell: number, eventType: string) => void;
 }
 
 export default function View(props: IViewProps): JSX.Element {
@@ -11,15 +15,15 @@ export default function View(props: IViewProps): JSX.Element {
     return (
         <div>
             {
-                props.map.map((row, rowIndex) => {
+                // TODO: Придумать что то получке
+                Array(props.height).fill(null).map((_, rowIndex) => {
                     return (
                         <div key={rowIndex} className='tw-flex'>
                             {
-                                row.map((item, cellIndex) => {
+                                Array(props.width).fill(null).map((_, cellIndex) => {
                                     return <Item
                                         key={cellIndex}
-                                        item={item}
-                                        size={props.size}
+                                        map={props.map}
                                         row={rowIndex}
                                         cell={cellIndex}
                                         onClick={props.itemClick} />

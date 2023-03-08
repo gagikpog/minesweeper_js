@@ -14,6 +14,7 @@
     background-color: #50A0A0;
     outline: outset 3px #60b8b8;
     outline-offset: -3px;
+    width: 100%;
 }
 #game {
     border-spacing: 0;
@@ -142,6 +143,11 @@ select {
     content: "\1F6A9";
     font-weight: 1000;
 }
+
+.cell-content {
+    padding-top: 100%;
+}
+
 .head {
     border: 1px solid gray;
     padding: 5px;
