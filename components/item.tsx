@@ -22,20 +22,27 @@ export default function Item(props: IItemProps): JSX.Element {
 
     switch (item?.state) {
         case ItemState.opened:
-            classes += ` open cell${item.val}`;
             if (gameState === GameState.gameOver && item.val === ItemValues.mine) {
-                classes += ' cellX';
+                // if game over show wrong opening
+                classes += ' cell-x';
+            } else {
+                classes += ` open cell-${item.val}`;
             }
             break;
         case ItemState.flag:
-            classes += ` cellFlag`;
+            classes += ` cell-flag`;
+            // if game over show wrong flags
+            if (gameState === GameState.gameOver && item.val !== ItemValues.mine) {
+                classes += ' cell-x';
+            }
             break;
         default:
             break;
     }
 
+    // if game ended show all mines
     if ((gameState === GameState.gameWin || gameState === GameState.gameOver) && item.val === ItemValues.mine) {
-        classes += ' cell9'
+        classes += ' cell-9'
     }
 
     const onClick = (event: MouseEvent<HTMLDivElement>) => {

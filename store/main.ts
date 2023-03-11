@@ -21,7 +21,7 @@ const gameSlice = createSlice({
         displayBlocked: false,
         totalMines: 10,
         remainingMines: 0,
-        godMode: false,
+        godMode: true,
         openedCount: 0,
         animationSpeed: 50,
         defaultAnimationSpeed: 50,
