@@ -3,9 +3,9 @@ import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import { useEffect, useState } from 'react';
 import View from '../components/view';
-import { Item } from '../public/src/js/item';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, setGameMap } from '../store/main';
+import { RootState, runNewGame, setGameMap } from '../store/main';
+import { GameState, IMapItem } from '../game/types';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +19,7 @@ export default function Home() {
     const width = useSelector((state: RootState) => state.width);
     const height = useSelector((state: RootState) => state.height);
     const blockSize = useSelector((state: RootState) => state.blockSize);
+    const gameState = useSelector((state: RootState) => state.gameState);
 
     const [options] = useState(() => [
         { value: 'beginner', text: 'Beginner' },
@@ -26,8 +27,10 @@ export default function Home() {
         { value: 'advanced', text: 'Advanced' },
     ]);
 
-    const itemClick = (item: Item, row: number, cell: number, eventType: string): void => {
-
+    const itemClick = (item: IMapItem | undefined, row: number, cell: number, eventType: string): void => {
+        if (gameState === GameState.newGame) {
+            dispatch(runNewGame({point: {x: cell, y: row}}));
+        }
     }
 
     return (
@@ -88,10 +91,9 @@ export default function Home() {
 
             <div id="leaderBoardDialog" style={{ display: 'none' }} className="leader-board__main">
                 <div className="leader-board__head">
-                    <div className="leader-board__head-caption">Leaderboard</div>
+                    <div className="leader-board__head-caption">Leader board</div>
                     <div className="leader-board__head-close-button" onClick={() => notify('leaderBoardClose')}>
                         <svg
-                            id="Capa_1"
                             height="15px"
                             viewBox="0 0 413.348 413.348"
                             width="15px"

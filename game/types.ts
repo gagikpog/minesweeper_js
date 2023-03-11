@@ -1,4 +1,7 @@
-import { MapItem } from "./mapItem";
+export interface IMapItem {
+    val: number;
+    state: ItemState;
+}
 
 export enum ItemState {
     opened = 'opened',
@@ -6,8 +9,15 @@ export enum ItemState {
     hidden = 'hidden'
 }
 
+export enum GameState {
+    newGame = 'newGame',
+    game = 'game',
+    pause = 'pause',
+    gameOver = 'gameOver'
+}
+
 export type Notifier = (action: string, payload?: any) => void;
-export type GameMap = {[key: string]: MapItem};
+export type GameMap = IMapItem[][];
 
 export interface IPoint {
     x: number;

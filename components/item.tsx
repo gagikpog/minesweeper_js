@@ -1,30 +1,35 @@
 import { MouseEvent } from "react";
-import { getKey } from "../game/function";
-import { MapItem } from "../game/mapItem";
-import { GameMap } from "../game/types";
+import { mapGetter } from "../game/function";
+import { GameMap, IMapItem, ItemState } from "../game/types";
 
 interface IItemProps {
     map: GameMap;
     row: number;
     cell: number;
-    onClick: (item: MapItem, row: number, cell: number, eventType: string) => void;
-}
-
-interface IEnets {
-    onClick: (event: MouseEvent<HTMLDivElement>) => void;
+    onClick: (item: IMapItem | undefined, row: number, cell: number, eventType: string) => void;
 }
 
 export default function Item(props: IItemProps): JSX.Element {
 
     const style = {};
 
-    const classes = 'cell';
+    let classes = 'cell';
+    const item = mapGetter(props.map, props.row, props.cell);
+
+    switch (item?.state) {
+        case ItemState.opened:
+            classes += ` open cell${item.val}`
+            break;
+        case ItemState.flag:
+            classes += ` cellFlag`
+            break;
+        default:
+            break;
+    }
 
     const onClick = (event: MouseEvent<HTMLDivElement>) => {
         props.onClick(item, props.row, props.cell, 'click');
     }
-
-    const item = props.map?.[getKey(props.row, props.cell)];
 
     return (
         <div style={style} className={classes} onClick={onClick} >

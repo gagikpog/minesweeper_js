@@ -1,6 +1,6 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
-import { MAX_GAME_HEIGHT, MAX_GAME_WIDTH } from '../game/constants';
-import { generateMap } from '../game/function';
+import { generateMap, randomfillMap } from '../game/function';
+import { GameState } from '../game/types';
 
 const gameSlice = createSlice({
     name: 'game',
@@ -14,20 +14,30 @@ const gameSlice = createSlice({
             default: 25
         },
         userName: '',
+        gameState: GameState.newGame,
         totalMines: 10,
         godMode: true,
         animationSpeed: 50,
         defaultAnimationSpeed: 50,
-        gameMap: generateMap(MAX_GAME_WIDTH, MAX_GAME_HEIGHT)
+        gameMap: generateMap(0, 0)
     },
     reducers: {
         setGameMap: (state, action) => {
             state.gameMap = action.payload;
+        },
+        setGameState: (state, action) => {
+            state.gameState = action.payload;
+        },
+        runNewGame: (state, action) => {
+            const conf = action.payload;
+            const newMap = randomfillMap(conf.point, state.width, state.height, state.totalMines);
+            state.gameMap = newMap;
+            state.gameState = GameState.game;
         }
     }
 });
 
-export const { setGameMap } = gameSlice.actions;
+export const { setGameMap, setGameState, runNewGame } = gameSlice.actions;
 
 export const store = configureStore({
     reducer: gameSlice.reducer

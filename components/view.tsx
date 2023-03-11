@@ -1,5 +1,4 @@
-import { MapItem } from "../game/mapItem";
-import { GameMap } from "../game/types";
+import { GameMap, IMapItem } from "../game/types";
 import Item from "./item";
 
 interface IViewProps {
@@ -7,7 +6,7 @@ interface IViewProps {
     size: number;
     width: number;
     height: number;
-    itemClick: (item: MapItem, row: number, cell: number, eventType: string) => void;
+    itemClick: (item: IMapItem | undefined, row: number, cell: number, eventType: string) => void;
 }
 
 export default function View(props: IViewProps): JSX.Element {
