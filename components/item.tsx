@@ -1,7 +1,8 @@
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { mapGetter } from "../game/function";
-import { EventType, GameMap, GameState, IMapItem, ItemState, ItemValues } from "../game/types";
+import { Chanel } from "../game/funcs/chanel";
+import { chanelEventGetter, mapGetter } from "../game/funcs/getters";
+import { ChanelEvents, EventType, GameMap, GameState, IMapItem, ItemState, ItemValues } from "../game/types";
 import { RootState } from "../store/main";
 
 interface IItemProps {
@@ -14,11 +15,28 @@ interface IItemProps {
 export default function Item(props: IItemProps): JSX.Element {
 
     const gameState = useSelector((state: RootState) => state.gameState);
+    const animationSpeed = useSelector((state: RootState) => state.animationSpeed);
+    const [isPushed, setPushed] = useState(false);
 
     const style = {};
 
     let classes = 'cell';
     const item = mapGetter(props.map, props.row, props.cell);
+
+    useEffect(() => {
+        const subscribeId = Chanel.subscribe(chanelEventGetter(props.row, props.cell), (eventName: ChanelEvents) => {
+            if (eventName === ChanelEvents.TogglePushing) {
+                setPushed(true);
+                setTimeout(() => {
+                    setPushed(false);
+                }, animationSpeed * 6);
+            }
+        });
+
+        return () => {
+            Chanel.unsubscribe(subscribeId);
+        };
+    }, []);
 
     switch (item?.state) {
         case ItemState.opened:
@@ -34,6 +52,11 @@ export default function Item(props: IItemProps): JSX.Element {
             // if game over show wrong flags
             if (gameState === GameState.gameOver && item.val !== ItemValues.mine) {
                 classes += ' cell-x';
+            }
+            break;
+        case ItemState.hidden:
+            if (isPushed) {
+                classes += ' pushed';
             }
             break;
         default:

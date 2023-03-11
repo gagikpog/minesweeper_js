@@ -23,6 +23,10 @@ export enum ItemValues {
     mine = 9
 }
 
+export enum ChanelEvents {
+    TogglePushing = 'togglePushing'
+}
+
 export enum EventType {
     click = 'leftClick',
     rightClick = 'rightClick'

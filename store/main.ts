@@ -1,6 +1,7 @@
 import { createSlice, configureStore, createAsyncThunk } from '@reduxjs/toolkit';
-import { asyncOpenItem, checkEnd } from '../game/engine';
-import { generateMap, mapGetter, randomfillMap } from '../game/function';
+import { asyncOpenItem } from '../game/engine';
+import { generateMap, randomfillMap } from '../game/funcs/mapGenerate';
+import { mapGetter } from '../game/funcs/getters';
 import { GameState, ItemState } from '../game/types';
 
 const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
@@ -72,7 +73,9 @@ const gameSlice = createSlice({
                 }, 0);
             }
 
-            state.gameMap[action.payload.item.pos.y][action.payload.item.pos.x] = action.payload.item;
+            if (action.payload.changed) {
+                state.gameMap[action.payload.item.pos.y][action.payload.item.pos.x] = action.payload.item;
+            }
 
             const { totalMines, width, height, openedCount } = state;
 

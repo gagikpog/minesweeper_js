@@ -1,7 +1,10 @@
-import { gameWin, openItem, store, toggleItemFlag } from "../store/main";
-import { checkBlock, mapGetter } from "./function";
-import { createMapItem } from "./mapItem";
-import { IMapItem, IPoint, ItemState } from "./types";
+import { openItem, store, toggleItemFlag } from "../store/main";
+import { Chanel } from "./funcs/chanel";
+import { checkBlock } from "./funcs/checkBlock";
+import { chanelEventGetter, mapGetter } from "./funcs/getters";
+
+import { createMapItem } from "./funcs/mapItem";
+import { ChanelEvents, IMapItem, IPoint, ItemState } from "./types";
 
 function boom(point: IPoint): void {
     const { animationSpeed, gameMap } = store.getState();
@@ -63,15 +66,9 @@ function neighborOpen(point: IPoint): void {
                 if (_item.state === ItemState.hidden) {
                     if (godMode && closedCount === item.val) {
                         store.dispatch(toggleItemFlag({ point: _item?.pos }));
-                    } else {
+                    } else if (animationSpeed) {
                         // push animation
-                        if (animationSpeed) {
-                            // check animation enabled
-                            // _item.view.classList.add('pushed');
-                            // setTimeout(() => {
-                            //     _item.view.classList.remove('pushed');
-                            // }, Game.animationSpeed * 6);
-                        }
+                        Chanel.notify(chanelEventGetter(_item.pos.y, _item.pos.x), ChanelEvents.TogglePushing, null);
                     }
                 }
             });
@@ -85,6 +82,7 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
     const state = store.getState();
     const item = createMapItem(mapGetter(state.gameMap, point.y, point.x));
     const opened = item.state === ItemState.hidden;
+    let changed = false;
     let gameOver = false;
     if (item.state === ItemState.hidden) {
 
@@ -100,7 +98,7 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
                 break;
         }
 
-
+        changed = true;
         item.state = ItemState.opened;
 
     } else if (item.state === ItemState.opened) {
@@ -109,5 +107,5 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
         }, 0);
     }
 
-    return { item, opened, gameOver };
+    return { item, opened, gameOver, changed };
 }

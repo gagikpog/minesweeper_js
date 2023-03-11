@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import View from '../components/view';
 import { useDispatch, useSelector } from 'react-redux';
 import { openItem, RootState, runNewGame, setGameMap, toggleItemFlag } from '../store/main';
@@ -31,7 +31,8 @@ export default function Home() {
         { value: 'advanced', text: 'Advanced' },
     ]);
 
-    const itemClick = (item: IMapItem | undefined, row: number, cell: number, eventType: EventType): void => {
+    const itemClick = useMemo(() => (item: IMapItem | undefined, row: number, cell: number, eventType: EventType) => {
+
         switch (gameState) {
             case GameState.newGame:
                 dispatch(runNewGame({ point: { x: cell, y: row }}));
@@ -53,7 +54,8 @@ export default function Home() {
             default:
                 break;
         }
-    }
+
+    }, [gameState]);
 
     return (
         <>

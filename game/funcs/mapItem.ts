@@ -1,4 +1,4 @@
-import { IMapItem, ItemState } from "./types";
+import { IMapItem, ItemState } from "../types";
 
 export function createMapItem(item?: Partial<IMapItem>): IMapItem {
     return {
