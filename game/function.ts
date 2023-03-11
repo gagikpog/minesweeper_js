@@ -2,9 +2,9 @@ import { createMapItem } from "./mapItem";
 import { GameMap, IMapItem, IPoint } from "./types";
 
 export function generateMap(width: number, height: number): GameMap {
-    return Array(height).fill(null).map(() => {
-        return Array(width).fill(null).map(() => {
-            return createMapItem();
+    return Array(height).fill(null).map((_, y) => {
+        return Array(width).fill(null).map((_, x) => {
+            return createMapItem({ pos: { x, y } });
         });
     });
 }
@@ -55,18 +55,18 @@ export function mapGetter(map: GameMap,row: number, cell: number): IMapItem {
     return map?.[row]?.[cell];
 }
 
-type CheckBlockCallback = (item: IMapItem | undefined, res?: object) => void;
+type CheckBlockCallback<T = object> = (item: IMapItem, res?: T) => void;
 
-export function checkBlock(
+export function checkBlock<T = object>(
     point: IPoint,
     width: number,
     height: number,
     map: GameMap,
-    callback: CheckBlockCallback
-): object {
+    callback: CheckBlockCallback<Partial<T>>
+): Partial<T> {
     const startX = point.x - 1 >= 0 ? point.x - 1 : point.x;
     const startY = point.y - 1 >= 0 ? point.y - 1 : point.y;
-    let res = {};
+    let res = {} as Partial<T>;
     for (let i = startY; i < height && i <= point.y + 1; i++) {
         for (let j = startX; j < width && j <= point.x + 1; j++) {
             callback(mapGetter(map, i, j), res);

@@ -1,6 +1,7 @@
 export interface IMapItem {
     val: number;
     state: ItemState;
+    pos: IPoint;
 }
 
 export enum ItemState {
@@ -13,7 +14,18 @@ export enum GameState {
     newGame = 'newGame',
     game = 'game',
     pause = 'pause',
-    gameOver = 'gameOver'
+    gameOver = 'gameOver',
+    gameWin = 'gameWin'
+}
+
+export enum ItemValues {
+    empty = 0,
+    mine = 9
+}
+
+export enum EventType {
+    click = 'leftClick',
+    rightClick = 'rightClick'
 }
 
 export type Notifier = (action: string, payload?: any) => void;

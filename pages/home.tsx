@@ -1,11 +1,11 @@
 import Head from 'next/head'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import View from '../components/view';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, runNewGame, setGameMap } from '../store/main';
-import { GameState, IMapItem } from '../game/types';
+import { openItem, RootState, runNewGame, setGameMap, toggleItemFlag } from '../store/main';
+import { EventType, GameState, IMapItem, ItemState } from '../game/types';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,6 +20,10 @@ export default function Home() {
     const height = useSelector((state: RootState) => state.height);
     const blockSize = useSelector((state: RootState) => state.blockSize);
     const gameState = useSelector((state: RootState) => state.gameState);
+    const displayBlocked = useSelector((state: RootState) => state.displayBlocked);
+    const godMode = useSelector((state: RootState) => state.godMode);
+    const totalMines = useSelector((state: RootState) => state.totalMines);
+    const remainingMines = useSelector((state: RootState) => state.remainingMines);
 
     const [options] = useState(() => [
         { value: 'beginner', text: 'Beginner' },
@@ -27,9 +31,27 @@ export default function Home() {
         { value: 'advanced', text: 'Advanced' },
     ]);
 
-    const itemClick = (item: IMapItem | undefined, row: number, cell: number, eventType: string): void => {
-        if (gameState === GameState.newGame) {
-            dispatch(runNewGame({point: {x: cell, y: row}}));
+    const itemClick = (item: IMapItem | undefined, row: number, cell: number, eventType: EventType): void => {
+        switch (gameState) {
+            case GameState.newGame:
+                dispatch(runNewGame({ point: { x: cell, y: row }}));
+                dispatch(openItem({ point: { x: cell, y: row }}));
+                break;
+            case GameState.game:
+                if (eventType === EventType.rightClick &&
+                        (item?.state === ItemState.hidden || item?.state === ItemState.flag)
+                    ) {
+                    dispatch(toggleItemFlag({ point: { x: cell, y: row }}));
+                } else {
+                    if (eventType === EventType.click || godMode) {
+                        dispatch(openItem({ point: { x: cell, y: row }}));
+                    }
+                }
+                break;
+            case GameState.pause:
+            case GameState.gameOver:
+            default:
+                break;
         }
     }
 
@@ -38,7 +60,7 @@ export default function Home() {
             <main id="mainContent">
                 <div className="head">
                     <button onClick={() => notify('newGame')}>New game</button>
-                    <button id="mines">10</button>
+                    <button id="mines">{ totalMines - remainingMines }</button>
                     <button id="time">Time 0</button>
                     {/* onChange={() => levelItemChanged(this)} */}
                     <select name="level" id="level">
@@ -75,7 +97,8 @@ export default function Home() {
                 </div>
             </main>
             {/* <div id="stub">Minesweeper</div> */}
-            {/* <div id="blocker"></div> */}
+
+            { displayBlocked ? <div className='blocker'></div> : '' }
 
             <div style={{ display: 'none' }} className="text-wrapper" id="text-wrapper">
                 <div className="form-wrapper">
