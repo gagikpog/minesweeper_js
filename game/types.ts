@@ -28,6 +28,12 @@ export enum ChanelEvents {
     ToggleMine = 'toggleMine',
 }
 
+export enum GameLevels {
+    Beginner = 'beginner',
+    Intermediate = 'intermediate',
+    Advanced = 'advanced'
+}
+
 export enum EventType {
     click = 'leftClick',
     rightClick = 'rightClick'
