@@ -2,6 +2,7 @@ import { createMapItem } from "./mapItem";
 import { GameMap, IPoint } from "../types";
 import { checkBlock } from "./checkBlock";
 import { mapGetter } from "./getters";
+// import { positions } from "./mapGeneratorPoints";
 
 export function generateMap(width: number, height: number): GameMap {
     return Array(height).fill(null).map((_, y) => {
@@ -20,8 +21,8 @@ export function randomfillMap(point: IPoint, width: number, height: number, mine
         const rand = () => {
             const x = Math.floor(Math.random() * 1000) % width;
             const y = Math.floor(Math.random() * 1000) % height;
+            // return nextPos.next().value as IPoint;
             return { x, y };
-            // return nextPos.next().value;
         };
         let r = null;
         let n = 100;

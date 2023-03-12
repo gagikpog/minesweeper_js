@@ -17,6 +17,7 @@ export default function Item(props: IItemProps): JSX.Element {
     const gameState = useSelector((state: RootState) => state.gameState);
     const animationSpeed = useSelector((state: RootState) => state.animationSpeed);
     const [isPushed, setPushed] = useState(false);
+    const [mineShowed, setMineShowed] = useState(false);
 
     const style = {};
 
@@ -25,11 +26,21 @@ export default function Item(props: IItemProps): JSX.Element {
 
     useEffect(() => {
         const subscribeId = Chanel.subscribe(chanelEventGetter(props.row, props.cell), (eventName: ChanelEvents) => {
-            if (eventName === ChanelEvents.TogglePushing) {
-                setPushed(true);
-                setTimeout(() => {
-                    setPushed(false);
-                }, animationSpeed * 6);
+            switch (eventName) {
+                case ChanelEvents.TogglePushing:
+                    setPushed(true);
+                    setTimeout(() => {
+                        setPushed(false);
+                    }, animationSpeed * 6);
+                    break;
+                case ChanelEvents.ToggleMine:
+                    setMineShowed(true)
+                    setTimeout(() => {
+                        setMineShowed(false);
+                    }, animationSpeed * 6);
+                    break;
+                default:
+                    break;
             }
         });
 
@@ -64,7 +75,8 @@ export default function Item(props: IItemProps): JSX.Element {
     }
 
     // if game ended show all mines
-    if ((gameState === GameState.gameWin || gameState === GameState.gameOver) && item.val === ItemValues.mine) {
+    if (mineShowed || (gameState === GameState.gameWin || gameState === GameState.gameOver) &&
+        item.val === ItemValues.mine) {
         classes += ' cell-9'
     }
 

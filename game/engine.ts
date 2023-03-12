@@ -1,6 +1,7 @@
 import { openItem, store, toggleItemFlag } from "../store/main";
 import { Chanel } from "./funcs/chanel";
 import { checkBlock } from "./funcs/checkBlock";
+import { checkNeedSave } from "./funcs/checkNeedSave";
 import { chanelEventGetter, mapGetter } from "./funcs/getters";
 
 import { createMapItem } from "./funcs/mapItem";
@@ -82,7 +83,7 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
     const state = store.getState();
     const item = createMapItem(mapGetter(state.gameMap, point.y, point.x));
     const opened = item.state === ItemState.hidden;
-    let changed = false;
+    const changes = [];
     let gameOver = false;
     if (item.state === ItemState.hidden) {
 
@@ -91,15 +92,27 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
                 boom(point);
                 break;
             case 9:
-                // this.checkNeedSave();
-                gameOver = true;
+                const items = checkNeedSave(item.pos);
+                changes.push(...items);
+                if (items.length === 0) {
+                    gameOver = true;
+                }
                 break;
             default:
                 break;
         }
 
-        changed = true;
-        item.state = ItemState.opened;
+        if (changes.length) {
+            changes.forEach((changeItem) => {
+                if (changeItem.pos.x === item.pos.x && changeItem.pos.y === item.pos.y) {
+                    changeItem.state = ItemState.opened;
+                }
+            });
+        } else {
+            item.state = ItemState.opened;
+            changes.push(item);
+        }
+
 
     } else if (item.state === ItemState.opened) {
         setTimeout(() => {
@@ -107,5 +120,5 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
         }, 0);
     }
 
-    return { item, opened, gameOver, changed };
+    return { item, opened, gameOver, changes };
 }

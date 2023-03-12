@@ -24,7 +24,8 @@ export enum ItemValues {
 }
 
 export enum ChanelEvents {
-    TogglePushing = 'togglePushing'
+    TogglePushing = 'togglePushing',
+    ToggleMine = 'toggleMine',
 }
 
 export enum EventType {
