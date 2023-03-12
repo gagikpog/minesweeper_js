@@ -21,6 +21,7 @@
         height: 100%;
         align-items: center;
         justify-content: center;
+        font-size: var(--game-items-font-size);
     }
 
     &.open {
@@ -101,6 +102,7 @@
         color: black;
         content: "\1F6A9";
         font-weight: 1000;
+        font-size: calc(var(--game-items-font-size) * 0.7);
     }
 
     &-boom::before {

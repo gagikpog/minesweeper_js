@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import { EventType, GameMap, IMapItem } from "../game/types";
 import Item from "./item";
 
@@ -7,12 +8,13 @@ interface IViewProps {
     width: number;
     height: number;
     itemClick: (item: IMapItem | undefined, row: number, cell: number, eventType: EventType) => void;
+    style: CSSProperties;
 }
 
 export default function View(props: IViewProps): JSX.Element {
 
     return (
-        <div>
+        <div style={ props.style }>
             {
                 // TODO: Придумать что то получке
                 Array(props.height).fill(null).map((_, rowIndex) => {

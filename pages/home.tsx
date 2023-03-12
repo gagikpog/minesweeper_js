@@ -59,7 +59,7 @@ export default function Home() {
 
     return (
         <>
-            <main id="mainContent">
+            <main id="mainContent" style={ {'--game-items-font-size': `${blockSize.value * 0.7}px`} }>
                 <div className="head">
                     <button onClick={() => notify('newGame')}>New game</button>
                     <button id="mines">{ totalMines - remainingMines }</button>
@@ -90,6 +90,7 @@ export default function Home() {
                 <div className="scroll-container">
                     {
                         <View
+                            style={{ width: `${blockSize.value * width}px` }}
                             map={gameMap}
                             size={blockSize.value}
                             width={width}
