@@ -1,0 +1,11 @@
+.previewer {
+    color: #fff;
+    font-size: 10vw;
+    text-transform: uppercase;
+    letter-spacing: 0px;
+    transition: letter-spacing 800ms;
+}
+
+.wide {
+    letter-spacing: 8px;
+}

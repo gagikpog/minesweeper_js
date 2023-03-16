@@ -6,7 +6,7 @@ import { GameLevels, GameState, IMapItem, ItemState } from '../game/types';
 import { getLevelSettings } from '../game/funcs/gameLevels';
 
 const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
-const levelData = getLevelSettings(GameLevels.Advanced);
+const levelData = getLevelSettings(GameLevels.Beginner);
 
 const gameSlice = createSlice({
     name: 'game',
@@ -88,6 +88,20 @@ const gameSlice = createSlice({
                 state.time++;
                 setTimeout(() => store.dispatch(runTimer(null)), 1000);
             }
+        },
+        loadGame(state, action) {
+            const data: Partial<RootState> = action.payload;
+            const keys = Object.keys(data) as (keyof RootState)[];
+            keys.forEach((key) => {
+                const value = data[key];
+                if (data.hasOwnProperty(key) && value && typeof state[key] === typeof value) {
+                    state[key] = value as never;
+                }
+            });
+
+            setTimeout(() => {
+                store.dispatch(runTimer(null));
+            }, 0);
         }
     },
     extraReducers: (builder) => {
@@ -127,7 +141,8 @@ export const {
     gameOver,
     newGame,
     changeLevel,
-    runTimer
+    runTimer,
+    loadGame
 } = gameSlice.actions;
 
 export { openItem };

@@ -1,5 +1,6 @@
 export const MAX_GAME_WIDTH = 30;
 export const MAX_GAME_HEIGHT = 16;
+export const LOCAL_STORE_DATA_KEY = 'minesweeper-data';
 
 // https://1drv.ms/x/s!AhziwSL0ZF01gd9uMWxIHcpM_EygMg?e=44RjtA
 
