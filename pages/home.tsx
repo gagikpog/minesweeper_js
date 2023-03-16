@@ -3,15 +3,15 @@ import { Inter } from '@next/font/google'
 import { useMemo, } from 'react';
 import View from '../components/view';
 import { useDispatch, useSelector } from 'react-redux';
-import { openItem, RootState, runNewGame, toggleItemFlag } from '../store/main';
+import { openItem, RootState, runNewGame, store, toggleItemFlag } from '../store/main';
 import { EventType, GameState, IMapItem, ItemState } from '../game/types';
 import Header from '../components/header';
+import { mapGetter } from '../game/funcs/getters';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
     const dispatch = useDispatch();
 
-    const gameMap = useSelector((state: RootState) => state.gameMap);
     const width = useSelector((state: RootState) => state.width);
     const height = useSelector((state: RootState) => state.height);
     const blockSize = useSelector((state: RootState) => state.blockSize);
@@ -20,8 +20,11 @@ export default function Home() {
     const godMode = useSelector((state: RootState) => state.godMode);
 
 
-    const itemClick = useMemo(() => (item: IMapItem | undefined, row: number, cell: number, eventType: EventType) => {
+    const itemClick = useMemo(() => (row: number, cell: number, eventType: EventType) => {
 
+        const gameMap = store.getState().gameMap
+
+        const item = mapGetter(gameMap, row, cell);
         switch (gameState) {
             case GameState.newGame:
                 dispatch(runNewGame({ point: { x: cell, y: row }}));
@@ -55,7 +58,6 @@ export default function Home() {
                     {
                         <View
                             style={{ width: `${blockSize.value * width}px` }}
-                            map={gameMap}
                             size={blockSize.value}
                             width={width}
                             height={height}

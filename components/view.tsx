@@ -1,17 +1,21 @@
 import { CSSProperties } from "react";
-import { EventType, GameMap, IMapItem } from "../game/types";
+import { useSelector } from "react-redux";
+import { mapGetter } from "../game/funcs/getters";
+import { EventType, IMapItem } from "../game/types";
+import { RootState } from "../store/main";
 import Item from "./item";
 
 interface IViewProps {
-    map: GameMap;
     size: number;
     width: number;
     height: number;
-    itemClick: (item: IMapItem | undefined, row: number, cell: number, eventType: EventType) => void;
+    itemClick: (row: number, cell: number, eventType: EventType) => void;
     style: CSSProperties;
 }
 
 export default function View(props: IViewProps): JSX.Element {
+
+    const gameMap = useSelector((state: RootState) => state.gameMap);
 
     return (
         <div style={ props.style }>
@@ -22,9 +26,11 @@ export default function View(props: IViewProps): JSX.Element {
                         <div key={rowIndex} className='tw-flex'>
                             {
                                 Array(props.width).fill(null).map((_, cellIndex) => {
+                                    const item = mapGetter(gameMap, rowIndex, cellIndex);
                                     return <Item
                                         key={cellIndex}
-                                        map={props.map}
+                                        val={ item?.val }
+                                        state={ item?.state }
                                         row={rowIndex}
                                         cell={cellIndex}
                                         onClick={props.itemClick} />
