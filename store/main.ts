@@ -1,5 +1,5 @@
 import { createSlice, configureStore, createAsyncThunk } from '@reduxjs/toolkit';
-import { asyncOpenItem } from '../game/engine';
+import { asyncOpenItem, updateStateOnItemsOpen } from '../game/engine';
 import { generateMap, randomfillMap } from '../game/funcs/mapGenerate';
 import { mapGetter } from '../game/funcs/getters';
 import { GameLevels, GameState, IMapItem, ItemState } from '../game/types';
@@ -102,32 +102,18 @@ const gameSlice = createSlice({
             setTimeout(() => {
                 store.dispatch(runTimer(null));
             }, 0);
+        },
+        openItemsList(state, action) {
+            updateStateOnItemsOpen(state, action.payload);
         }
     },
     extraReducers: (builder) => {
         builder.addCase(openItem.fulfilled, (state, action) => {
-            if (action.payload.opened) {
-                state.openedCount++;
-            }
-
-            if (action.payload.gameOver) {
-                setTimeout(() => {
-                    store.dispatch(gameOver(null));
-                }, 0);
-            }
-
-            action.payload.changes?.forEach((item: IMapItem): void => {
-                state.gameMap[item.pos.y][item.pos.x] = item;
+            updateStateOnItemsOpen(state, {
+                openedCount: action.payload.opened ? 1 : 0,
+                changes: action.payload.changes,
+                gameOver: action.payload.gameOver
             });
-
-            const { totalMines, width, height, openedCount } = state;
-
-            if (width * height - totalMines - openedCount === 0) {
-                setTimeout(() => {
-                    store.dispatch(gameWin(null));
-                }, 0);
-            }
-
         });
     }
 });
@@ -142,7 +128,8 @@ export const {
     newGame,
     changeLevel,
     runTimer,
-    loadGame
+    loadGame,
+    openItemsList
 } = gameSlice.actions;
 
 export { openItem };
