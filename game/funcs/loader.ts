@@ -1,6 +1,7 @@
 import { RootState } from "../../store/main";
 import { LOCAL_STORE_DATA_KEY } from "../constants";
 import { getLevelSettings } from "./gameLevels";
+import { debounce } from "./debounce";
 
 function isClient(): boolean {
     return typeof window !== 'undefined';
@@ -28,7 +29,7 @@ export function loadGameState(): Promise<Partial<RootState>> {
     });
 }
 
-export function saveGameState(data: Partial<RootState>): void {
+function save(data: Partial<RootState>): void {
     if (isClient()) {
         try {
             const dataStr = JSON.stringify(data);
@@ -38,3 +39,5 @@ export function saveGameState(data: Partial<RootState>): void {
         }
     }
 }
+
+export const saveGameState = debounce(save, 250);
