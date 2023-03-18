@@ -2,7 +2,7 @@ import { createSlice, configureStore, createAsyncThunk } from '@reduxjs/toolkit'
 import { asyncOpenItem, updateStateOnItemsOpen } from '../game/engine';
 import { generateMap, randomfillMap } from '../game/funcs/mapGenerate';
 import { mapGetter } from '../game/funcs/getters';
-import { GameLevels, GameState, IMapItem, ItemState } from '../game/types';
+import { GameLevels, GameState, ItemState } from '../game/types';
 import { getLevelSettings } from '../game/funcs/gameLevels';
 
 const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
@@ -21,6 +21,7 @@ const gameSlice = createSlice({
         },
         userName: '',
         time: 0,
+        timerRunningId: 0,
         level: levelData.level,
         gameState: GameState.newGame,
         displayBlocked: false,
@@ -84,9 +85,17 @@ const gameSlice = createSlice({
             }, 0);
         },
         runTimer(state, action) {
+            if (!state.timerRunningId && state.gameState === GameState.game) {
+                state.time++;
+                state.timerRunningId = setInterval(() => store.dispatch(stepTimer(null)), 1000) as unknown as number;
+            }
+        },
+        stepTimer(state, action) {
             if (state.gameState === GameState.game) {
                 state.time++;
-                setTimeout(() => store.dispatch(runTimer(null)), 1000);
+            } else if (state.timerRunningId) {
+                clearInterval(state.timerRunningId);
+                state.timerRunningId = 0;
             }
         },
         loadGame(state, action) {
@@ -128,6 +137,7 @@ export const {
     newGame,
     changeLevel,
     runTimer,
+    stepTimer,
     loadGame,
     openItemsList
 } = gameSlice.actions;

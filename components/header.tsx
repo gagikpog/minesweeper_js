@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GameLevels } from "../game/types";
 import { changeLevel, newGame, RootState } from "../store/main";
+import Timer from "./timer";
 
 interface IProps {
 
@@ -13,7 +14,6 @@ export default function Header(props: IProps) {
 
     const totalMines = useSelector((state: RootState) => state.totalMines);
     const remainingMines = useSelector((state: RootState) => state.remainingMines);
-    const time = useSelector((state: RootState) => state.time);
     const level = useSelector((state: RootState) => state.level);
 
     const [options] = useState(() => [
@@ -26,8 +26,7 @@ export default function Header(props: IProps) {
         <div className="head">
             <button onClick={() => dispatch(newGame(null))}>New game</button>
             <button>{ totalMines - remainingMines }</button>
-            <button>Time {time}</button>
-
+            <Timer />
             <select value={level} onChange={(event) => dispatch(changeLevel(event.target.value))} >
                 {options.map((option) => (
                     <option key={option.value} value={option.value}>
