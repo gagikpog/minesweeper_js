@@ -51,7 +51,7 @@ export default function Home() {
 
     return (
         <>
-            <main id="mainContent" style={ {'--game-items-font-size': `${blockSize.value * 0.7}px`} }>
+            <main id="mainContent" style={ {'--game-items-size': blockSize.value} }>
                 <Header />
 
                 <div className="scroll-container">

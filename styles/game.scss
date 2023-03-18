@@ -1,10 +1,12 @@
 .cell {
+    --game-items-size-px: calc(var(--game-items-size) * 1px);
     text-align: center;
     position: relative;
     background-color: #50A0A0;
     outline: outset 3px #60b8b8;
     outline-offset: -3px;
-    width: 100%;
+    width: var(--game-items-size-px);
+    height: var(--game-items-size-px);
 
     &::before {
         display: flex;
@@ -21,7 +23,7 @@
         height: 100%;
         align-items: center;
         justify-content: center;
-        font-size: var(--game-items-font-size);
+        font-size: calc(var(--game-items-size-px) * 0.7);
     }
 
     &.open {
@@ -102,7 +104,7 @@
         color: black;
         content: "\1F6A9";
         font-weight: 1000;
-        font-size: calc(var(--game-items-font-size) * 0.7);
+        font-size: calc(var(--game-items-size-px) * 0.5);
     }
 
     &-boom::before {
@@ -113,7 +115,4 @@
         background-repeat: no-repeat;
     }
 
-    &-content {
-        padding-top: 100%;
-    }
 }

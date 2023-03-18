@@ -80,11 +80,17 @@ export default memo(function Item(props: IItemProps): JSX.Element {
         classes += ' cell-9'
     }
 
-    const onClick = (event: EventType) => props.onClick(props.row, props.cell, event);
+    const onClick = (event: MouseEvent, eventName: EventType) => {
+        event.stopPropagation();
+        event.preventDefault();
+        props.onClick(props.row, props.cell, eventName);
+    };
 
     return (
-        <div style={style} className={classes} onClick={() => onClick(EventType.click)} onContextMenu={() => onClick(EventType.rightClick)}>
-            <div className="cell-content"></div>
+        <div style={style}
+            className={classes}
+            onClick={(e) => onClick(e, EventType.click)}
+            onContextMenu={(e) => onClick(e, EventType.rightClick)}>
         </div>
     );
 });
