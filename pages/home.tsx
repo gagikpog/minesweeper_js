@@ -51,20 +51,22 @@ export default function Home() {
 
     return (
         <>
-            <main id="mainContent" style={ {'--game-items-size': blockSize.value} }>
-                <Header />
+            <div className='tw-w-full tw-h-full tw-flex tw-flex-col tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
+                <div className='tw-max-w-full tw-max-h-full tw-flex tw-flex-col'>
+                    <Header />
 
-                <div className="scroll-container">
-                    {
-                        <View
-                            style={{ width: `${blockSize.value * width}px` }}
-                            size={blockSize.value}
-                            width={width}
-                            height={height}
-                            itemClick={itemClick}/>
-                    }
+                    <main className="scroll-container">
+                        {
+                            <View
+                                style={{ width: `${blockSize.value * width}px` }}
+                                size={blockSize.value}
+                                width={width}
+                                height={height}
+                                itemClick={itemClick}/>
+                        }
+                    </main>
                 </div>
-            </main>
+            </div>
             {/* <div id="stub">Minesweeper</div> */}
 
             { displayBlocked ? <div className='blocker'></div> : '' }

@@ -29,8 +29,10 @@ export default function Previewer(props: IProps) {
     }, []);
 
     return loaded ? props.children : (
-        <div className={`${styles.previewer} ${ animation ? styles.wide : ''}`}>
-            Minesweeper
+        <div className="tw-flex tw-w-full tw-h-full tw-items-center tw-justify-center">
+            <div className={`${styles.previewer} ${ animation ? styles.wide : ''}`}>
+                Minesweeper
+            </div>
         </div>
     );
 }
