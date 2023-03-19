@@ -8,6 +8,12 @@
   margin: 0;
 }
 
+:root {
+  --background-color: #1E1E1E;
+  --background-color-header: #363636;
+  --text-color: #fff;
+}
+
 #__next,
 html,
 body {
@@ -18,11 +24,12 @@ body {
 
 #__next {
   display: flex;
-  background-color: #1E1E1E;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 #stub {
-  color: #fff;
+  color: var(--text-color);
   font-size: 10vw;
   text-transform: uppercase;
 }
