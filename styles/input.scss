@@ -1,0 +1,26 @@
+input {
+    &[type=email],
+    &[type=text] {
+        width: 100%;
+        border: 2px solid var(--border-color);
+        border-radius: 5px;
+        margin: 3px 0;
+        outline: none;
+        padding: 8px;
+        box-sizing: border-box;
+        transition: .3s;
+        color: var(--text-color);
+        background-color: var(--background-color);
+
+
+        &:focus {
+            border-color: var(--input-border-focus-color);
+            box-shadow: 0 0 3px 0 var(--input-border-focus-color);
+
+            &:invalid {
+                border-color: var(--input-border-focus-invalid-color);
+                box-shadow: 0 0 3px 0 var(--input-border-focus-invalid-color);
+            }
+        }
+    }
+}

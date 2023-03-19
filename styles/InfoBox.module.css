@@ -1,0 +1,12 @@
+.message {
+    top: -30px;
+    left: 0;
+    background-color: var(--background-color-header);
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.danger {
+    border: 2px solid var(--input-border-focus-invalid-color);
+}

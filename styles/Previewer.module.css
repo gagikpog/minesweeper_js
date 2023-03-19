@@ -1,6 +1,7 @@
 .previewer {
-    color: #fff;
+    color: var(--text-color);
     font-size: 10vw;
+    font-family: "Times New Roman";
     text-transform: uppercase;
     letter-spacing: 0px;
     transition: letter-spacing 800ms;

@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { IDialogProps } from "../../dialog/dialogProvider";
 import styles from '../../styles/DialogTemplate.module.css';
 
-interface IProps extends IDialogProps {
+interface IProps extends Omit<IDialogProps, 'sendResult'> {
     closeButtonVisible?: boolean;
     children: ReactElement;
 }

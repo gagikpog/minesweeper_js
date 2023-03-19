@@ -34,6 +34,7 @@
 .close {
     font-size: 25px;
     font-weight: bold;
+    font-family: "Times New Roman";
     color: var(--text-color);
     cursor: pointer;
     background-color: var(--background-color-header);
