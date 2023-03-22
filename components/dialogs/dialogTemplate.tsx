@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { IDialogProps } from "../../dialog/dialogProvider";
+import { IDialogProps } from "../../dialog/contextController";
 import styles from '../../styles/DialogTemplate.module.css';
 
 interface IProps extends Omit<IDialogProps, 'sendResult'> {

@@ -1,5 +1,5 @@
 import { FormEvent, useRef, useState } from 'react';
-import { IDialogProps } from '../../dialog/dialogProvider';
+import { IDialogProps } from '../../dialog/contextController';
 import DialogTemplate from './dialogTemplate';
 import styles from '../../styles/Register.module.css';
 import { InfoBox } from '../infoBox';

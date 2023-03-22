@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { DialogContext, IDialog } from "./dialogProvider";
+import { IDialog } from "./contextController";
+import { DialogContext } from "./dialogProvider";
 
 export function useDialog(): [<TResult>(dialog: IDialog<TResult>) => void, (closeId: string) => void] {
     const { open, close } = useContext(DialogContext);
