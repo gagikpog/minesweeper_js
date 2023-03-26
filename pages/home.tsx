@@ -53,9 +53,9 @@ export default function Home() {
         <>
             <div className={`tw-h-full tw-w-full tw-flex ${ isPhone ? 'tw-flex-col-reverse' : 'tw-flex-col'}`}>
                 <Header />
-                <main className='tw-flex tw-w-full tw-h-full tw-min-h-full  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
-                    <div className='tw-max-w-full tw-max-h-full' >
-                        <div className="scroll-container">
+                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
+                    <div className='tw-max-w-full tw-max-h-full tw-flex' >
+                        <div className="scroll-container tw-p-20">
                             <View
                                 style={{ width: `${blockSize.value * width}px` }}
                                 size={blockSize.value}
