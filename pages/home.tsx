@@ -7,7 +7,8 @@ import { openItem, RootState, runNewGame, store, toggleItemFlag } from '../store
 import { EventType, GameState, IMapItem, ItemState } from '../game/types';
 import Header from '../components/header';
 import { mapGetter } from '../game/funcs/getters';
-const inter = Inter({ subsets: ['latin'] })
+import { isPhone } from '../game/detection';
+const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
     const dispatch = useDispatch();
@@ -18,7 +19,6 @@ export default function Home() {
     const gameState = useSelector((state: RootState) => state.gameState);
     const displayBlocked = useSelector((state: RootState) => state.displayBlocked);
     const godMode = useSelector((state: RootState) => state.godMode);
-
 
     const itemClick = useMemo(() => (row: number, cell: number, eventType: EventType) => {
 
@@ -51,37 +51,27 @@ export default function Home() {
 
     return (
         <>
-            <div className='tw-w-full tw-h-full tw-flex tw-flex-col tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
-                <div className='tw-max-w-full tw-max-h-full tw-flex tw-flex-col'>
-                    <Header />
-
-                    <main className="scroll-container">
-                        {
+            <div className={`tw-h-full tw-w-full tw-flex ${ isPhone ? 'tw-flex-col-reverse' : 'tw-flex-col'}`}>
+                <Header />
+                <main className='tw-flex tw-w-full tw-h-full tw-min-h-full  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
+                    <div className='tw-max-w-full tw-max-h-full' >
+                        <div className="scroll-container">
                             <View
                                 style={{ width: `${blockSize.value * width}px` }}
                                 size={blockSize.value}
                                 width={width}
                                 height={height}
                                 itemClick={itemClick}/>
-                        }
-                    </main>
-                </div>
+                        </div>
+                    </div>
+                </main>
             </div>
-            {/* <div id="stub">Minesweeper</div> */}
 
             { displayBlocked ? <div className='blocker'></div> : '' }
 
-            {/* <div style={{ display: 'none' }} className="text-wrapper" id="text-wrapper">
-                <div className="form-wrapper">
-                    <input required name="userName" placeholder="Enter name" type="text" />
-                    <div className="form-remember">
-                        <label htmlFor="rememberName">Remember this name</label>
-                        <input name="rememberName" type="checkbox" />
-                    </div>
-                </div>
-            </div> */}
-
             <div className="cell-9"></div>
+
+            {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" ></link> */}
 
             {/* <div id="leaderBoardDialog" style={{ display: 'none' }} className="leader-board__main">
                 <div className="leader-board__head">
@@ -118,9 +108,6 @@ export default function Home() {
                 </div>
                 <div id="leaderBoardBody" className="leader-board__body"></div>
             </div> */}
-            {/* <script src="https://gagikpog.ru/data/libs/quicksettings.min.js"></script>
-            <script src="https://gagikpog.ru/confirm/confirm.min.js"></script> */}
-
         </>
     )
 }

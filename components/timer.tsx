@@ -1,7 +1,17 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store/main";
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/main';
 
-export default function Timer() {
+interface IProps {
+    className?: string;
+}
+
+export default function Timer(props: IProps) {
     const time = useSelector((state: RootState) => state.time);
-    return <button>Time {time}</button>;
+    return (
+        <div className={`tw-flex tw-justify-center tw-items-center tw-p-8 ${props.className || ''}`}>
+            <div>
+                <i className='fa fa-clock-o tw-ml-4'></i> {time}
+            </div>
+        </div>
+    );
 }

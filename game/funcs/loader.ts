@@ -2,6 +2,7 @@ import { RootState } from "../../store/main";
 import { LOCAL_STORE_DATA_KEY } from "../constants";
 import { getLevelSettings } from "./gameLevels";
 import { debounce } from "./debounce";
+import { isClient } from "../detection";
 
 const saveItems: (keyof RootState)[] = [
     'blockSize',
@@ -14,10 +15,6 @@ const saveItems: (keyof RootState)[] = [
     'openedCount',
     'gameMap'
 ];
-
-function isClient(): boolean {
-    return typeof window !== 'undefined';
-}
 
 export function loadGameState(): Promise<Partial<RootState>> {
     let data: Partial<RootState> = {};

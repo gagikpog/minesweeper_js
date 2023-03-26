@@ -11,11 +11,6 @@
     src: url("../public/fonts/ArchivoBlack-Regular.ttf");
 }
 
-#game {
-    border-spacing: 0;
-    margin: 0 auto;
-    padding: 0 15px;
-}
 .scroll-container {
     width: 100%;
     overflow: scroll;
@@ -25,7 +20,6 @@
     display: none;
 }
 
-
 .blocker {
     width: 100vw;
     height: 100vh;
@@ -33,37 +27,6 @@
     position: fixed;
     left: 0;
     top: 0;
-}
-
-select {
-    outline: none;
-    padding: 10px;
-    background-color: #1E1E1E;
-    color: #fff;
-}
-
-
-
-.head {
-    border: 1px solid gray;
-    padding: 5px;
-    display: flex;
-}
-.head button {
-    outline: none;
-    padding: 8px;
-    background-color: #1E1E1E;
-    color: #fff;
-    margin: 0 5px;
-    font-family: 'ArchivoBlack';
-}
-
-.head-menu__leader-board {
-    width: 30px;
-    fill: #fff;
-    cursor: pointer;
-    border: 2px solid #f0f0f0;
-    min-width: 15px;
 }
 
 /* settings */
@@ -128,25 +91,7 @@ select {
 }
 
 @media screen and (max-width: 446px) {
-    .head button {
-        margin: 0 3px;
-        padding: 3px;
-    }
-    .head {
-        padding: 3px;
-    }
-    .head #settings {
-        padding: 1px;
-    }
-    .head select {
-        max-width: 134px;
-        padding: 3px;
-    }
     .qs_main {
         width: 100%!important;
-    }
-
-    #game {
-        padding: 100px 50px 50px;
     }
 }

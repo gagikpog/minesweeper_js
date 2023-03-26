@@ -64,12 +64,3 @@ window.notify = function (eventName) {
         }
     });
 }
-
-window.isTouchDevice = function () {
-    try {
-        document.createEvent("TouchEvent");
-        return true;
-    } catch (e) {
-        return false;
-    }
-}

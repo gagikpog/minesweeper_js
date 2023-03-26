@@ -1,0 +1,29 @@
+.popup {
+    background-color: var(--background-color-header);
+    color: var(--text-color);
+    border-radius: 4px;
+}
+
+.center {
+    left: 10px;
+    right: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.sticky {
+    top: 100%;
+}
+
+.sticky.right {
+    left: 0;
+}
+
+.sticky.left {
+    right: 0;
+}
+
+.selected {
+    background-color: var(--background-color);
+    border-radius: 4px;
+}

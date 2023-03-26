@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { GameLevels } from "../game/types";
-import { changeLevel, newGame, RootState } from "../store/main";
-import Timer from "./timer";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { GameLevels } from '../game/types';
+import { changeLevel, newGame, RootState } from '../store/main';
+import Select from './select';
+import Timer from './timer';
+import styles from '../styles/Header.module.css';
 
 interface IProps {
 
@@ -23,17 +25,25 @@ export default function Header(props: IProps) {
     ]);
 
     return (
-        <header className="head">
-            <button onClick={() => dispatch(newGame(null))}>New game</button>
-            <button>{ totalMines - remainingMines }</button>
-            <Timer />
-            <select value={level} onChange={(event) => dispatch(changeLevel(event.target.value))} >
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
-                        {option.text}
-                    </option>
-                ))}
-            </select>
+        <header className={`${ styles.head } tw-flex tw-p-8`}>
+
+            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(newGame(null))}>
+                <div>
+                    <i className='fa fa-repeat'></i>
+                </div>
+            </div>
+
+            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-ml-auto'>
+                <div>
+                    <i className='fa fa-flag-o'></i> { totalMines - remainingMines }
+                </div>
+            </div>
+
+            <Timer className='tw-mr-auto'/>
+
+            <Select horizontalAlign='left' value={level} icon='fa-navicon' items={options} onChange={(value) => dispatch(changeLevel(value))}></Select>
+
+            {/* bars gear */}
 
             {/* <button id="settings" onClick={() => notify('showSettings')}>
                 &#9881;

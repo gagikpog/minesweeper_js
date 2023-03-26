@@ -9,9 +9,7 @@ Promise.all([
 ]).then(([main]) => {
     main.documentLoaded(resolver);
 
-    if (isTouchDevice()) {
-        import('./js/zoom.js');
-    }
+    import('./js/zoom.js');
 });
 
 if ('serviceWorker' in navigator) {
