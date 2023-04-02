@@ -21,7 +21,7 @@ export default function Previewer(props: IProps) {
             store.dispatch(loadGame(data));
 
             store.subscribe(() => {
-                saveGameState(store.getState());
+                saveGameState(store.getState().game);
             });
 
             setLoaded(true);

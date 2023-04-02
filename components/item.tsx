@@ -15,8 +15,8 @@ interface IItemProps {
 
 export default memo(function Item(props: IItemProps): JSX.Element {
 
-    const gameState = useSelector((state: RootState) => state.gameState);
-    const animationSpeed = useSelector((state: RootState) => state.animationSpeed);
+    const gameState = useSelector((state: RootState) => state.game.gameState);
+    const animationSpeed = useSelector((state: RootState) => state.game.animationSpeed);
     const [isPushed, setPushed] = useState(false);
     const [mineShowed, setMineShowed] = useState(false);
 

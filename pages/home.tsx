@@ -13,16 +13,16 @@ const inter = Inter({ subsets: ['latin'] });
 export default function Home() {
     const dispatch = useDispatch();
 
-    const width = useSelector((state: RootState) => state.width);
-    const height = useSelector((state: RootState) => state.height);
-    const blockSize = useSelector((state: RootState) => state.blockSize);
-    const gameState = useSelector((state: RootState) => state.gameState);
-    const displayBlocked = useSelector((state: RootState) => state.displayBlocked);
-    const godMode = useSelector((state: RootState) => state.godMode);
+    const width = useSelector((state: RootState) => state.game.width);
+    const height = useSelector((state: RootState) => state.game.height);
+    const blockSize = useSelector((state: RootState) => state.game.blockSize);
+    const gameState = useSelector((state: RootState) => state.game.gameState);
+    const displayBlocked = useSelector((state: RootState) => state.game.displayBlocked);
+    const godMode = useSelector((state: RootState) => state.game.godMode);
 
     const itemClick = useMemo(() => (row: number, cell: number, eventType: EventType) => {
 
-        const gameMap = store.getState().gameMap
+        const gameMap = store.getState().game.gameMap
 
         const item = mapGetter(gameMap, row, cell);
         switch (gameState) {

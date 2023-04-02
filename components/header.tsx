@@ -14,9 +14,9 @@ export default function Header(props: IProps) {
 
     const dispatch = useDispatch();
 
-    const totalMines = useSelector((state: RootState) => state.totalMines);
-    const remainingMines = useSelector((state: RootState) => state.remainingMines);
-    const level = useSelector((state: RootState) => state.level);
+    const totalMines = useSelector((state: RootState) => state.game.totalMines);
+    const remainingMines = useSelector((state: RootState) => state.game.remainingMines);
+    const level = useSelector((state: RootState) => state.game.level);
 
     const [options] = useState(() => [
         { value: GameLevels.Beginner, text: 'Beginner' },

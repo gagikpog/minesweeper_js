@@ -1,3 +1,4 @@
+import { TGameState } from "../store/gameSlice";
 import { gameOver, gameWin, openItem, openItemsList, RootState, store, toggleItemFlag } from "../store/main";
 import { callCollect } from "./funcs/callCollect";
 import { Chanel } from "./funcs/chanel";
@@ -11,11 +12,11 @@ import { ChanelEvents, IMapItem, IPoint, ItemState, ItemValues } from "./types";
 const addOpenItemCollect = callCollect<{ point: IPoint }>(openItemCollect, 1);
 
 function boom(point: IPoint): void {
-    const { animationSpeed, gameMap } = store.getState();
+    const { animationSpeed, gameMap } = store.getState().game;
     const item = mapGetter(gameMap, point.y, point.x);
     if (item.state === ItemState.hidden && item.val === ItemValues.empty) {
         setTimeout(() => {
-            const { gameMap, width, height } = store.getState();
+            const { gameMap, width, height } = store.getState().game;
             checkBlock(point, width, height, gameMap, (_item: IMapItem) => {
                 if (_item.state === ItemState.hidden) {
                     addOpenItemCollect({ point: _item?.pos });
@@ -33,7 +34,7 @@ function neighborOpen(point: IPoint): void {
         height,
         godMode,
         animationSpeed
-    } = store.getState();
+    } = store.getState().game;
 
     const item = mapGetter(gameMap, point.y, point.x);
 
@@ -83,7 +84,7 @@ function neighborOpen(point: IPoint): void {
 
 export function asyncOpenItem({ point }: { point: IPoint }) {
 
-    const state = store.getState();
+    const state = store.getState().game;
     const item = createMapItem(mapGetter(state.gameMap, point.y, point.x));
     const opened = item.state === ItemState.hidden;
     const changes = [];
@@ -131,7 +132,7 @@ function openItemCollect(data: { point: IPoint }[]): void {
     const itemCache: {[key: string]: number} = {};
     const pointCache: {[key: string]: boolean} = {};
 
-    const { gameMap } = store.getState();
+    const { gameMap } = store.getState().game;
 
     const isHidden = (point: IPoint ) => mapGetter(gameMap, point.y, point.x)?.state === ItemState.hidden;
 
@@ -173,7 +174,7 @@ function openItemCollect(data: { point: IPoint }[]): void {
     store.dispatch(openItemsList(res));
 }
 
-export function updateStateOnItemsOpen(state: RootState, data: { gameOver: boolean, changes: IMapItem[], openedCount: number}): void {
+export function updateStateOnItemsOpen(state: TGameState, data: { gameOver: boolean, changes: IMapItem[], openedCount: number}): void {
     if (data.openedCount) {
         state.openedCount += data.openedCount;
     }

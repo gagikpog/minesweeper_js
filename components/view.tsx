@@ -15,7 +15,7 @@ interface IViewProps {
 
 export default function View(props: IViewProps): JSX.Element {
 
-    const gameMap = useSelector((state: RootState) => state.gameMap);
+    const gameMap = useSelector((state: RootState) => state.game.gameMap);
 
     const items = useMemo(() => {
         return Array(props.height * props.width).fill(null);

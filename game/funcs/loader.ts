@@ -1,10 +1,10 @@
-import { RootState } from "../../store/main";
 import { LOCAL_STORE_DATA_KEY } from "../constants";
 import { getLevelSettings } from "./gameLevels";
 import { debounce } from "./debounce";
 import { isClient } from "../detection";
+import { TGameState } from "../../store/gameSlice";
 
-const saveItems: (keyof RootState)[] = [
+const saveItems: (keyof TGameState)[] = [
     'blockSize',
     'userName',
     'time',
@@ -16,8 +16,8 @@ const saveItems: (keyof RootState)[] = [
     'gameMap'
 ];
 
-export function loadGameState(): Promise<Partial<RootState>> {
-    let data: Partial<RootState> = {};
+export function loadGameState(): Promise<Partial<TGameState>> {
+    let data: Partial<TGameState> = {};
 
     if (isClient()) {
         try {
@@ -38,10 +38,10 @@ export function loadGameState(): Promise<Partial<RootState>> {
     });
 }
 
-function save(data: Partial<RootState>): void {
+function save(data: Partial<TGameState>): void {
     if (isClient()) {
         try {
-            const state: Partial<RootState> = {}
+            const state: Partial<TGameState> = {}
             saveItems.forEach((key) => {
                 const value = data[key];
                 if (data.hasOwnProperty(key) && value !== undefined) {
