@@ -8,7 +8,8 @@ import { resetTimer, runTimer, stopTimer } from './timerSlice';
 
 export const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
 const levelData = getLevelSettings(GameLevels.Beginner);
-const stopTimerAsync = () => import('./main').then(({store}) => store.dispatch(stopTimer()));
+
+const dispatchAsync = (action: any) => import('./main').then(({store}) => store.dispatch(action));
 
 export const gameSlice = createSlice({
     name: 'game',
@@ -30,7 +31,7 @@ export const gameSlice = createSlice({
             const newMap = randomfillMap(conf.point, state.width, state.height, state.totalMines);
             state.gameMap = newMap;
             state.gameState = GameState.game;
-            import('./main').then(({store}) => store.dispatch(runTimer(null)));
+            dispatchAsync(runTimer(null));
         },
         toggleItemFlag(state, action) {
             const item = mapGetter(state.gameMap, action.payload.point.y, action.payload.point.x);
@@ -47,18 +48,18 @@ export const gameSlice = createSlice({
         },
         gameWin(state, action) {
             state.gameState = GameState.gameWin;
-            stopTimerAsync();
+            dispatchAsync(stopTimer());
         },
         gameOver(state, action) {
             state.gameState = GameState.gameOver;
-            stopTimerAsync();
+            dispatchAsync(stopTimer());
         },
         newGame(state) {
             state.gameState = GameState.newGame;
             state.gameMap = generateMap(0, 0);
             state.remainingMines = 0;
             state.openedCount = 0;
-            import('./main').then(({store}) => store.dispatch(resetTimer()));
+            dispatchAsync(resetTimer());
         },
         changeLevel(state, action) {
             const data = getLevelSettings(action.payload);
@@ -67,9 +68,7 @@ export const gameSlice = createSlice({
             state.height = data.height;
             state.totalMines = data.totalMines;
 
-            setTimeout(() => {
-                import('./main').then(({store}) => store.dispatch(newGame()));
-            }, 0);
+            dispatchAsync(newGame());
         },
         loadGame(state, action) {
             const data: Partial<TGameState> = action.payload;
@@ -82,7 +81,7 @@ export const gameSlice = createSlice({
             });
 
             if (state.gameState === GameState.game) {
-                import('./main').then(({store}) => store.dispatch(runTimer(null)));
+                dispatchAsync(runTimer(null));
             }
         },
         openItemsList(state, action) {

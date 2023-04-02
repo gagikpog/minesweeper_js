@@ -9,12 +9,12 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Index() {
     return (
-        <DialogProvider>
-            <Provider store={store}>
+        <Provider store={store}>
+            <DialogProvider>
                 <Previewer>
                     <Home />
                 </Previewer>
-            </Provider>
-        </DialogProvider>
+            </DialogProvider>
+        </Provider>
     )
 }

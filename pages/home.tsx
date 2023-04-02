@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import styles from '../styles/Home.module.css';
 import { Inter } from '@next/font/google'
 import { useMemo, } from 'react';
 import View from '../components/view';
@@ -8,7 +8,6 @@ import {  RootState, store } from '../store/main';
 import { EventType, GameState, ItemState } from '../game/types';
 import Header from '../components/header';
 import { mapGetter } from '../game/funcs/getters';
-import { isPhone } from '../game/detection';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
@@ -52,7 +51,7 @@ export default function Home() {
 
     return (
         <>
-            <div className={`tw-h-full tw-w-full tw-flex ${ isPhone ? 'tw-flex-col-reverse' : 'tw-flex-col'}`}>
+            <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`}>
                 <Header />
                 <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
                     <div className='tw-max-w-full tw-max-h-full tw-flex' >

@@ -6,6 +6,7 @@ import { changeLevel, newGame } from '../store/gameSlice';
 import Select from './select';
 import Timer from './timer';
 import styles from '../styles/Header.module.css';
+import { showStatistics } from '../store/statisticSlice';
 
 interface IProps {
 
@@ -42,9 +43,15 @@ export default function Header(props: IProps) {
 
             <Timer className='tw-mr-auto'/>
 
+            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(showStatistics())}>
+                <div>
+                    <i className='fa fa-rocket'></i>
+                </div>
+            </div>
+
             <Select horizontalAlign='left' value={level} icon='fa-navicon' items={options} onChange={(value) => dispatch(changeLevel(value))}></Select>
 
-            {/* bars gear */}
+            {/* fa-book fa-wrench fa-rocket */}
 
             {/* <button id="settings" onClick={() => notify('showSettings')}>
                 &#9881;

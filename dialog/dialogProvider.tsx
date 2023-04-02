@@ -1,7 +1,7 @@
 import { createContext, ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 import styles from '../styles/DialogProvider.module.css';
 import { ContextController } from "./contextController";
-const controller = new ContextController();
+export const controller = new ContextController();
 export const DialogContext = createContext(controller);
 
 interface IProps {

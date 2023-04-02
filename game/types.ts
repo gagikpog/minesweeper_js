@@ -46,3 +46,20 @@ export interface IPoint {
     x: number;
     y: number;
 }
+
+export enum ServiceStatus {
+    Success = 'done',
+    Error = 'error'
+}
+
+export interface IStatisticsItem {
+    date: string;
+    name: string;
+    time: string;
+}
+
+export interface IServiceResult<TRes> {
+    data: TRes;
+    message: string;
+    status: ServiceStatus;
+}

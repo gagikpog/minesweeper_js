@@ -3,6 +3,8 @@ import { TSettingsState } from "../store/settingsSlice";
 import { TTimerState } from "../store/timerSlice";
 import { TUserState } from "../store/userSlice";
 
+export const API_ROOT = '/';
+// export const API_ROOT = 'https://minesweeper.gagikpog.ru/';
 export const MAX_GAME_WIDTH = 30;
 export const MAX_GAME_HEIGHT = 16;
 // Local store keys

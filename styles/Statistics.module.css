@@ -1,0 +1,12 @@
+.selected {
+    background-color: var(--background-color-header);
+    border-radius: 4px;
+}
+
+.grid {
+    grid-template-columns: fit-content(20px) 1fr min-content min-content;
+}
+
+.noWrap {
+    white-space: nowrap;
+}
