@@ -6,7 +6,7 @@ interface IProps {
 }
 
 export default function Timer(props: IProps) {
-    const time = useSelector((state: RootState) => state.game.time);
+    const time = useSelector((state: RootState) => state.timer.time);
     return (
         <div className={`tw-flex tw-justify-center tw-items-center tw-p-8 ${props.className || ''}`}>
             <div>

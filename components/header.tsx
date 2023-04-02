@@ -28,7 +28,7 @@ export default function Header(props: IProps) {
     return (
         <header className={`${ styles.head } tw-flex tw-p-8`}>
 
-            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(newGame(null))}>
+            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(newGame())}>
                 <div>
                     <i className='fa fa-repeat'></i>
                 </div>

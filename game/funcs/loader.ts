@@ -1,27 +1,16 @@
-import { LOCAL_STORE_DATA_KEY } from "../constants";
+import { GAME_SAVE_ITEMS, LOCAL_STORE_GAME_KEY, LOCAL_STORE_TIMER_KEY, TIMER_SAVE_ITEMS } from "../constants";
 import { getLevelSettings } from "./gameLevels";
 import { debounce } from "./debounce";
 import { isClient } from "../detection";
 import { TGameState } from "../../store/gameSlice";
+import { TTimerState } from "../../store/timerSlice";
 
-const saveItems: (keyof TGameState)[] = [
-    'blockSize',
-    'userName',
-    'time',
-    'level',
-    'gameState',
-    'remainingMines',
-    'godMode',
-    'openedCount',
-    'gameMap'
-];
-
-export function loadGameState(): Promise<Partial<TGameState>> {
-    let data: Partial<TGameState> = {};
+function read<TState>(storeId: string): Partial<TState> {
+    let data: Partial<TState> = {};
 
     if (isClient()) {
         try {
-            const storeData = window.localStorage.getItem(LOCAL_STORE_DATA_KEY);
+            const storeData = window.localStorage.getItem(storeId);
             if (storeData) {
                 data = JSON.parse(storeData);
             }
@@ -29,20 +18,14 @@ export function loadGameState(): Promise<Partial<TGameState>> {
             console.error(error);
         }
     }
-
-    const levelData = data.level ? getLevelSettings(data.level) : {};
-
-    return Promise.resolve({
-        ...data,
-        ...levelData
-    });
+    return data;
 }
 
-function save(data: Partial<TGameState>): void {
+function write<TState>(storeId: string, data: Partial<TState>, items: (keyof TState)[]): void {
     if (isClient()) {
         try {
-            const state: Partial<TGameState> = {}
-            saveItems.forEach((key) => {
+            const state: Partial<TState> = {}
+            items.forEach((key) => {
                 const value = data[key];
                 if (data.hasOwnProperty(key) && value !== undefined) {
                     state[key] = value as never;
@@ -50,11 +33,23 @@ function save(data: Partial<TGameState>): void {
             });
 
             const dataStr = JSON.stringify(state);
-            window.localStorage.setItem(LOCAL_STORE_DATA_KEY, dataStr);
+            window.localStorage.setItem(storeId, dataStr);
         } catch (error) {
             console.error(error);
         }
     }
 }
 
-export const saveGameState = debounce(save, 250);
+export function loadGameState(): Promise<Partial<TGameState>> {
+    const data = read<TGameState>(LOCAL_STORE_GAME_KEY);
+    const levelData = data.level ? getLevelSettings(data.level) : {};
+
+    return Promise.resolve({ ...data, ...levelData });
+}
+
+export function loadTimerState(): Promise<Partial<TTimerState>> {
+    return Promise.resolve(read<TTimerState>(LOCAL_STORE_TIMER_KEY));
+}
+
+export const saveGameState = debounce((data: Partial<TGameState>) => write<TGameState>(LOCAL_STORE_GAME_KEY, data, GAME_SAVE_ITEMS), 250);
+export const saveTimerState = debounce((data: Partial<TTimerState>) => write<TTimerState>(LOCAL_STORE_TIMER_KEY, data, TIMER_SAVE_ITEMS), 250);

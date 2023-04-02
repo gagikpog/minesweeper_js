@@ -1,8 +1,9 @@
 import { ReactElement, useEffect, useState } from "react";
-import { loadGameState, saveGameState } from "../game/funcs/loader";
+import { loadGameState, loadTimerState, saveGameState, saveTimerState } from "../game/funcs/loader";
 import { loadGame } from "../store/gameSlice";
 import { store } from "../store/main";
 import styles from '../styles/Previewer.module.css'
+import { loadTimer } from "../store/timerSlice";
 
 interface IProps {
     children: ReactElement;
@@ -17,12 +18,15 @@ export default function Previewer(props: IProps) {
         setTimeout(startAnimation, 100, true);
         Promise.all([
             loadGameState(),
+            loadTimerState(),
             new Promise((resolve) => setTimeout(resolve, 1000))
-        ]).then(([data]) => {
-            store.dispatch(loadGame(data));
+        ]).then(([gameData, timerData]) => {
+            store.dispatch(loadGame(gameData));
+            store.dispatch(loadTimer(timerData));
 
             store.subscribe(() => {
                 saveGameState(store.getState().game);
+                saveTimerState(store.getState().timer);
             });
 
             setLoaded(true);

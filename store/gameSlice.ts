@@ -4,9 +4,11 @@ import { generateMap, randomfillMap } from '../game/funcs/mapGenerate';
 import { mapGetter } from '../game/funcs/getters';
 import { GameLevels, GameState, ItemState } from '../game/types';
 import { getLevelSettings } from '../game/funcs/gameLevels';
+import { resetTimer, runTimer, stopTimer } from './timerSlice';
 
 export const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
 const levelData = getLevelSettings(GameLevels.Beginner);
+const stopTimerAsync = () => import('./main').then(({store}) => store.dispatch(stopTimer()));
 
 export const gameSlice = createSlice({
     name: 'game',
@@ -20,8 +22,6 @@ export const gameSlice = createSlice({
             default: 25
         },
         userName: '',
-        time: 0,
-        timerRunningId: 0,
         level: levelData.level,
         gameState: GameState.newGame,
         displayBlocked: false,
@@ -39,7 +39,7 @@ export const gameSlice = createSlice({
             const newMap = randomfillMap(conf.point, state.width, state.height, state.totalMines);
             state.gameMap = newMap;
             state.gameState = GameState.game;
-            setTimeout(() => import('./main').then(({store}) => store.dispatch(runTimer(null))), 1000);
+            import('./main').then(({store}) => store.dispatch(runTimer(null)));
         },
         toggleItemFlag(state, action) {
             const item = mapGetter(state.gameMap, action.payload.point.y, action.payload.point.x);
@@ -56,16 +56,18 @@ export const gameSlice = createSlice({
         },
         gameWin(state, action) {
             state.gameState = GameState.gameWin;
+            stopTimerAsync();
         },
         gameOver(state, action) {
             state.gameState = GameState.gameOver;
+            stopTimerAsync();
         },
-        newGame(state, action) {
+        newGame(state) {
             state.gameState = GameState.newGame;
             state.gameMap = generateMap(0, 0);
             state.remainingMines = 0;
             state.openedCount = 0;
-            state.time = 0;
+            import('./main').then(({store}) => store.dispatch(resetTimer()));
         },
         changeLevel(state, action) {
             const data = getLevelSettings(action.payload);
@@ -75,22 +77,8 @@ export const gameSlice = createSlice({
             state.totalMines = data.totalMines;
 
             setTimeout(() => {
-                import('./main').then(({store}) => store.dispatch(newGame(null)));
+                import('./main').then(({store}) => store.dispatch(newGame()));
             }, 0);
-        },
-        runTimer(state, action) {
-            if (!state.timerRunningId && state.gameState === GameState.game) {
-                state.time++;
-                state.timerRunningId = setInterval(() => import('./main').then(({store}) => store.dispatch(stepTimer(null))), 1000) as unknown as number;
-            }
-        },
-        stepTimer(state, action) {
-            if (state.gameState === GameState.game) {
-                state.time++;
-            } else if (state.timerRunningId) {
-                clearInterval(state.timerRunningId);
-                state.timerRunningId = 0;
-            }
         },
         loadGame(state, action) {
             const data: Partial<TGameState> = action.payload;
@@ -102,9 +90,9 @@ export const gameSlice = createSlice({
                 }
             });
 
-            setTimeout(() => {
+            if (state.gameState === GameState.game) {
                 import('./main').then(({store}) => store.dispatch(runTimer(null)));
-            }, 0);
+            }
         },
         openItemsList(state, action) {
             updateStateOnItemsOpen(state, action.payload);
@@ -128,8 +116,6 @@ export const {
     gameOver,
     newGame,
     changeLevel,
-    runTimer,
-    stepTimer,
     loadGame,
     openItemsList
 } = gameSlice.actions;
