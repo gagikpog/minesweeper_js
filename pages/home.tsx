@@ -16,10 +16,10 @@ export default function Home() {
 
     const width = useSelector((state: RootState) => state.game.width);
     const height = useSelector((state: RootState) => state.game.height);
-    const blockSize = useSelector((state: RootState) => state.game.blockSize);
     const gameState = useSelector((state: RootState) => state.game.gameState);
     const displayBlocked = useSelector((state: RootState) => state.game.displayBlocked);
-    const godMode = useSelector((state: RootState) => state.game.godMode);
+    const blockSize = useSelector((state: RootState) => state.settings.blockSize);
+    const godMode = useSelector((state: RootState) => state.settings.godMode);
 
     const itemClick = useMemo(() => (row: number, cell: number, eventType: EventType) => {
 

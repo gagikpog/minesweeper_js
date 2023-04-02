@@ -1,5 +1,6 @@
 import { TGameState } from "../store/gameSlice";
 import { gameOver, gameWin, openItem, openItemsList, toggleItemFlag } from "../store/gameSlice";
+import { TSettingsState } from "../store/settingsSlice";
 import { callCollect } from "./funcs/callCollect";
 import { Chanel } from "./funcs/chanel";
 import { checkBlock } from "./funcs/checkBlock";
@@ -33,10 +34,10 @@ async function neighborOpen(point: IPoint): Promise<void> {
     const {
         gameMap,
         width,
-        height,
-        godMode,
-        animationSpeed
+        height
     } = store.getState().game;
+
+    const { godMode, animationSpeed } = store.getState().settings;
 
     const item = mapGetter(gameMap, point.y, point.x);
 
@@ -80,16 +81,15 @@ async function neighborOpen(point: IPoint): Promise<void> {
                 }
             });
         }
-
     }
 }
 
 export async function asyncOpenItem(params: { point: IPoint }) {
     const store = (await import('../store/main')).store;
-    return syncOpenItem(params, store.getState().game);
+    return syncOpenItem(params, store.getState().game, store.getState().settings);
 }
 
-export function syncOpenItem({ point }: { point: IPoint }, state: TGameState) {
+export function syncOpenItem({ point }: { point: IPoint }, state: TGameState, settings: TSettingsState) {
     const item = createMapItem(mapGetter(state.gameMap, point.y, point.x));
     const opened = item.state === ItemState.hidden;
     const changes = [];
@@ -98,10 +98,10 @@ export function syncOpenItem({ point }: { point: IPoint }, state: TGameState) {
 
         switch (item.val) {
             case 0:
-                boom(point, state.gameMap, state.animationSpeed);
+                boom(point, state.gameMap, settings.animationSpeed);
                 break;
             case 9:
-                const items = checkNeedSave(item.pos, state.gameMap, state.width, state.height, state.animationSpeed);
+                const items = checkNeedSave(item.pos, state.gameMap, state.width, state.height, settings.animationSpeed);
                 changes.push(...items);
                 if (items.length === 0) {
                     gameOver = true;
@@ -155,7 +155,7 @@ async function openItemCollect(data: { point: IPoint }[]): Promise<void> {
 
     const filter = ({point}: { point: IPoint }) => isHidden(point) && checkDuplicate(point);
 
-    const res = data.filter(filter).map((params) => syncOpenItem(params, store.getState().game)).reduce((acc, item ) => {
+    const res = data.filter(filter).map((params) => syncOpenItem(params, store.getState().game, store.getState().settings)).reduce((acc, item ) => {
 
         if (item.gameOver) {
             acc.gameOver = true;

@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
-import { loadGameState, loadTimerState, loadUserState, saveGameState, saveTimerState, saveUserState } from "../game/funcs/loader";
+import { loadGameState, loadSettingsState, loadTimerState, loadUserState, saveGameState, saveSettingsState, saveTimerState, saveUserState } from "../game/funcs/loader";
 import { loadGame } from "../store/gameSlice";
 import { store } from "../store/main";
 import styles from '../styles/Previewer.module.css'
 import { loadTimer } from "../store/timerSlice";
 import { loadUser } from "../store/userSlice";
+import { loadSettings } from "../store/settingsSlice";
 
 interface IProps {
     children: ReactElement;
@@ -21,16 +22,19 @@ export default function Previewer(props: IProps) {
             loadGameState(),
             loadTimerState(),
             loadUserState(),
+            loadSettingsState(),
             new Promise((resolve) => setTimeout(resolve, 1000))
-        ]).then(([gameData, timerData, userDate]) => {
+        ]).then(([gameData, timerData, userData, settingsData]) => {
             store.dispatch(loadGame(gameData));
             store.dispatch(loadTimer(timerData));
-            store.dispatch(loadUser(userDate));
+            store.dispatch(loadUser(userData));
+            store.dispatch(loadSettings(settingsData));
 
             store.subscribe(() => {
                 saveGameState(store.getState().game);
                 saveTimerState(store.getState().timer);
                 saveUserState(store.getState().user);
+                saveSettingsState(store.getState().settings);
             });
 
             setLoaded(true);

@@ -15,21 +15,13 @@ export const gameSlice = createSlice({
     initialState: {
         width: levelData.width,
         height: levelData.height,
-        blockSize: {
-            value: 50,
-            min: 25,
-            max: 70,
-            default: 25
-        },
         level: levelData.level,
         gameState: GameState.newGame,
         displayBlocked: false,
         totalMines: levelData.totalMines,
         remainingMines: 0,
-        godMode: true,
         openedCount: 0,
-        animationSpeed: 50,
-        defaultAnimationSpeed: 50,
+
         gameMap: generateMap(0, 0)
     },
     reducers: {

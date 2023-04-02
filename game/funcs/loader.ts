@@ -1,10 +1,11 @@
-import { GAME_SAVE_ITEMS, LOCAL_STORE_GAME_KEY, LOCAL_STORE_TIMER_KEY, LOCAL_STORE_USER_KEY, TIMER_SAVE_ITEMS, USER_SAVE_ITEMS } from "../constants";
+import { GAME_SAVE_ITEMS, LOCAL_STORE_GAME_KEY, LOCAL_STORE_SETTINGS_KEY, LOCAL_STORE_TIMER_KEY, LOCAL_STORE_USER_KEY, SETTINGS_SAVE_ITEMS, TIMER_SAVE_ITEMS, USER_SAVE_ITEMS } from "../constants";
 import { getLevelSettings } from "./gameLevels";
 import { debounce } from "./debounce";
 import { isClient } from "../detection";
 import { TGameState } from "../../store/gameSlice";
 import { TTimerState } from "../../store/timerSlice";
 import { TUserState } from "../../store/userSlice";
+import { TSettingsState } from "../../store/settingsSlice";
 
 function read<TState>(storeId: string): Partial<TState> {
     let data: Partial<TState> = {};
@@ -56,6 +57,11 @@ export function loadUserState(): Promise<Partial<TUserState>> {
     return Promise.resolve(read<TUserState>(LOCAL_STORE_USER_KEY));
 }
 
+export function loadSettingsState(): Promise<Partial<TSettingsState>> {
+    return Promise.resolve(read<TSettingsState>(LOCAL_STORE_SETTINGS_KEY));
+}
+
 export const saveGameState = debounce((data: Partial<TGameState>) => write<TGameState>(LOCAL_STORE_GAME_KEY, data, GAME_SAVE_ITEMS), 250);
 export const saveTimerState = debounce((data: Partial<TTimerState>) => write<TTimerState>(LOCAL_STORE_TIMER_KEY, data, TIMER_SAVE_ITEMS), 250);
 export const saveUserState = debounce((data: Partial<TUserState>) => write<TUserState>(LOCAL_STORE_USER_KEY, data, USER_SAVE_ITEMS), 250);
+export const saveSettingsState = debounce((data: Partial<TSettingsState>) => write<TSettingsState>(LOCAL_STORE_SETTINGS_KEY, data, SETTINGS_SAVE_ITEMS), 250);

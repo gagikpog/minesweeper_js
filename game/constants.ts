@@ -1,24 +1,21 @@
 import { TGameState } from "../store/gameSlice";
+import { TSettingsState } from "../store/settingsSlice";
 import { TTimerState } from "../store/timerSlice";
 import { TUserState } from "../store/userSlice";
 
 export const MAX_GAME_WIDTH = 30;
 export const MAX_GAME_HEIGHT = 16;
+// Local store keys
 export const LOCAL_STORE_KEY = 'minesweeper-data';
 export const LOCAL_STORE_GAME_KEY = `${LOCAL_STORE_KEY}_game-state`;
 export const LOCAL_STORE_TIMER_KEY = `${LOCAL_STORE_KEY}_timer-state`;
 export const LOCAL_STORE_USER_KEY = `${LOCAL_STORE_KEY}_user-state`;
+export const LOCAL_STORE_SETTINGS_KEY = `${LOCAL_STORE_KEY}_settings-state`;
+// Local store save data
 export const TIMER_SAVE_ITEMS: (keyof TTimerState)[] = ['time'];
 export const USER_SAVE_ITEMS: (keyof TUserState)[] = ['username', 'email'];
-export const GAME_SAVE_ITEMS: (keyof TGameState)[] = [
-    'blockSize',
-    'level',
-    'gameState',
-    'remainingMines',
-    'godMode',
-    'openedCount',
-    'gameMap'
-];
+export const SETTINGS_SAVE_ITEMS: (keyof TSettingsState)[] = ['blockSize', 'godMode', 'animationSpeed'];
+export const GAME_SAVE_ITEMS: (keyof TGameState)[] = ['level', 'gameState', 'remainingMines', 'openedCount', 'gameMap'];
 
 // https://1drv.ms/x/s!AhziwSL0ZF01gd9uMWxIHcpM_EygMg?e=44RjtA
 
