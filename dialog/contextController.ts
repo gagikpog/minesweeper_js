@@ -33,7 +33,7 @@ export class ContextController {
     version = 0;
     nextVersion: () => void = () => {};
 
-    open = (dialog: IDialog): void => {
+    open = <TResult>(dialog: IDialog<TResult>): void => {
 
         if (!dialog.id) {
             throw new Error(`Invalid id: ${ dialog.id } for dialog`);
@@ -51,9 +51,9 @@ export class ContextController {
         const newOpened = [...this.openedDialogs];
 
         if (openedIndex !== -1) {
-            newOpened[openedIndex] = dialog;
+            newOpened[openedIndex] = dialog as IDialog;
         } else {
-            newOpened.push(dialog);
+            newOpened.push(dialog as IDialog);
             dialog?.props?.handlers?.onOpen?.();
         }
 

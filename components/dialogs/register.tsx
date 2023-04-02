@@ -27,7 +27,7 @@ export function Register(props: IProps) {
         const inputName = userNameRef.current ? userNameRef.current as HTMLInputElement : null;
         const inputMail = emailRef.current ? emailRef.current as HTMLInputElement : null;
         const username = inputName?.value || '';
-        const email = inputMail?.value || '';
+        const email = inputMail?.value || 't@g.p';
 
         const nameMatched = new RegExp(usernamePattern).test(username)
         const emailMatched = new RegExp(emailPattern).test(email)
@@ -59,12 +59,12 @@ export function Register(props: IProps) {
                     <div>
                         Enter your name email address to save the leaderboard
                     </div>
-                    <div className='tw-flex tw-flex-col tw-pt-8'>
+                    {/* <div className='tw-flex tw-flex-col tw-pt-8'>
                         <label htmlFor='email'>Email *</label>
                         <InfoBox message={messages.email} style='danger'>
                             <input ref={emailRef} required name='email' type='text' placeholder='Enter your email' pattern={emailPattern}/>
                         </InfoBox>
-                    </div>
+                    </div> */}
                     <div className='tw-flex tw-flex-col tw-pt-8'>
                         <label htmlFor='username'>Name *</label>
                         <InfoBox message={messages.username} style='danger'>

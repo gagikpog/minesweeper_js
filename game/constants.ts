@@ -15,7 +15,7 @@ export const LOCAL_STORE_USER_KEY = `${LOCAL_STORE_KEY}_user-state`;
 export const LOCAL_STORE_SETTINGS_KEY = `${LOCAL_STORE_KEY}_settings-state`;
 // Local store save data
 export const TIMER_SAVE_ITEMS: (keyof TTimerState)[] = ['time'];
-export const USER_SAVE_ITEMS: (keyof TUserState)[] = ['username', 'email'];
+export const USER_SAVE_ITEMS: (keyof TUserState)[] = ['username', 'email', 'neverShowRegistration'];
 export const SETTINGS_SAVE_ITEMS: (keyof TSettingsState)[] = ['blockSize', 'godMode', 'animationSpeed'];
 export const GAME_SAVE_ITEMS: (keyof TGameState)[] = ['level', 'gameState', 'remainingMines', 'openedCount', 'gameMap'];
 

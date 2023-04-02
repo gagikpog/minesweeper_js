@@ -5,6 +5,7 @@ import { mapGetter } from '../game/funcs/getters';
 import { GameLevels, GameState, ItemState } from '../game/types';
 import { getLevelSettings } from '../game/funcs/gameLevels';
 import { resetTimer, runTimer, stopTimer } from './timerSlice';
+import { addStatistic } from './statisticSlice';
 
 export const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
 const levelData = getLevelSettings(GameLevels.Beginner);
@@ -22,7 +23,6 @@ export const gameSlice = createSlice({
         totalMines: levelData.totalMines,
         remainingMines: 0,
         openedCount: 0,
-
         gameMap: generateMap(0, 0)
     },
     reducers: {
@@ -49,6 +49,7 @@ export const gameSlice = createSlice({
         gameWin(state, action) {
             state.gameState = GameState.gameWin;
             dispatchAsync(stopTimer());
+            addStatistic();
         },
         gameOver(state, action) {
             state.gameState = GameState.gameOver;
