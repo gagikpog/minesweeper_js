@@ -1,4 +1,3 @@
-import { store } from "../../store/main";
 import { CaseId, MAPS, SWAP_MAP } from "../constants";
 import { ChanelEvents, GameMap, IMapItem, IPoint, ItemState, ItemValues } from "../types";
 import { Chanel } from "./chanel";
@@ -6,9 +5,7 @@ import { checkBlock } from "./checkBlock";
 import { chanelEventGetter } from "./getters";
 import { createMapItem } from "./mapItem";
 
-export function checkNeedSave(point: IPoint): IMapItem[] {
-
-    const { gameMap } = store.getState();
+export function checkNeedSave(point: IPoint, gameMap: GameMap, width: number, height: number, animationSpeed: number): IMapItem[] {
 
     let map = 0;
     const { x, y } = point;
@@ -32,7 +29,7 @@ export function checkNeedSave(point: IPoint): IMapItem[] {
 
     const mask = inversed === void 0 ? map : inversed;
 
-    return (index >= 0 && (mask & map) === 0) ? changeMap(gameMap, { x, y }, caseId) : [];
+    return (index >= 0 && (mask & map) === 0) ? changeMap(gameMap, { x, y }, caseId, width, height, animationSpeed) : [];
 }
 
 
@@ -42,9 +39,7 @@ function swapItems (a: IMapItem, b: IMapItem): void {
     b.val = t;
 }
 
-function changeMap(gameMap: GameMap, center: IPoint, caseId: CaseId): IMapItem[] {
-
-    const { width, height, animationSpeed } = store.getState();
+function changeMap(gameMap: GameMap, center: IPoint, caseId: CaseId, width: number, height: number, animationSpeed: number): IMapItem[] {
     const changes: IMapItem[] = [];
 
     try {

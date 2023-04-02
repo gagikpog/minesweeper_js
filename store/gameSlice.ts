@@ -5,11 +5,10 @@ import { mapGetter } from '../game/funcs/getters';
 import { GameLevels, GameState, ItemState } from '../game/types';
 import { getLevelSettings } from '../game/funcs/gameLevels';
 
-const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
+export const openItem = createAsyncThunk('game/openItem', asyncOpenItem);
 const levelData = getLevelSettings(GameLevels.Beginner);
-import { store } from './main';
 
-const gameSlice = createSlice({
+export const gameSlice = createSlice({
     name: 'game',
     initialState: {
         width: levelData.width,
@@ -35,18 +34,12 @@ const gameSlice = createSlice({
         gameMap: generateMap(0, 0)
     },
     reducers: {
-        setGameMap: (state, action) => {
-            state.gameMap = action.payload;
-        },
-        setGameState: (state, action) => {
-            state.gameState = action.payload;
-        },
         runNewGame: (state, action) => {
             const conf = action.payload;
             const newMap = randomfillMap(conf.point, state.width, state.height, state.totalMines);
             state.gameMap = newMap;
             state.gameState = GameState.game;
-            setTimeout(() => store.dispatch(runTimer(null)), 1000);
+            setTimeout(() => import('./main').then(({store}) => store.dispatch(runTimer(null))), 1000);
         },
         toggleItemFlag(state, action) {
             const item = mapGetter(state.gameMap, action.payload.point.y, action.payload.point.x);
@@ -82,13 +75,13 @@ const gameSlice = createSlice({
             state.totalMines = data.totalMines;
 
             setTimeout(() => {
-                store.dispatch(newGame(null));
+                import('./main').then(({store}) => store.dispatch(newGame(null)));
             }, 0);
         },
         runTimer(state, action) {
             if (!state.timerRunningId && state.gameState === GameState.game) {
                 state.time++;
-                state.timerRunningId = setInterval(() => store.dispatch(stepTimer(null)), 1000) as unknown as number;
+                state.timerRunningId = setInterval(() => import('./main').then(({store}) => store.dispatch(stepTimer(null))), 1000) as unknown as number;
             }
         },
         stepTimer(state, action) {
@@ -110,7 +103,7 @@ const gameSlice = createSlice({
             });
 
             setTimeout(() => {
-                store.dispatch(runTimer(null));
+                import('./main').then(({store}) => store.dispatch(runTimer(null)));
             }, 0);
         },
         openItemsList(state, action) {
@@ -129,8 +122,6 @@ const gameSlice = createSlice({
 });
 
 export const {
-    setGameMap,
-    setGameState,
     runNewGame,
     toggleItemFlag,
     gameWin,
@@ -143,7 +134,4 @@ export const {
     openItemsList
 } = gameSlice.actions;
 
-export { openItem };
-export { gameSlice };
 export type TGameState = ReturnType<typeof gameSlice.reducer>;
-

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GameLevels } from '../game/types';
-import { changeLevel, newGame, RootState } from '../store/main';
+import { RootState } from '../store/main';
+import { changeLevel, newGame } from '../store/gameSlice';
 import Select from './select';
 import Timer from './timer';
 import styles from '../styles/Header.module.css';

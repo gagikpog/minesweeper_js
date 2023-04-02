@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { loadGameState, saveGameState } from "../game/funcs/loader";
-import { loadGame, store } from "../store/main";
+import { loadGame } from "../store/gameSlice";
+import { store } from "../store/main";
 import styles from '../styles/Previewer.module.css'
 
 interface IProps {

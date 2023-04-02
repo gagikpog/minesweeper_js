@@ -1,5 +1,5 @@
 import { TGameState } from "../store/gameSlice";
-import { gameOver, gameWin, openItem, openItemsList, RootState, store, toggleItemFlag } from "../store/main";
+import { gameOver, gameWin, openItem, openItemsList, toggleItemFlag } from "../store/gameSlice";
 import { callCollect } from "./funcs/callCollect";
 import { Chanel } from "./funcs/chanel";
 import { checkBlock } from "./funcs/checkBlock";
@@ -7,27 +7,29 @@ import { checkNeedSave } from "./funcs/checkNeedSave";
 import { chanelEventGetter, mapGetter } from "./funcs/getters";
 
 import { createMapItem } from "./funcs/mapItem";
-import { ChanelEvents, IMapItem, IPoint, ItemState, ItemValues } from "./types";
+import { ChanelEvents, GameMap, IMapItem, IPoint, ItemState, ItemValues } from "./types";
 
 const addOpenItemCollect = callCollect<{ point: IPoint }>(openItemCollect, 1);
 
-function boom(point: IPoint): void {
-    const { animationSpeed, gameMap } = store.getState().game;
+function boom(point: IPoint, gameMap: GameMap, animationSpeed: number): void {
     const item = mapGetter(gameMap, point.y, point.x);
     if (item.state === ItemState.hidden && item.val === ItemValues.empty) {
         setTimeout(() => {
-            const { gameMap, width, height } = store.getState().game;
-            checkBlock(point, width, height, gameMap, (_item: IMapItem) => {
-                if (_item.state === ItemState.hidden) {
-                    addOpenItemCollect({ point: _item?.pos });
-                }
+            import('../store/main').then(({store}) => {
+                const { gameMap, width, height } = store.getState().game;
+                checkBlock(point, width, height, gameMap, (_item: IMapItem) => {
+                    if (_item.state === ItemState.hidden) {
+                        addOpenItemCollect({ point: _item?.pos });
+                    }
+                });
             });
         }, animationSpeed);
     }
 }
 
-function neighborOpen(point: IPoint): void {
+async function neighborOpen(point: IPoint): Promise<void> {
 
+    const store = (await import('../store/main')).store;
     const {
         gameMap,
         width,
@@ -82,9 +84,12 @@ function neighborOpen(point: IPoint): void {
     }
 }
 
-export function asyncOpenItem({ point }: { point: IPoint }) {
+export async function asyncOpenItem(params: { point: IPoint }) {
+    const store = (await import('../store/main')).store;
+    return syncOpenItem(params, store.getState().game);
+}
 
-    const state = store.getState().game;
+export function syncOpenItem({ point }: { point: IPoint }, state: TGameState) {
     const item = createMapItem(mapGetter(state.gameMap, point.y, point.x));
     const opened = item.state === ItemState.hidden;
     const changes = [];
@@ -93,10 +98,10 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
 
         switch (item.val) {
             case 0:
-                boom(point);
+                boom(point, state.gameMap, state.animationSpeed);
                 break;
             case 9:
-                const items = checkNeedSave(item.pos);
+                const items = checkNeedSave(item.pos, state.gameMap, state.width, state.height, state.animationSpeed);
                 changes.push(...items);
                 if (items.length === 0) {
                     gameOver = true;
@@ -127,7 +132,9 @@ export function asyncOpenItem({ point }: { point: IPoint }) {
     return { item, opened, gameOver, changes };
 }
 
-function openItemCollect(data: { point: IPoint }[]): void {
+async function openItemCollect(data: { point: IPoint }[]): Promise<void> {
+
+    const store = (await import('../store/main')).store;
 
     const itemCache: {[key: string]: number} = {};
     const pointCache: {[key: string]: boolean} = {};
@@ -148,7 +155,7 @@ function openItemCollect(data: { point: IPoint }[]): void {
 
     const filter = ({point}: { point: IPoint }) => isHidden(point) && checkDuplicate(point);
 
-    const res = data.filter(filter).map(asyncOpenItem).reduce((acc, item ) => {
+    const res = data.filter(filter).map((params) => syncOpenItem(params, store.getState().game)).reduce((acc, item ) => {
 
         if (item.gameOver) {
             acc.gameOver = true;
@@ -181,7 +188,9 @@ export function updateStateOnItemsOpen(state: TGameState, data: { gameOver: bool
 
     if (data.gameOver) {
         setTimeout(() => {
-            store.dispatch(gameOver(null));
+            import('../store/main').then(({store}) => {
+                store.dispatch(gameOver(null));
+            });
         }, 0);
     }
 
@@ -193,7 +202,9 @@ export function updateStateOnItemsOpen(state: TGameState, data: { gameOver: bool
 
     if (width * height - totalMines - openedCount === 0) {
         setTimeout(() => {
-            store.dispatch(gameWin(null));
+            import('../store/main').then(({store}) => {
+                store.dispatch(gameWin(null));
+            });
         }, 0);
     }
 }

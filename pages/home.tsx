@@ -3,8 +3,9 @@ import { Inter } from '@next/font/google'
 import { useMemo, } from 'react';
 import View from '../components/view';
 import { useDispatch, useSelector } from 'react-redux';
-import { openItem, RootState, runNewGame, store, toggleItemFlag } from '../store/main';
-import { EventType, GameState, IMapItem, ItemState } from '../game/types';
+import { openItem,  runNewGame, toggleItemFlag } from '../store/gameSlice';
+import {  RootState, store } from '../store/main';
+import { EventType, GameState, ItemState } from '../game/types';
 import Header from '../components/header';
 import { mapGetter } from '../game/funcs/getters';
 import { isPhone } from '../game/detection';
