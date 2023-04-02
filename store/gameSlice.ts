@@ -21,7 +21,6 @@ export const gameSlice = createSlice({
             max: 70,
             default: 25
         },
-        userName: '',
         level: levelData.level,
         gameState: GameState.newGame,
         displayBlocked: false,
