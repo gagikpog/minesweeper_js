@@ -1,6 +1,7 @@
 import { MouseEvent, TouchEvent, useEffect, useState } from 'react';
 import { isPhone, isTouchDevice } from '../game/detection';
 import styles from '../styles/Selector.module.css';
+import Button from './button';
 
 interface IItem {
     text: string;
@@ -59,11 +60,8 @@ export default function Select(props: IProps) {
     }, []);
 
     return (
-        <div onClick={ !isPhone ? open : () => {} } onTouchEnd={ isPhone ? open : () => {} } className={`tw-flex tw-cursor-pointer tw-justify-center tw-items-center tw-p-8 ${props.className || ''} ${ !isPhone ? 'tw-relative' : ''}`}>
-            <div>
-                <i className={`fa fa-clock-o tw-ml-4 ${ props.icon || 'fa-navicon'}`}></i>
-            </div>
-
+        <div className={`${props.className || ''} ${ !isPhone ? 'tw-relative' : ''}`}>
+            <Button icon={props.icon || 'fa-navicon'} onClick={!isPhone ? open : () => {}} onTouchEnd={ isPhone ? open : () => {} }/>
             {opened ? selector(props.items, props.value, onChange, props.horizontalAlign) : null}
         </div>
     );

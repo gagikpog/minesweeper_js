@@ -7,6 +7,7 @@ import Select from './select';
 import Timer from './timer';
 import styles from '../styles/Header.module.css';
 import { showStatistics } from '../store/statisticSlice';
+import Button from './button';
 
 interface IProps {
 
@@ -29,26 +30,10 @@ export default function Header(props: IProps) {
     return (
         <header className={`${ styles.head } tw-flex tw-p-8`}>
 
-            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(newGame())}>
-                <div>
-                    <i className='fa fa-repeat'></i>
-                </div>
-            </div>
-
-            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-ml-auto'>
-                <div>
-                    <i className='fa fa-flag-o'></i> { totalMines - remainingMines }
-                </div>
-            </div>
-
+            <Button icon='fa-repeat' onClick={() => dispatch(newGame())}/>
+            <Button icon='fa-flag-o' className='tw-ml-auto' caption={`${ totalMines - remainingMines}`}/>
             <Timer className='tw-mr-auto'/>
-
-            <div className='tw-flex tw-justify-center tw-items-center tw-p-8 tw-cursor-pointer' onClick={() => dispatch(showStatistics())}>
-                <div>
-                    <i className='fa fa-rocket'></i>
-                </div>
-            </div>
-
+            <Button icon='fa-rocket' onClick={() => dispatch(showStatistics())}/>
             <Select horizontalAlign='left' value={level} icon='fa-navicon' items={options} onChange={(value) => dispatch(changeLevel(value))}></Select>
 
             {/* fa-book fa-wrench fa-rocket */}

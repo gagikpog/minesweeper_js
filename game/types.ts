@@ -63,3 +63,11 @@ export interface IServiceResult<TRes> {
     message: string;
     status: ServiceStatus;
 }
+
+export enum IconSizes {
+    x1 = '',
+    x2 = 'fa-2x',
+    x3 = 'fa-3x',
+    x4 = 'fa-4x',
+    x5 = 'fa-5x'
+}

@@ -1,0 +1,7 @@
+.clickable {
+    color: var(--text-color);
+}
+
+.clickable:hover {
+    color: var(--text-color-hover);
+}

@@ -14,6 +14,7 @@
   --background-color: #1E1E1E;
   --background-color-header: #363636;
   --text-color: #fff;
+  --text-color-hover: #cacaca;
   --border-color: #aaa;
   --input-border-focus-color: #1e90ff;
   --input-border-focus-invalid-color: #e00000;
@@ -22,7 +23,7 @@
 #__next,
 html,
 body {
-  max-width: 100vw;
+  max-width: 100%;
   overflow-x: hidden;
   height: 100%;
   font-family: Calibri;
