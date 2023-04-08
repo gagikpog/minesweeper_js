@@ -1,0 +1,23 @@
+.preview {
+    width: calc(1px * var(--game-items-width) * var(--item-size) + 2px);
+    height: calc(1px * var(--game-items-height) * var(--item-size) + 2px);
+    border: 1px solid var(--text-color);
+    pointer-events: none;
+    top: 2px;
+    right: 2px;
+}
+
+.item {
+    width: calc(var(--item-size) * 1px);
+    height: calc(var(--item-size) * 1px);
+}
+
+.opened {
+    background-color: var(--text-color);
+}
+
+@media screen and (min-width: 576px) {
+    .wrapper {
+        position: relative;
+    }
+}
