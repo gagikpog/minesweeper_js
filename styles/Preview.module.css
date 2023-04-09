@@ -7,15 +7,6 @@
     right: 8px;
 }
 
-.item {
-    width: calc(var(--item-size) * 1px);
-    height: calc(var(--item-size) * 1px);
-}
-
-.opened {
-    background-color: var(--text-color);
-}
-
 @media screen and (min-width: 576px) {
     .wrapper {
         position: relative;

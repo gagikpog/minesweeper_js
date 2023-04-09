@@ -23,16 +23,26 @@ export default function Preview(props: IViewProps): JSX.Element {
     return (
         <div className={`${styles.wrapper}`}  style={{'--item-size': size}}>
             <div className={`tw-flex tw-flex-wrap tw-absolute tw-z-20 ${styles.preview} `} >
-                {
-                    items.map((_, index) => {
-                        const rowIndex = Math.floor(index / width);
-                        const cellIndex = index % width;
-                        const item = mapGetter(gameMap, rowIndex, cellIndex);
-                        return <div
-                            key={`${rowIndex}-${cellIndex}`}
-                            className={`${ styles.item } ${ item && item.state !== ItemState.hidden ? styles.opened : '' }`} ></div>
-                    })
-                }
+
+                <svg width={width*size} height={height*size}
+                    viewBox={`0 0 ${width} ${height}`}
+                    fill='#fff'
+                    xmlns="http://www.w3.org/2000/svg">
+
+                    {
+                        items.map((_, index) => {
+                            const rowIndex = Math.floor(index / width);
+                            const cellIndex = index % width;
+                            const item = mapGetter(gameMap, rowIndex, cellIndex);
+
+                            return  item && item.state !== ItemState.hidden ? (
+                                <rect x={ cellIndex} y={rowIndex} key={`${rowIndex}-${cellIndex}`} width={1} height={1}/>
+                            ) : null
+                        })
+                    }
+
+                </svg>
+
             </div>
         </div>
     );
