@@ -26,6 +26,7 @@ export enum ItemValues {
 export enum ChanelEvents {
     TogglePushing = 'togglePushing',
     ToggleMine = 'toggleMine',
+    ZoomChange = 'zoomChange',
 }
 
 export enum GameLevels {
