@@ -8,9 +8,10 @@ import Timer from './timer';
 import styles from '../styles/Header.module.css';
 import { showStatistics } from '../store/statisticSlice';
 import Button from './button';
+import { showSettings } from '../store/settingsSlice';
 
 interface IProps {
-
+    className?: string;
 }
 
 export default function Header(props: IProps) {
@@ -28,12 +29,13 @@ export default function Header(props: IProps) {
     ]);
 
     return (
-        <header className={`${ styles.head } tw-flex tw-p-8`}>
+        <header className={`${ styles.head } ${props.className || ''} tw-flex tw-p-8`}>
 
             <Button icon='fa-repeat' onClick={() => dispatch(newGame())}/>
             <Button icon='fa-flag-o' className='tw-ml-auto' caption={`${ totalMines - remainingMines}`}/>
             <Timer className='tw-mr-auto'/>
             <Button icon='fa-rocket' onClick={() => dispatch(showStatistics())}/>
+            <Button icon='fa-wrench' onClick={() => showSettings()}/>
             <Select horizontalAlign='left' value={level} icon='fa-navicon' items={options} onChange={(value) => dispatch(changeLevel(value))}></Select>
 
             {/* fa-book fa-wrench fa-rocket */}

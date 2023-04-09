@@ -1,9 +1,11 @@
+import { ISettingsResult } from '../components/dialogs/settings';
+import { controller as DialogController } from '../dialog/dialogProvider';
 import { createSlice } from '@reduxjs/toolkit';
 
 export const settingsSlice = createSlice({
     name: 'settings',
     initialState: {
-        godMode: true,
+        godMode: false,
         animationSpeed: 50,
         blockSize: {
             value: 50,
@@ -18,7 +20,7 @@ export const settingsSlice = createSlice({
             const keys = Object.keys(data) as (keyof TSettingsState)[];
             keys.forEach((key) => {
                 const value = data[key];
-                if (data.hasOwnProperty(key) && value && typeof state[key] === typeof value) {
+                if (data.hasOwnProperty(key) && value !== undefined && typeof state[key] === typeof value) {
                     state[key] = value as never;
                 }
             });
@@ -29,3 +31,32 @@ export const settingsSlice = createSlice({
 export const { loadSettings } = settingsSlice.actions;
 
 export type TSettingsState = ReturnType<typeof settingsSlice.reducer>;
+
+export function showSettings() {
+    return import('../components/dialogs/settings').then(({ Settings }) => {
+        return new Promise((resolve) => {
+            let resolved = false;
+            const onResolve = (val: boolean | Promise<boolean>) => {
+                if (!resolved) {
+                    resolved = true;
+                    resolve(val)
+                }
+            };
+            DialogController.open<ISettingsResult>( {
+                id: 'register',
+                props: {
+                    modal: true,
+                    handlers: {
+                        onResult(res) {
+                            onResolve(true);
+                        },
+                        onClose() {
+                            onResolve(false);
+                        }
+                    }
+                },
+                template: Settings
+            });
+        });
+    });
+}
