@@ -15,8 +15,8 @@ export default function StatusBar(props: IProps) {
     const progress = (openedCount ) / (width * height - totalMines);
 
     return (
-        <div className={`${ props.className || '' }`}>
-            <div className={styles.progress} style={{width: `${progress * 100}%`}}></div>
+        <div className={`${ props.className || '' } tw-relative`}>
+            <div className={`${styles.progress} tw-absolute tw-z-20`} style={{width: `${progress * 100}%`}} ></div>
         </div>
     );
 }

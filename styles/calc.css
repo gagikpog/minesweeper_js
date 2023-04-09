@@ -1,0 +1,14 @@
+:root {
+  --cell-color-default: #49b8b8;
+  --cell-color-default-darken: #44aeae;
+  --cell-color-default-lighten: #80cdcd;
+  --cell-color-opened: #d1d1d1;
+  --cell-color-opened-darken: #c9c9c9;
+  --cell-color-opened-lighten: #f7f7f7;
+  --progress-color: #5869ff;
+  --progress-color-darken: #495bff;
+  --progress-color-lighten: #a5aeff;
+  --cell-color-destroyed: #d45151;
+  --cell-color-destroyed-darken: #d14545;
+  --cell-color-destroyed-lighten: #e38e8e;
+}

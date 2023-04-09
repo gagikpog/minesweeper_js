@@ -22,7 +22,7 @@ export default function Preview(props: IViewProps): JSX.Element {
 
     return (
         <div className={`${styles.wrapper}`}  style={{'--item-size': size}}>
-            <div className={`tw-flex tw-flex-wrap tw-absolute tw-z-10 ${styles.preview} `} >
+            <div className={`tw-flex tw-flex-wrap tw-absolute tw-z-20 ${styles.preview} `} >
                 {
                     items.map((_, index) => {
                         const rowIndex = Math.floor(index / width);

@@ -3,8 +3,8 @@
     height: calc(1px * var(--game-items-height) * var(--item-size) + 2px);
     border: 1px solid var(--text-color);
     pointer-events: none;
-    top: 2px;
-    right: 2px;
+    top: 8px;
+    right: 8px;
 }
 
 .item {

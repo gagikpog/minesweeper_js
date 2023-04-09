@@ -53,7 +53,7 @@ export default memo(function Item(props: IItemProps): JSX.Element {
         case ItemState.opened:
             if (gameState === GameState.gameOver && props.val === ItemValues.mine) {
                 // if game over show wrong opening
-                classes += ' cell-x';
+                classes += ' destroyed';
             } else {
                 classes += ` open cell-${props.val}`;
             }
@@ -77,7 +77,7 @@ export default memo(function Item(props: IItemProps): JSX.Element {
     // if game ended show all mines
     if (mineShowed || (gameState === GameState.gameWin || gameState === GameState.gameOver) &&
         props.val === ItemValues.mine) {
-        classes += ' cell-9'
+        classes += ' open cell-9'
     }
 
     const onClick = (event: MouseEvent, eventName: EventType) => {
