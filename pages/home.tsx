@@ -54,7 +54,7 @@ export default function Home() {
     return (
         <>
             <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`} style={{ '--game-items-width': width, '--game-items-height': height }}>
-                <Header />
+                <Header className='tw-z-20'/>
                 <StatusBar/>
                 <Preview />
                 <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>

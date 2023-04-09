@@ -26,6 +26,9 @@ interface IZIndex {
     [key: string]: number;
 }
 
+const DIALOG_MIN_Z_INDEX = 100;
+const DIALOG_Z_INDEX_STEP = 10;
+
 export class ContextController {
 
     openedDialogs: IDialog[] = [];
@@ -59,12 +62,12 @@ export class ContextController {
 
         const dialogZIndex = this.openedDialogs.reduce((max, {id}) => {
             return Math.max(max, this.zIndex[id] || 0);
-        }, 0);
-        this.zIndex[dialog.id] = dialogZIndex + 10;
+        }, DIALOG_MIN_Z_INDEX);
+        this.zIndex[dialog.id] = dialogZIndex + DIALOG_Z_INDEX_STEP;
 
         this.zIndex = {
             ...this.zIndex,
-            [dialog.id]: dialogZIndex + 10
+            [dialog.id]: dialogZIndex + DIALOG_Z_INDEX_STEP
         };
 
         this.openedDialogs = newOpened;

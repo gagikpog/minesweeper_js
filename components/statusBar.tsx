@@ -3,7 +3,7 @@ import { RootState } from '../store/main';
 import styles from '../styles/StatusBar.module.css';
 
 interface IProps {
-
+    className?: string;
 }
 
 export default function StatusBar(props: IProps) {
@@ -15,7 +15,7 @@ export default function StatusBar(props: IProps) {
     const progress = (openedCount ) / (width * height - totalMines);
 
     return (
-        <div className={`${ styles.head }`}>
+        <div className={`${ props.className || '' }`}>
             <div className={styles.progress} style={{width: `${progress * 100}%`}}></div>
         </div>
     );

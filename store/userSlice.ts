@@ -13,7 +13,7 @@ export const userSlice = createSlice({
             const keys = Object.keys(data) as (keyof TUserState)[];
             keys.forEach((key) => {
                 const value = data[key];
-                if (data.hasOwnProperty(key) && value && typeof state[key] === typeof value) {
+                if (data.hasOwnProperty(key) && value !== undefined && typeof state[key] === typeof value) {
                     state[key] = value as never;
                 }
             });
