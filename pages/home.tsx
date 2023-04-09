@@ -74,44 +74,6 @@ export default function Home() {
             { displayBlocked ? <div className='blocker'></div> : '' }
 
             <div className="cell-9"></div>
-
-            {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" ></link> */}
-
-            {/* <div id="leaderBoardDialog" style={{ display: 'none' }} className="leader-board__main">
-                <div className="leader-board__head">
-                    <div className="leader-board__head-caption">Leader board</div>
-                    <div className="leader-board__head-close-button" onClick={() => notify('leaderBoardClose')}>
-                        <svg
-                            height="15px"
-                            viewBox="0 0 413.348 413.348"
-                            width="15px"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path d="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z" />
-                        </svg>
-                    </div>
-                </div>
-                <div className="leader-board__tabs" onClick={() => notify('leaderBoardActivateTab')}>
-                    <div
-                        data-name="beginner"
-                        className="leader-board__tab leader-board__tab-beginner leader-board__tab-active"
-                    >
-                        Beginner
-                    </div>
-                    <div data-name="intermediate" className="leader-board__tab leader-board__tab-intermediate">
-                        Intermediate
-                    </div>
-                    <div data-name="advanced" className="leader-board__tab leader-board__tab-advanced">
-                        Advanced
-                    </div>
-                </div>
-                <div className="leader-board__column-titles">
-                    <div className="leader-board__column-title leader-board__column-title_name">Name</div>
-                    <div className="leader-board__column-title leader-board__column-title_date">Date</div>
-                    <div className="leader-board__column-title leader-board__column-title_time">Duration</div>
-                </div>
-                <div id="leaderBoardBody" className="leader-board__body"></div>
-            </div> */}
         </>
     )
 }

@@ -1,5 +1,3 @@
-import { Game } from './game';
-
 function waitToLoaded() {
     if (window.GameTable && window.GameTable.addEventListener) {
         window.GameTable.addEventListener('long-press', function(event){
