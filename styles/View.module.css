@@ -1,0 +1,3 @@
+.view {
+    grid-template-columns:repeat(var(--game-items-width), minmax(0, 1fr));
+}

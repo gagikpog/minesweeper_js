@@ -1,9 +1,10 @@
-import { CSSProperties, useMemo } from "react";
-import { useSelector } from "react-redux";
-import { mapGetter } from "../game/funcs/getters";
-import { EventType, IMapItem } from "../game/types";
-import { RootState } from "../store/main";
-import Item from "./item";
+import { CSSProperties, useMemo } from 'react';
+import { useSelector } from 'react-redux';
+import { mapGetter } from '../game/funcs/getters';
+import { EventType } from '../game/types';
+import { RootState } from '../store/main';
+import styles from '../styles/View.module.css';
+import Item from './item';
 
 interface IViewProps {
     size: number;
@@ -22,7 +23,7 @@ export default function View(props: IViewProps): JSX.Element {
     }, [props.width, props.height])
 
     return (
-        <div style={ props.style } className="tw-flex tw-flex-wrap">
+        <div style={ props.style } className={`tw-grid ${styles.view}`}>
             {
                 items.map((_, index) => {
                     const rowIndex = Math.floor(index / props.width);

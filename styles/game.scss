@@ -1,15 +1,16 @@
 .cell {
     --game-items-size-px: calc(var(--game-items-size) * 1px);
+    --game-items-shadow-border-width: calc(var(--game-items-size) * 0.08px);
+    --game-items-border-width: calc(var(--game-items-size) * 0.04px);
+
     text-align: center;
     position: relative;
-
-    outline: outset 2px var(--cell-color-default);
-    outline-offset: -2px;
-    border-radius: 5px;
+    outline: outset var(--game-items-border-width) var(--cell-color-default);
+    outline-offset: calc(var(--game-items-border-width) * -1);
+    border-radius: calc(var(--game-items-size) * 0.1px);
     background: linear-gradient(145deg,  var(--cell-color-default-lighten), var(--cell-color-default-darken));
     width: var(--game-items-size-px);
     height: var(--game-items-size-px);
-    transition: 0.2s;
 
     &::before {
         display: flex;
@@ -31,14 +32,14 @@
 
     &.open {
         background: linear-gradient(145deg, var(--cell-color-opened-darken), var(--cell-color-opened-lighten));
-        box-shadow: inset 3px 3px 5px var(--cell-color-opened-darken),
-            inset -3px -3px 5px var(--cell-color-opened-lighten);
+        box-shadow: inset var(--game-items-shadow-border-width) var(--game-items-shadow-border-width) var(--game-items-shadow-border-width) var(--cell-color-opened-darken),
+            inset calc(var(--game-items-shadow-border-width) * -1) calc(var(--game-items-shadow-border-width) * -1) var(--game-items-shadow-border-width) var(--cell-color-opened-lighten);
     }
 
     &.pushed {
         background: linear-gradient(145deg,  var(--cell-color-default-darken), var(--cell-color-default-lighten));
-        outline: inset 2px var(--cell-color-default);
-        outline-offset: -2px;
+        outline: inset var(--game-items-border-width) var(--cell-color-default);
+        outline-offset:  calc(var(--game-items-border-width) * -1);
     }
 
     &-1::before {
@@ -123,8 +124,8 @@
 
     &.destroyed {
         background: linear-gradient(145deg, var(--cell-color-destroyed-darken), var(--cell-color-destroyed-lighten));
-        box-shadow: inset 3px 3px 5px var(--cell-color-destroyed-darken),
-        inset -3px -3px 5px var(--cell-color-destroyed-lighten);
+        box-shadow: inset var(--game-items-shadow-border-width) var(--game-items-shadow-border-width) var(--game-items-shadow-border-width) var(--cell-color-destroyed-darken),
+        inset calc(var(--game-items-shadow-border-width) * -1) calc(var(--game-items-shadow-border-width) * -1) var(--game-items-shadow-border-width) var(--cell-color-destroyed-lighten);
     }
 
 }

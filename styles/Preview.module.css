@@ -4,7 +4,7 @@
     border: 1px solid var(--text-color);
     pointer-events: none;
     top: 8px;
-    right: 8px;
+    left: 8px;
 }
 
 @media screen and (min-width: 576px) {
