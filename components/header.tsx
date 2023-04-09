@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GameLevels } from '../game/types';
-import { RootState } from '../store/main';
+import { AppDispatch, RootState } from '../store/main';
 import { changeLevel, newGame } from '../store/gameSlice';
 import Select from './select';
 import Timer from './timer';
@@ -16,7 +16,7 @@ interface IProps {
 
 export default function Header(props: IProps) {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const totalMines = useSelector((state: RootState) => state.game.totalMines);
     const remainingMines = useSelector((state: RootState) => state.game.remainingMines);

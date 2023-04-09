@@ -3,7 +3,7 @@ import { IDialogProps } from '../../dialog/contextController';
 import DialogTemplate from './dialogTemplate';
 import styles from '../../styles/Settings.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/main';
+import { AppDispatch, RootState } from '../../store/main';
 import { loadSettings } from '../../store/settingsSlice';
 import { resetAll } from '../../game/funcs/resetAll';
 
@@ -19,17 +19,19 @@ interface IProps extends IDialogProps<ISettingsResult> {
 
 export function Settings(props: IProps) {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const godMode = useSelector((state: RootState) => state.settings.godMode);
     const blockSize = useSelector((state: RootState) => state.settings.blockSize);
 
     const godModeChanged = (event: ChangeEvent) => {
-        const value = Boolean(event.target.checked);
+        const target = event.target as HTMLInputElement;
+        const value = Boolean(target.checked);
         dispatch(loadSettings({ godMode: value }));
     };
 
     const blockSizeChanged = (event: ChangeEvent) => {
-        const value = Number(event.target.value);
+        const target = event.target as HTMLInputElement;
+        const value = Number(target.value);
         dispatch(loadSettings({blockSize: {
             ...blockSize,
             value

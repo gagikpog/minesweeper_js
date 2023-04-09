@@ -21,7 +21,7 @@ export default function Preview(props: IViewProps): JSX.Element {
     }, [width, height])
 
     return (
-        <div className={`${styles.wrapper}`}  style={{'--item-size': size}}>
+        <div className={`${styles.wrapper}`} style={{'--item-size': size} as React.CSSProperties }>
             <div className={`tw-flex tw-flex-wrap tw-absolute tw-z-20 ${styles.preview} `} >
 
                 <svg width={width*size} height={height*size}

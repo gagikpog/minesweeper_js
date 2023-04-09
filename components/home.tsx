@@ -1,19 +1,21 @@
 import styles from '../styles/Home.module.css';
 import { Inter } from '@next/font/google'
 import { useMemo, } from 'react';
-import View from '../components/view';
+import View from './view';
 import { useDispatch, useSelector } from 'react-redux';
 import { openItem,  runNewGame, toggleItemFlag } from '../store/gameSlice';
-import {  RootState, store } from '../store/main';
+import {  AppDispatch, RootState, store } from '../store/main';
 import { EventType, GameState, ItemState } from '../game/types';
-import Header from '../components/header';
+import Header from './header';
 import { mapGetter } from '../game/funcs/getters';
-import StatusBar from '../components/statusBar';
-import Preview from '../components/preview';
+import StatusBar from './statusBar';
+import Preview from './preview';
 const inter = Inter({ subsets: ['latin'] });
 
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+
 export default function Home() {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const width = useSelector((state: RootState) => state.game.width);
     const height = useSelector((state: RootState) => state.game.height);
@@ -53,11 +55,11 @@ export default function Home() {
 
     return (
         <>
-            <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`} style={{ '--game-items-width': width, '--game-items-height': height }}>
+            <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`} style={{ '--game-items-width': width, '--game-items-height': height } as React.CSSProperties}>
                 <Header className='tw-z-20'/>
                 <StatusBar/>
                 <Preview />
-                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} }>
+                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} as React.CSSProperties}>
                     <div className='tw-max-w-full tw-max-h-full tw-flex' >
                         <div className={`scroll-container ${styles.gameContent}`}>
                             <View

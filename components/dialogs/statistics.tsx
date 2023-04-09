@@ -2,7 +2,7 @@ import { IDialogProps } from '../../dialog/contextController';
 import DialogTemplate from './dialogTemplate';
 import styles from '../../styles/Statistics.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, store } from '../../store/main';
+import { AppDispatch, RootState, store } from '../../store/main';
 import { useEffect, useMemo, useState } from 'react';
 import { GameLevels, IStatisticsItem } from '../../game/types';
 import { clearStatistic, loadStatistic } from '../../store/statisticSlice';
@@ -34,7 +34,7 @@ function table(items: IStatisticsItem[], header: boolean = true) {
 
 export function Statistics(props: IProps) {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const beginner = useSelector((state: RootState) => state.statistics.beginner);
     const intermediate = useSelector((state: RootState) => state.statistics.intermediate);
     const advanced = useSelector((state: RootState) => state.statistics.advanced);
@@ -66,7 +66,7 @@ export function Statistics(props: IProps) {
     useEffect(() => {
         const items = store.getState().statistics[levelQueue.value];
         if (!items.length) {
-            dispatch(loadStatistic({level: levelQueue.value}));
+            dispatch(loadStatistic({ level: levelQueue.value }));
         }
     }, [levelQueue.value])
 

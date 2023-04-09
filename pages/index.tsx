@@ -1,5 +1,5 @@
 import { Inter } from '@next/font/google'
-import Home from './home';
+import Home from '../components/home';
 import { Provider } from "react-redux";
 import { store } from '../store/main';
 import Previewer from '../components/previewer';
