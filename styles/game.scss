@@ -84,7 +84,7 @@
 
     &-9::before {
         content: "";
-        background-image: url(../public/images/mine.png);
+        background-image: url(../public/images/mine.svg);
         background-size: 70%;
         background-position: center;
         background-repeat: no-repeat;
@@ -108,18 +108,9 @@
     }
 
     &-flag::before {
-        color: black;
-        content: "\1F6A9";
-        font-weight: 1000;
-        font-size: calc(var(--game-items-size-px) * 0.5);
-    }
-
-    &-boom::before {
-        content: "";
-        background-image: url(../public/images/boom.gif);
-        background-size: contain;
-        background-position-y: center;
-        background-repeat: no-repeat;
+        color: #43482a;
+        content: "!";
+        font-size: calc(var(--game-items-size-px) * 0.8);
     }
 
     &.destroyed {

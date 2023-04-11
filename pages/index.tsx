@@ -19,7 +19,7 @@ export default function Index() {
                 <meta name='viewport' content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=320, height=device-height' />
                 <link rel='manifest' href='/.webmanifest' />
                 <meta http-equiv='X-UA-Compatible' content='ie=edge' />
-                <link rel='icon' type='image/x-icon' href='/favicon.ico'></link>
+                <link rel='icon' type='image/svg+xml' href='/favicon.svg'></link>
             </Head>
             <Provider store={store}>
                 <DialogProvider>
