@@ -14,11 +14,13 @@
 :root {
   --background-color: #1E1E1E;
   --background-color-header: #363636;
+  --danger-color: #e00000;
+  --success-color: #4BB543;
   --text-color: #fff;
   --text-color-hover: #cacaca;
   --border-color: #aaa;
   --input-border-focus-color: #1e90ff;
-  --input-border-focus-invalid-color: #e00000;
+  --input-border-focus-invalid-color: var(--danger-color);
 }
 
 #__next,

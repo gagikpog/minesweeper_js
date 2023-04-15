@@ -10,6 +10,7 @@ import Header from './header';
 import { mapGetter } from '../game/funcs/getters';
 import StatusBar from './statusBar';
 import Preview from './preview';
+import AnimationMessage from './animationMessage';
 const inter = Inter({ subsets: ['latin'] });
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -59,6 +60,7 @@ export default function Home() {
                 <Header className='tw-z-20'/>
                 <StatusBar/>
                 <Preview />
+                <AnimationMessage />
                 <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} as React.CSSProperties}>
                     <div className='tw-max-w-full tw-max-h-full tw-flex' >
                         <div className={`scroll-container ${styles.gameContent}`}>

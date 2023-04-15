@@ -1,0 +1,34 @@
+.message {
+    position: fixed;
+    left: 0;
+    text-align: center;
+    font-size: 0;
+    white-space: nowrap;
+    transform: translate(0, -50%);
+    text-transform: uppercase;
+    animation-duration: 3s;
+    animation-name: Message;
+}
+
+.gameWin {
+    color: var(--success-color);
+}
+
+.gameOver {
+    color: var(--danger-color);
+}
+
+@keyframes Message {
+    0% {
+        top: 0;
+        font-size: 0px;
+    }
+    90% {
+        top: 50%;
+        font-size: 10vmin;
+    }
+    100% {
+        top: 50%;
+        font-size: 0;
+    }
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { GameLevels } from '../game/types';
+import { GameLevels, GameState } from '../game/types';
 import { AppDispatch, RootState } from '../store/main';
 import { changeLevel, newGame } from '../store/gameSlice';
 import Select from './select';
@@ -21,6 +21,7 @@ export default function Header(props: IProps) {
     const totalMines = useSelector((state: RootState) => state.game.totalMines);
     const remainingMines = useSelector((state: RootState) => state.game.remainingMines);
     const level = useSelector((state: RootState) => state.game.level);
+    const gameState = useSelector((state: RootState) => state.game.gameState);
 
     const [options] = useState(() => [
         { value: GameLevels.Beginner, text: 'Beginner' },
@@ -28,8 +29,11 @@ export default function Header(props: IProps) {
         { value: GameLevels.Advanced, text: 'Advanced' },
     ]);
 
+    const animationClass = gameState === GameState.gameOver ? styles.gameOver :
+        ( gameState === GameState.gameWin ? styles.gameWin : '');
+
     return (
-        <header className={`${ styles.head } ${props.className || ''} tw-grid tw-grid-cols-3 tw-p-8`}>
+        <header className={`${ styles.head } ${props.className || ''} tw-grid tw-grid-cols-3 tw-p-8 ${ animationClass }`}>
 
             <div className='tw-flex'>
                 <Button icon='fa-repeat' onClick={() => dispatch(newGame())}/>

@@ -1,10 +1,56 @@
 .head {
     box-shadow: 0 -5px 10px black;
     background-color: var(--background-color-header);
+    animation-duration: 3s;
+}
+
+.gameWin {
+    animation-name: gameWin;
+}
+
+.gameOver {
+    animation-name: gameOver;
 }
 
 @media screen and (min-width: 576px) {
     .head {
         box-shadow: 0 5px 10px black;
+    }
+}
+
+
+@keyframes gameOver {
+    0% {
+        background-color: var(--background-color-header);
+    }
+    25% {
+        background-color: var(--danger-color);
+    }
+    50% {
+        background-color: var(--background-color-header);
+    }
+    75% {
+        background-color: var(--danger-color);
+    }
+    100% {
+        background-color: var(--background-color-header);
+    }
+}
+
+@keyframes gameWin {
+    0% {
+        background-color: var(--background-color-header);
+    }
+    25% {
+        background-color: var(--success-color);
+    }
+    50% {
+        background-color: var(--background-color-header);
+    }
+    75% {
+        background-color: var(--success-color);
+    }
+    100% {
+        background-color: var(--background-color-header);
     }
 }
