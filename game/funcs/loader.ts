@@ -6,6 +6,7 @@ import { TGameState } from "../../store/gameSlice";
 import { TTimerState } from "../../store/timerSlice";
 import { TUserState } from "../../store/userSlice";
 import { TSettingsState } from "../../store/settingsSlice";
+import { GameState } from "../types";
 
 function read<TState>(storeId: string): Partial<TState> {
     let data: Partial<TState> = {};
@@ -45,6 +46,13 @@ function write<TState>(storeId: string, data: Partial<TState>, items: (keyof TSt
 export function loadGameState(): Promise<Partial<TGameState>> {
     const data = read<TGameState>(LOCAL_STORE_GAME_KEY);
     const levelData = data.level ? getLevelSettings(data.level) : {};
+
+    if (data?.gameState === GameState.gameOver || data?.gameState === GameState.gameWin) {
+        delete data.gameMap;
+        data.gameState = GameState.newGame;
+        delete data.openedCount;
+        delete data.remainingMines;
+    }
 
     return Promise.resolve({ ...data, ...levelData });
 }
