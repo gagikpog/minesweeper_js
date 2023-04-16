@@ -72,3 +72,8 @@ export enum IconSizes {
     x4 = 'fa-4x',
     x5 = 'fa-5x'
 }
+
+export enum Lang {
+    En = 'en',
+    Ru = 'ru'
+}

@@ -6,7 +6,7 @@ import { AppDispatch, RootState, store } from '../../store/main';
 import { useEffect, useMemo, useState } from 'react';
 import { GameLevels, IStatisticsItem } from '../../game/types';
 import { clearStatistic, loadStatistic } from '../../store/statisticSlice';
-
+import { useTranslation } from 'react-i18next';
 
 interface IProps extends IDialogProps<void> {
 
@@ -19,11 +19,11 @@ function dateFormat(date: string): string {
     return `${padStart(d.getDate())}.${padStart(d.getMonth() + 1)}.${d.getFullYear()}`;
 }
 
-function table(items: IStatisticsItem[], header: boolean = true) {
+function table(items: IStatisticsItem[], header: boolean = true, t: (v: string) => string) {
     return items.map(({name, date, time}, index) => {
         return (
             <div key={index} className='tw-contents'>
-                <div className='tw-p-8'> { header ? index + 1 : '#' } </div>
+                <div className='tw-p-8'> { header ? index + 1 : t('statistics.number') } </div>
                 <div className={`tw-p-8 tw-truncate`}> {name} </div>
                 <div className={`tw-p-8 ${styles.noWrap}`}> {header ? dateFormat(date) : date} </div>
                 <div className='tw-p-8 tw-flex tw-justify-end'> {time} </div>
@@ -38,6 +38,7 @@ export function Statistics(props: IProps) {
     const beginner = useSelector((state: RootState) => state.statistics.beginner);
     const intermediate = useSelector((state: RootState) => state.statistics.intermediate);
     const advanced = useSelector((state: RootState) => state.statistics.advanced);
+    const { t } = useTranslation();
 
     const [levelQueue, setLevelQueue] = useState({ value: GameLevels.Beginner, prev: GameLevels.Beginner });
 
@@ -54,7 +55,7 @@ export function Statistics(props: IProps) {
         });
     };
 
-    const header = useMemo(() => ([{ name: 'User', date: 'Date', time: 'Time' }]), []);
+    const header = useMemo(() => ([{ name: t('statistics.user'), date: t('statistics.date'), time: t('statistics.time') }]), []);
 
     const body: IStatisticsItem[] = useMemo(() => {
         const items = store.getState().statistics[levelQueue.value];
@@ -77,16 +78,22 @@ export function Statistics(props: IProps) {
     }, [])
 
     return (
-        <DialogTemplate close={props.close} title='Statistics'>
+        <DialogTemplate close={props.close} title={t('statistics.caption')}>
             <div>
                 <div className='tw-flex'>
-                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Beginner ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Beginner)}> Beginner </div>
-                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Intermediate ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Intermediate)}> Intermediate </div>
-                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Advanced ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Advanced)}> Advanced </div>
+                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Beginner ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Beginner)}>
+                        {t('common.beginner')}
+                    </div>
+                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Intermediate ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Intermediate)}>
+                        {t('common.intermediate')}
+                    </div>
+                    <div className={`tw-p-4 tw-m-4 tw-cursor-pointer ${levelQueue.value === GameLevels.Advanced ? styles.selected : ''}`} onClick={() => setLevel(GameLevels.Advanced)}>
+                        {t('common.advanced')}
+                    </div>
                 </div>
                 <div className={`tw-grid ${ styles.grid }`}>
-                    {table(header, false)}
-                    {table(body)}
+                    {table(header, false, t)}
+                    {table(body, undefined, t)}
                 </div>
             </div>
         </DialogTemplate>

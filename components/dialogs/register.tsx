@@ -3,6 +3,7 @@ import { IDialogProps } from '../../dialog/contextController';
 import DialogTemplate from './dialogTemplate';
 import styles from '../../styles/Register.module.css';
 import { InfoBox } from '../infoBox';
+import { useTranslation } from 'react-i18next';
 
 export interface IRegisterResult {
     username: string;
@@ -18,6 +19,7 @@ export function Register(props: IProps) {
 
     const userNameRef = useRef(null);
     const emailRef = useRef(null);
+    const { t } = useTranslation();
     const [messages, setMessages] = useState({email: '', username: ''});
     const usernamePattern = '[a-zA-Zа-яА-я\s]{2,}';
     const emailPattern = '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$';
@@ -53,11 +55,11 @@ export function Register(props: IProps) {
     };
 
     return (
-        <DialogTemplate close={props.close} title='Register'>
+        <DialogTemplate close={props.close} title={t('register.caption')}>
             <div className='tw-p-8'>
                 <form action='/' onSubmit={register}>
                     <div>
-                        Enter your name email address to save the leaderboard
+                        {t('register.description')}
                     </div>
                     {/* <div className='tw-flex tw-flex-col tw-pt-8'>
                         <label htmlFor='email'>Email *</label>
@@ -66,14 +68,18 @@ export function Register(props: IProps) {
                         </InfoBox>
                     </div> */}
                     <div className='tw-flex tw-flex-col tw-pt-8'>
-                        <label htmlFor='username'>Name *</label>
+                        <label htmlFor='username'>{t('register.name')} *</label>
                         <InfoBox message={messages.username} style='danger'>
-                            <input ref={userNameRef} required name='username' type='text' placeholder='Enter your name' pattern={usernamePattern}/>
+                            <input ref={userNameRef} required name='username' type='text' placeholder={t('register.namePlaceholder') as string} pattern={usernamePattern}/>
                         </InfoBox>
                     </div>
                     <div className='tw-flex tw-justify-end tw-pt-8'>
-                        <div className={`tw-p-4 tw-mr-8 ${styles.registerButton}`} onClick={() => closeNoRegistration()}> Never show registration </div>
-                        <div className={`tw-p-4 ${styles.registerButton}`} onClick={() => register()}> Register </div>
+                        <div className={`tw-p-4 tw-mr-8 ${styles.registerButton}`} onClick={() => closeNoRegistration()}>
+                            {t('register.neverShow')}
+                        </div>
+                        <div className={`tw-p-4 ${styles.registerButton}`} onClick={() => register()}>
+                            {t('register.register')}
+                        </div>
                     </div>
                 </form>
             </div>

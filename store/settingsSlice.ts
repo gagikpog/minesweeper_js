@@ -1,6 +1,10 @@
 import { ISettingsResult } from '../components/dialogs/settings';
 import { controller as DialogController } from '../dialog/dialogProvider';
 import { createSlice } from '@reduxjs/toolkit';
+import { Lang } from '../game/types';
+const setLangAsync = (lang: Lang) => import('../lang/i18n').then((i18n) => {
+    i18n.default.changeLanguage(lang);
+});
 
 export const settingsSlice = createSlice({
     name: 'settings',
@@ -13,17 +17,25 @@ export const settingsSlice = createSlice({
             max: 70,
             default: 25
         },
+        lang: Lang.En
     },
     reducers: {
         loadSettings(state, action) {
             const data: Partial<TSettingsState> = action.payload;
             const keys = Object.keys(data) as (keyof TSettingsState)[];
+            if (state.lang !== data.lang && data.lang) {
+                setLangAsync(data.lang);
+            }
             keys.forEach((key) => {
                 const value = data[key];
                 if (data.hasOwnProperty(key) && value !== undefined && typeof state[key] === typeof value) {
                     state[key] = value as never;
                 }
             });
+        },
+        setLang(state, action) {
+            state.lang = action.payload.lang;
+            setLangAsync(state.lang);
         }
     }
 });

@@ -9,6 +9,7 @@ import styles from '../styles/Header.module.css';
 import { showStatistics } from '../store/statisticSlice';
 import Button from './button';
 import { showSettings } from '../store/settingsSlice';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
     className?: string;
@@ -22,11 +23,12 @@ export default function Header(props: IProps) {
     const remainingMines = useSelector((state: RootState) => state.game.remainingMines);
     const level = useSelector((state: RootState) => state.game.level);
     const gameState = useSelector((state: RootState) => state.game.gameState);
+    const { t } = useTranslation();
 
     const [options] = useState(() => [
-        { value: GameLevels.Beginner, text: 'Beginner' },
-        { value: GameLevels.Intermediate, text: 'Intermediate' },
-        { value: GameLevels.Advanced, text: 'Advanced' },
+        { value: GameLevels.Beginner, text: t('common.beginner') },
+        { value: GameLevels.Intermediate, text: t('common.intermediate') },
+        { value: GameLevels.Advanced, text: t('common.advanced') },
     ]);
 
     const animationClass = gameState === GameState.gameOver ? styles.gameOver :
