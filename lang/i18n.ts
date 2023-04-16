@@ -23,7 +23,8 @@ i18n
                         caption: 'Settings',
                         godMode: 'God mode',
                         blockSize: 'Zoom',
-                        resetAll: 'Reset all'
+                        resetAll: 'Reset all',
+                        lang: 'Lang'
                     },
                     messages: {
                         gameOver: 'Game over',
@@ -57,7 +58,8 @@ i18n
                         caption: 'Настройки',
                         godMode: 'Помощник',
                         blockSize: 'Масштаб',
-                        resetAll: 'Сбросить все'
+                        resetAll: 'Сбросить все',
+                        lang: 'Язык'
                     },
                     messages: {
                         gameOver: 'Проигрыш',
