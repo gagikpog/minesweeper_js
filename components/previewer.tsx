@@ -6,6 +6,7 @@ import styles from '../styles/Previewer.module.css'
 import { loadTimer } from "../store/timerSlice";
 import { loadUser } from "../store/userSlice";
 import { loadSettings } from "../store/settingsSlice";
+import { GameState } from "../game/types";
 
 interface IProps {
     children: ReactElement;
@@ -26,7 +27,9 @@ export default function Previewer(props: IProps) {
             new Promise((resolve) => setTimeout(resolve, 1000))
         ]).then(([gameData, timerData, userData, settingsData]) => {
             store.dispatch(loadGame(gameData));
-            store.dispatch(loadTimer(timerData));
+            if (gameData.gameState === GameState.game || gameData.gameState === GameState.pause) {
+                store.dispatch(loadTimer(timerData));
+            }
             store.dispatch(loadUser(userData));
             store.dispatch(loadSettings(settingsData));
 
