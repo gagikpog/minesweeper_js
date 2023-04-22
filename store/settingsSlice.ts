@@ -17,6 +17,7 @@ export const settingsSlice = createSlice({
             max: 70,
             default: 25
         },
+        padding: 15,
         lang: Lang.En
     },
     reducers: {

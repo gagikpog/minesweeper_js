@@ -23,6 +23,7 @@ i18n
                         caption: 'Settings',
                         godMode: 'God mode',
                         blockSize: 'Zoom',
+                        padding: 'Paddings',
                         resetAll: 'Reset all',
                         lang: 'Lang'
                     },
@@ -58,6 +59,7 @@ i18n
                         caption: 'Настройки',
                         godMode: 'Помощник',
                         blockSize: 'Масштаб',
+                        padding: 'Отступы',
                         resetAll: 'Сбросить все',
                         lang: 'Язык'
                     },

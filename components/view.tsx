@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { mapGetter } from '../game/funcs/getters';
 import { EventType } from '../game/types';
@@ -11,19 +11,27 @@ interface IViewProps {
     width: number;
     height: number;
     itemClick: (row: number, cell: number, eventType: EventType) => void;
-    style: CSSProperties;
+    style?: CSSProperties;
+    className?: string;
 }
 
 export default function View(props: IViewProps): JSX.Element {
 
     const gameMap = useSelector((state: RootState) => state.game.gameMap);
-
+    const viewRef = useRef(null)
     const items = useMemo(() => {
         return Array(props.height * props.width).fill(null);
-    }, [props.width, props.height])
+    }, [props.width, props.height]);
+
+    useEffect(() => {
+        if (viewRef.current) {
+            const viewDiv = viewRef.current as HTMLDivElement;
+            viewDiv.scrollIntoView();
+        }
+    }, []);
 
     return (
-        <div style={ props.style } className={`tw-grid ${styles.view}`}>
+        <div style={ props.style || {} } ref={viewRef} className={`tw-grid ${styles.view} ${props.className || ''}`}>
             {
                 items.map((_, index) => {
                     const rowIndex = Math.floor(index / props.width);

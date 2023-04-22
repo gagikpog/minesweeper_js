@@ -21,7 +21,7 @@ export default function LangSwitcher(props: IProps) {
 
     return (
         <div className='tw-flex' style={{'--background-color-item': '#2196F3'} as React.CSSProperties }>
-            <label htmlFor='lang' className='tw-cursor-pointer'>Ру</label>
+            <label htmlFor='lang' className='tw-cursor-pointer'>РУ</label>
             <Switcher htmlForName='lang' onChange={onChange} checked={props.value === Lang.En} className='tw-ml-8 tw-mr-8'/>
             <label htmlFor='lang' className='tw-cursor-pointer'>EN</label>
         </div>

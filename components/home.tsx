@@ -23,6 +23,7 @@ export default function Home() {
     const gameState = useSelector((state: RootState) => state.game.gameState);
     const displayBlocked = useSelector((state: RootState) => state.game.displayBlocked);
     const blockSize = useSelector((state: RootState) => state.settings.blockSize);
+    const padding = useSelector((state: RootState) => state.settings.padding);
     const godMode = useSelector((state: RootState) => state.settings.godMode);
 
     const itemClick = useMemo(() => (row: number, cell: number, eventType: EventType) => {
@@ -61,10 +62,11 @@ export default function Home() {
                 <StatusBar/>
                 <Preview />
                 <AnimationMessage />
-                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value} as React.CSSProperties}>
+                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value, '--game-padding': padding} as React.CSSProperties}>
                     <div className='tw-max-w-full tw-max-h-full tw-flex' >
-                        <div className={`scroll-container ${styles.gameContent}`}>
+                        <div className={`scroll-container`}>
                             <View
+                                className={`${styles.gameContent}`}
                                 style={{ width: `${blockSize.value * width}px` }}
                                 size={blockSize.value}
                                 width={width}

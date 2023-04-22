@@ -26,6 +26,7 @@ export function Settings(props: IProps) {
     const { t } = useTranslation();
     const godMode = useSelector((state: RootState) => state.settings.godMode);
     const blockSize = useSelector((state: RootState) => state.settings.blockSize);
+    const padding = useSelector((state: RootState) => state.settings.padding);
     const lang = useSelector((state: RootState) => state.settings.lang);
 
     const godModeChanged = (event: ChangeEvent) => {
@@ -47,6 +48,12 @@ export function Settings(props: IProps) {
         }}));
     };
 
+    const paddingChanged = (event: ChangeEvent) => {
+        const target = event.target as HTMLInputElement;
+        const value = Number(target.value);
+        dispatch(loadSettings({padding: value}));
+    };
+
     return (
         <DialogTemplate close={props.close} title={t('settings.caption')}>
             <div className='tw-p-8'>
@@ -60,6 +67,11 @@ export function Settings(props: IProps) {
                     <label className='tw-pt-8 tw-pb-8' htmlFor='blockSize'>{ t('settings.blockSize') }</label>
                     <div className='tw-pt-8 tw-pb-8'>
                         <input type='range' id='blockSize' onChange={blockSizeChanged} value={blockSize.value} min={blockSize.min} max={blockSize.max}/>
+                    </div>
+
+                    <label className='tw-pt-8 tw-pb-8' htmlFor='padding'>{ t('settings.padding') } ({padding}%)</label>
+                    <div className='tw-pt-8 tw-pb-8'>
+                        <input type='range' id='padding' onChange={paddingChanged} value={padding} min={5} max={50}/>
                     </div>
 
                     <label className='tw-pt-8 tw-pb-8' htmlFor='lang'>{ t('settings.lang') }</label>

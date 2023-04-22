@@ -3,7 +3,7 @@
 }
 
 .gameContent {
-    padding: 70px;
+    margin: calc(var(--game-padding, 20) * 1vh) calc(var(--game-padding, 20) * 1vw);
 }
 
 @media screen and (min-width: 576px) {
@@ -12,6 +12,6 @@
     }
 
     .gameContent {
-        padding: 25px;
+        margin: 25px;
     }
 }

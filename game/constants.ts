@@ -16,7 +16,7 @@ export const LOCAL_STORE_SETTINGS_KEY = `${LOCAL_STORE_KEY}_settings-state`;
 // Local store save data
 export const TIMER_SAVE_ITEMS: (keyof TTimerState)[] = ['time'];
 export const USER_SAVE_ITEMS: (keyof TUserState)[] = ['username', 'email', 'neverShowRegistration'];
-export const SETTINGS_SAVE_ITEMS: (keyof TSettingsState)[] = ['blockSize', 'godMode', 'animationSpeed', 'lang'];
+export const SETTINGS_SAVE_ITEMS: (keyof TSettingsState)[] = ['blockSize', 'godMode', 'animationSpeed', 'lang', 'padding'];
 export const GAME_SAVE_ITEMS: (keyof TGameState)[] = ['level', 'gameState', 'remainingMines', 'openedCount', 'gameMap'];
 
 // https://1drv.ms/x/s!AhziwSL0ZF01gd9uMWxIHcpM_EygMg?e=44RjtA
