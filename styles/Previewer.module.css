@@ -10,3 +10,8 @@
 .wide {
     letter-spacing: 8px;
 }
+
+.footer {
+    font-weight: bold;
+    font-family: "ArchivoBlack";
+}

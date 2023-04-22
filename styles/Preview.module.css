@@ -5,6 +5,7 @@
     pointer-events: none;
     top: 8px;
     left: 8px;
+    background-color: #0000005e;
 }
 
 @media screen and (min-width: 576px) {

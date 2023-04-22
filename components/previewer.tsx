@@ -45,9 +45,12 @@ export default function Previewer(props: IProps) {
     }, []);
 
     return loaded ? props.children : (
-        <div className="tw-flex tw-w-full tw-h-full tw-items-center tw-justify-center">
-            <div className={`${styles.previewer} ${ animation ? styles.wide : ''}`}>
+        <div className="tw-flex tw-w-full tw-h-full tw-items-center tw-justify-center tw-flex-col">
+            <div className={`tw-mt-auto ${styles.previewer } ${ animation ? styles.wide : ''}`}>
                 Minesweeper
+            </div>
+            <div className={`tw-mt-auto tw-mb-20 ${styles.footer}`}>
+                Created By gagikpog
             </div>
         </div>
     );
