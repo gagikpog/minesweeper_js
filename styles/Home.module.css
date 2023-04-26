@@ -3,7 +3,14 @@
 }
 
 .gameContent {
-    margin: calc(var(--game-padding, 20) * 1vh) calc(var(--game-padding, 20) * 1vw);
+    --p-base-width: calc(var(--game-items-width) * var(--game-items-size) * 1px + var(--game-padding, 20) * 1px);
+    --p-padding-width: calc(var(--game-padding, 20) * 2vw);
+
+    --p-base-height: calc(var(--game-items-height) * var(--game-items-size) * 1px + var(--game-padding, 20) * 1px);
+    --p-padding-height: calc(var(--game-padding, 20) * 2vh);
+
+    width: calc(var(--p-base-width) + var(--p-padding-width));
+    height: calc(var(--p-base-height) + var(--p-padding-height));
 }
 
 @media screen and (min-width: 576px) {
@@ -12,6 +19,7 @@
     }
 
     .gameContent {
-        margin: 25px;
+        --p-padding-width: 25px;
+        --p-padding-height: 25px;
     }
 }

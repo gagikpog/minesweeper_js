@@ -55,23 +55,30 @@ export default function Home() {
 
     }, [gameState]);
 
+    const cssVars = {
+        '--game-items-width': width,
+        '--game-items-height': height,
+        '--game-items-size': blockSize.value,
+        '--game-padding': padding
+    };
+
     return (
         <>
-            <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`} style={{ '--game-items-width': width, '--game-items-height': height } as React.CSSProperties}>
+            <div className={`tw-h-full tw-w-full tw-flex ${ styles.content }`} style={cssVars as React.CSSProperties}>
                 <Header className='tw-z-20'/>
                 <StatusBar/>
                 <Preview />
                 <AnimationMessage />
-                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center' style={ {'--game-items-size': blockSize.value, '--game-padding': padding} as React.CSSProperties}>
+                <main className='tw-flex tw-w-full tw-h-full tw-min-h-0  tw-items-center tw-justify-center'>
                     <div className='tw-max-w-full tw-max-h-full tw-flex' >
                         <div className={`scroll-container`}>
-                            <View
-                                className={`${styles.gameContent}`}
-                                style={{ width: `${blockSize.value * width}px` }}
-                                size={blockSize.value}
-                                width={width}
-                                height={height}
-                                itemClick={itemClick}/>
+                            <div className={`${styles.gameContent} tw-flex tw-items-center tw-justify-center`} >
+                                <View
+                                    size={blockSize.value}
+                                    width={width}
+                                    height={height}
+                                    itemClick={itemClick}/>
+                            </div>
                         </div>
                     </div>
                 </main>
