@@ -59,6 +59,13 @@ export interface IStatisticsItem {
     time: string;
 }
 
+export interface ILeaderboardItem {
+    identifier: string;
+    score: string | number;
+    date: string;
+    meta: string | null;
+}
+
 export interface IServiceResult<TRes> {
     data: TRes;
     message: string;

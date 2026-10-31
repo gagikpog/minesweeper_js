@@ -5,21 +5,32 @@ export function saveStatistics(level: GameLevels, data: IStatisticsItem): Promis
 
     const { time, name } = data;
 
-    if (!time || !level) {
+    const score = Number(time);
+
+    if (!name || !Number.isInteger(score) || score <= 0 || !level) {
         return Promise.resolve(false);
     }
 
-    const basePath = 'api/add.php'
-    let path = API_ROOT + basePath;
-    const body = { name, time, level };
+    const path = API_ROOT + 'add.php';
+    const body = {
+        identifier: name,
+        score,
+        game: 'minesweeper',
+        mode: level
+    };
 
     return fetch(path, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'text/plain;charset=UTF-8'
         },
         body: JSON.stringify(body)
-    }).then((data) => data.json()).then((result: IServiceResult<void>) => {
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`LeadBoard HTTP ${response.status}`);
+        }
+        return response.json();
+    }).then((result: IServiceResult<void>) => {
         if (result?.status === ServiceStatus.Error) {
             console.error(result.message);
         }

@@ -1,5 +1,4 @@
 import styles from '../styles/Home.module.css';
-import { Inter } from '@next/font/google'
 import { useMemo, } from 'react';
 import View from './view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +10,6 @@ import { mapGetter } from '../game/funcs/getters';
 import StatusBar from './statusBar';
 import Preview from './preview';
 import AnimationMessage from './animationMessage';
-const inter = Inter({ subsets: ['latin'] });
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 

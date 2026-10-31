@@ -1,21 +1,35 @@
 import { API_ROOT } from "../constants";
-import { GameLevels, IServiceResult, IStatisticsItem, ServiceStatus } from "../types";
+import { GameLevels, ILeaderboardItem, IServiceResult, IStatisticsItem, ServiceStatus } from "../types";
 
 export function getStatisticByLevel(level: GameLevels): Promise<IStatisticsItem[]> {
-    const basePath = 'api/getTop.php';
-    let path = `${API_ROOT}${basePath}`;
+    const path = API_ROOT + 'getTop.php';
 
     return fetch(path, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'text/plain;charset=UTF-8'
         },
-        body: JSON.stringify({ level })
-    }).then((data) => data.json()).then((result: IServiceResult<IStatisticsItem[]>) => {
-        if (result?.status === ServiceStatus.Error) {
-            console.error(result.message);
+        body: JSON.stringify({
+            game: 'minesweeper',
+            mode: level,
+            order: 'ASC',
+            // Preserve the old API behavior: return all players, not just the default top 10.
+            limit: 2147483647
+        })
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`LeadBoard HTTP ${response.status}`);
         }
-        return result.data;
+        return response.json();
+    }).then((result: IServiceResult<ILeaderboardItem[]>) => {
+        if (result?.status !== ServiceStatus.Success || !Array.isArray(result.data)) {
+            throw new Error(result?.message || 'Не удалось получить рейтинг.');
+        }
+        return result.data.map((item): IStatisticsItem => ({
+            name: item.identifier,
+            time: String(item.score),
+            date: item.date
+        }));
     }).catch((error: Error) => {
         console.error(error);
         return [];

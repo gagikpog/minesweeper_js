@@ -35,22 +35,26 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then(cacheNames =>
             cacheNames.filter(cacheName => !currentCaches.includes(cacheName))
-        ).then(cachesToDelete => 
+        ).then(cachesToDelete =>
             Promise.all(cachesToDelete.map(cacheToDelete => caches.delete(cacheToDelete)))
         ).then(() => self.clients.claim())
     );
 });
 
 self.addEventListener('fetch', (event) => {
-    // ignore fetch
-    const isFetch = /\/api\//.test(event.request.url);
+
+    const isGetQuery = event.request.method === 'GET';
     // ignore chrome extensions
     const isExtensions = event.request.url.startsWith('chrome');
-    if (!isExtensions && !isFetch) {
-        event.respondWith(
-            loadFromOrigin(event.request)
-            .then((response) => addToCache(event.request, response))
-            .catch(() => loadFromCache(event.request))
-        );
+    const isSameOrigin = URL(event.request.url).origin === self.location.origin;
+
+    if (isGetQuery || isExtensions || !isSameOrigin) {
+        return;
     }
+
+    event.respondWith(
+        loadFromOrigin(event.request)
+        .then((response) => addToCache(event.request, response))
+        .catch(() => loadFromCache(event.request))
+    );
 });

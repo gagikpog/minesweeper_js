@@ -1,4 +1,3 @@
-import { Inter } from '@next/font/google'
 import Home from '../components/home';
 import { Provider } from 'react-redux';
 import { store } from '../store/main';
@@ -6,8 +5,6 @@ import Previewer from '../components/previewer';
 import { DialogProvider } from '../dialog/dialogProvider';
 import { applicationInit } from '../game/funcs/applicationInit';
 import Head from 'next/head';
-
-const inter = Inter({ subsets: ['latin'] })
 
 applicationInit();
 

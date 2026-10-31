@@ -2,31 +2,20 @@ import { loadSettings } from '../../store/settingsSlice';
 import { isClient, isTouchDevice } from '../detection';
 import { ChanelEvents } from '../types';
 import { Zoom } from './zoom';
+import { initServiceWorker } from './initServiceWorker';
 
 export function applicationInit() {
     if (isClient()) {
         stopContextMenu();
-        runServiceWorker();
+        initServiceWorker();
         if (isTouchDevice()) {
             initZoom();
-
         }
     }
 }
 
 function stopContextMenu(): void {
     document.addEventListener('contextmenu', event => event.preventDefault(), false);
-}
-
-function runServiceWorker(): void {
-    if ('serviceWorker' in navigator) {
-        const VERSION = '1';
-        navigator.serviceWorker.register(`/sw.js?v=${VERSION}`).then((registration) => {
-            console.log('Service worker зарегистрирован:', registration);
-        }).catch(function(error) {
-            console.log('Ошибка при регистрации service worker-а:', error);
-        });
-    }
 }
 
 function initZoom() {
