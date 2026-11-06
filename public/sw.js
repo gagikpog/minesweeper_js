@@ -46,7 +46,7 @@ self.addEventListener('fetch', (event) => {
     const isGetQuery = event.request.method === 'GET';
     // ignore chrome extensions
     const isExtensions = event.request.url.startsWith('chrome');
-    const isSameOrigin = URL(event.request.url).origin === self.location.origin;
+    const isSameOrigin = new URL(event.request.url).origin === self.location.origin;
 
     if (isGetQuery || isExtensions || !isSameOrigin) {
         return;

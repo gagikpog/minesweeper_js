@@ -34,6 +34,4 @@ You can view the development server at `localhost:3000`.
 
 ```bash
 npm run build
-// or static
-npm run build-static
 ```

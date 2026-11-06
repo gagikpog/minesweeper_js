@@ -1,4 +1,4 @@
-const VERSION = 4;
+const VERSION = 5;
 
 export function initServiceWorker(): void {
     if (!('serviceWorker' in navigator)) {
