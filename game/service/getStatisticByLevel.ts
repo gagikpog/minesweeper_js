@@ -2,21 +2,16 @@ import { API_ROOT } from "../constants";
 import { GameLevels, ILeaderboardItem, IServiceResult, IStatisticsItem, ServiceStatus } from "../types";
 
 export function getStatisticByLevel(level: GameLevels): Promise<IStatisticsItem[]> {
-    const path = API_ROOT + 'getTop.php';
+    const query = new URLSearchParams({
+        game: 'minesweeper',
+        mode: level,
+        order: 'ASC',
+        // Return all players, preserving the existing game behavior.
+        limit: '2147483647'
+    });
+    const path = `${API_ROOT}scores?${query}`;
 
-    return fetch(path, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'text/plain;charset=UTF-8'
-        },
-        body: JSON.stringify({
-            game: 'minesweeper',
-            mode: level,
-            order: 'ASC',
-            // Preserve the old API behavior: return all players, not just the default top 10.
-            limit: 2147483647
-        })
-    }).then((response) => {
+    return fetch(path).then((response) => {
         if (!response.ok) {
             throw new Error(`LeadBoard HTTP ${response.status}`);
         }

@@ -11,7 +11,7 @@ export function saveStatistics(level: GameLevels, data: IStatisticsItem): Promis
         return Promise.resolve(false);
     }
 
-    const path = API_ROOT + 'add.php';
+    const path = API_ROOT + 'scores';
     const body = {
         identifier: name,
         score,
@@ -22,7 +22,7 @@ export function saveStatistics(level: GameLevels, data: IStatisticsItem): Promis
     return fetch(path, {
         method: 'POST',
         headers: {
-            'Content-Type': 'text/plain;charset=UTF-8'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
     }).then((response) => {
